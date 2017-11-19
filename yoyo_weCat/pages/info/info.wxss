@@ -1,0 +1,49 @@
+.info{
+  height: 100%;
+  background: #EEE;
+}
+.info .user{
+  background: #FFF;
+  padding: 20px 0;
+  text-align: center
+}
+.info .user image{
+  width: 70px;
+  height: 70px;
+  border: 3px solid #00D96D;
+  border-radius: 50%
+}
+.info .user text{
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+  display: block
+}
+.info form view text{
+  color: #00D96D;
+  font-size: 14px;
+  padding: 5px 10px;
+  display: block
+}
+.info form view input{
+  display: block;
+  background: #FFF;
+  padding: 10px
+}
+.info form view radio-group{
+  background: #FFF;
+  padding: 10px;
+  font-size: 14px
+}
+.info form view label{
+  margin-right: 10px
+}
+.info form .sub{
+  margin-top: 10px
+}
+.info form .sub button{
+  background: #00D96D;
+  color: #FFF;
+  margin: 0 10px;
+  font-size: 14px
+}

@@ -1,0 +1,34 @@
+<view class="info">
+  <view class="user">
+    <image src="{{userInfo.avatarUrl}}"></image>
+    <text>{{userInfo.nickName}}</text>
+  </view>
+  <form>
+    <view class="name">
+      <text>姓名</text>
+      <input type="text" value="{{userInfo.nickName}}" bindinput="changeName"/>
+    </view>
+    <view class="sex">
+      <text>性别</text>
+      <radio-group bindchange="changeSex">
+        <label>女
+          <radio value="0" checked="true" checked="{{userInfo.gender=='0'?true:false}}"/>
+        </label>
+        <label>男
+          <radio value="1" checked="false" checked="{{userInfo.gender=='1'?true:false}}"/>
+        </label>
+      </radio-group>
+    </view>
+    <view class="phone">
+      <text>手机号</text>
+      <input type="text" value="{{userInfo.phone}}" bindinput="changePhone"/>
+    </view>
+    <view class="email">
+      <text>邮箱</text>
+      <input type="text" value="{{userInfo.email}}" bindinput="changeEmail"/>
+    </view>
+    <view class="sub">
+      <button bindtap="subInfo">提 交</button>
+    </view>
+  </form>
+</view>

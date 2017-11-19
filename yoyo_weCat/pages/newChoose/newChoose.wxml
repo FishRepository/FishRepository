@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<view class="container">
+  <navigator class="adv" wx:if="{{showAdv && adv=='1'}}" url="/pages/advInfo/advInfo">
+    <view class="closeAdv" bindtap="closeAdv">X</view>
+    <image src="{{advUrl}}" mode="widthFix"></image>
+  </navigator>
+  <view class="bg">
+    <image src="../../images/shouye-img.jpg" mode="widthFix"></image>
+  </view>
+  <view class="userInfo">
+    <image class="userImg" src="{{userInfo.avatarUrl}}" bindtap="goUser"></image>
+    <view class="info">
+      <text class="name">Hello,<text>{{userInfo.nickName}}</text></text>
+      <view class="tip">
+        <text>来海证无忧，证书轻松拿</text>
+      </view>
+      <view class="coin">
+        <button bindtap='reload'>{{postText}}-{{certText}}</button>
+        <!-- 剩余解析币：
+        <image src="../../images/star-icon.png"></image>
+        <text>
+          <text>x</text>
+          <text>{{userInfo.coin}}</text>
+        </text>
+        <navigator url="/pages/pay/pay" style="display:none">充值</navigator> -->
+      </view>
+    </view>
+  </view>
+  <view class="test-cont section">
+    <text class="title">在线测试</text>
+    <view class="test-list">
+      <view class="flex-item sxcs">
+
+<!--/pages/result/result?passScore=' + pass + '&userScore=' + userScore-->
+<!--/pages/choose/choose?payType=0-->
+        <navigator url="/pages/clearStr/clearStr?payType=0&type=sxcs&postType={{postType}}&certType={{certType}}">
+          <image src="../../images/kaoshi-icon-1.jpg"></image>
+          <text>模拟测试</text>
+        </navigator>
+      </view>
+      <view class="flex-item">
+        <navigator url="/pages/newOrder/newOrder?payType=0&type=mncs&postType={{postType}}&certType={{certType}}">
+          <image src="../../images/kaoshi-icon-2.jpg"></image>
+          <text>顺序测试</text>
+        </navigator>
+      </view>
+      <view class="flex-item">
+        <navigator url="/pages/payTest/payTest?payType=1&postType={{postType}}&certType={{certType}}"> 
+          <image src="../../images/kaoshi-icon-3.jpg"></image>
+          <text>真题测试</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="model" wx:if="{{showModel}}">
+    <view class="box">
+      <text class="tip">温馨提示</text>
+      <text class="text">系统检测到您联系方式不完善，是否一键补全？</text>
+      <view class="btns">
+        <button class="y" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">确定</button>
+        <button class="n" bindtap="unget">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

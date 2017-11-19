@@ -1,0 +1,12 @@
+<!--pages/wepay/wepay.wxml-->
+<view class="wepay">
+  <view class="cont">
+    <text class="title">提示信息</text>
+    <view>
+      <text class="tip">此试题需购买！</text>
+      <text class="money"><text class="big">{{payMoney/100}}</text>元/次</text>
+      <button class="pay" bindtap="paySub">立即支付</button>
+      <button class="cancel" bindtap="noPay">取消</button>
+    </view>
+  </view>
+</view>

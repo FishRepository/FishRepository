@@ -1,0 +1,8 @@
+<!--pages/test/test.wxml-->
+
+<contact-button class="content">测试</contact-button>
+
+
+<button class="btn" bindlongtap="record">长按</button>
+
+<button class="btn" bindtap="stop">结束</button>

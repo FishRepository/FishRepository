@@ -1,0 +1,50 @@
+/*翻页*/
+.c-lists-page {
+	padding: 10px 12px;
+	clear: both;
+	text-align: center;
+	font-size: 14px;
+	vertical-align: top
+}
+
+.c-lists-page a,.c-lists-page span {
+	display: inline-block;
+	height: 23px;
+	line-height: 23px;
+	padding: 5px 12px;
+	margin: 5px 1px 0 0;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	overflow: hidden;
+	vertical-align: top;
+	text-decoration: none;
+	height: 23px;
+}
+
+.c-lists-page a:hover {
+	background: #32af75;
+	border: 1px solid #32af75;
+	text-decoration: none
+}
+
+.c-lists-page a,.c-lists-page a:visited {
+	color: #252525
+}
+
+.c-lists-page a:hover,.c-lists-page a:active {
+	color: #ffffff
+}
+
+.c-lists-page .current {
+	background: #32af75;
+	border: 1px solid #32af75;
+	color: #fff
+}
+
+.c-lists-page a.current,.c-lists-page a.current:visited {
+	color: #ffffff
+}
+
+.c-lists-page a.current:hover,.c-lists-page a.current:active {
+	color: #ffffff
+}

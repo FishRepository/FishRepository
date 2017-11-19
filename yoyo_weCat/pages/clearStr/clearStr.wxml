@@ -1,0 +1,5 @@
+<!--pages/clearStr/clearStr.wxml-->
+<view class='clearStr'>
+  <navigator url='/pages/exam/exam?payType=0&type=sxcs&postType={{postType}}&certType={{certType}}'>开始做题</navigator>
+  <button bindtap='clearStr'>清除缓存</button>
+</view>

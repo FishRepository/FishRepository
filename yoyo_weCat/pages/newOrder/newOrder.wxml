@@ -1,0 +1,16 @@
+<!--pages/newOrder/newOrder.wxml-->
+<view class="order">
+  <view class="section">
+    <text>请选择章节</text>
+  </view>
+  <picker-view indicator-style="height: 50px;" style="width: 100%; height: 200px;" value="{{value}}" bindchange="bindChange">
+    <picker-view-column>
+      <view wx:for="{{LIST}}" style="line-height: 50px;">{{item.NAME}}</view>
+    </picker-view-column>
+  </picker-view>
+  <view class="choose">{{choose}}</view>
+  <view class="btns">
+    <navigator url="/pages/newExam/newExam?sectionType={{sectionType}}&postType={{postType}}&certType={{certType}}">确定</navigator>
+    <button bindtap="clearSession">清除此题缓存</button>
+  </view>
+</view>

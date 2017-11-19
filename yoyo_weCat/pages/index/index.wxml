@@ -1,0 +1,28 @@
+<view class="choose">
+  <view class="cont">
+    <text>请选择对应岗位与证书</text>
+    <view class="picker">
+      <view class="post">
+        <picker bindchange="postChange" range="{{list}}" range-key="{{'postName'}}" value="{{postIndex}}">
+          <text>请选择岗位</text>
+          <view>
+            {{list[postIndex].postName}}
+          </view>
+        </picker>
+      </view>
+      <view class="cert">
+        <picker bindchange="certChange" range="{{certList}}" range-key="{{'certName'}}" value="{{certIndex}}">
+          <text>请选择科目</text>
+          <view>
+            {{certList[certIndex].certName}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="res">
+      <text>{{postText}}—{{certText}}</text>
+    </view>
+    <button class="btn" bindtap="goExam">确 定</button>
+    <!-- <button class="btn yellow" bindtap="clearStr">重新做题</button> -->
+  </view>
+</view>

@@ -1,0 +1,51 @@
+/* pages/userExam/userExam.wxss */
+.payTest{
+  background: #FEFEFE;
+  padding: 10px
+}
+.payTest .testList{
+  border: 1px solid #FEFEFE;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 5px #E2E2E2;
+  background: #FFF;
+  margin-bottom: 10px
+}
+.payTest .testList text.title{
+  font-size: 14px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 10px
+}
+.payTest .testList view{
+  text-align: center;
+  margin-bottom: 10px
+}
+.payTest .testList view text{
+  margin-right:5px;
+  font-size: 14px;
+  color: #666;
+}
+.payTest .testList navigator{
+  border: none;
+  height: 30px;
+  line-height: 30px;
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  background: #00D96D;
+  border-radius: 5px
+}
+.payTest .testList button{
+  background: rgba(224, 224, 0, 1);
+  color: #FFF;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  border: none
+}

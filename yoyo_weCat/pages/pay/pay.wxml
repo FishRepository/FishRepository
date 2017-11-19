@@ -1,0 +1,30 @@
+<view class="pay">
+  <view class="coin-cont">
+    <view class="coin">
+      <text class="title">剩余解析币</text>
+      <image src="../../images/star-icon.png"></image>
+      <text class="sy">x<text>{{userInfo.coin}}</text></text>
+    </view>
+    <form class="form">
+      <view class="inp">
+        <view class="rmb-ipt">
+          <image src="../../images/rmb-icon.png"></image>
+          <input name="input" value="{{payMoney}}" type="number" placeholder="金额" bindinput="moneyKeyInput"/>
+        </view>
+        <text>=</text>
+        <view class="coin-ipt">
+          <image src="../../images/star-icon.png"></image>
+          <input name="input" value="{{payCoin}}" type="number" placeholder="解析币" bindinput="coinKeyInput"/>
+        </view>
+      </view>
+      <view class="tip">
+        <text>充值说明：1元=2解析币
+解析币不能提现，只能用于平台查看试题解析，查看一次解析花费1个解析币。
+本解析币使用权及解释权规海证无忧+所有。</text>
+      </view>
+      <view class="btn">
+        <button type="primary" formType="submit" bindtap="paySub" disabled="{{canPay}}">充 值</button>
+      </view>
+    </form>
+  </view>
+</view>

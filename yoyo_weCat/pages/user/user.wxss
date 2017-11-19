@@ -1,0 +1,111 @@
+.container {
+  height: 100%;
+  display: block;
+  align-items: center;
+  background: #F2F2F2
+} 
+.container .user{
+  background: #FFF;
+  padding-top: 40px;
+  position: relative;
+  text-align: center;
+  border-bottom: 1px solid #DDDDDD;
+  padding-bottom: 10px
+}
+.container .user navigator.edit{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.container .user navigator.edit image{
+  width: 20px;
+  height: 20px;
+}
+.container .user .user-img{
+  width: 70px;
+  height: 70px;
+  border: 3px solid #00D96D;
+  border-radius: 50%
+}
+.container .user .name{
+  padding: 5px 0
+}
+.container .user .name text{
+  font-size: 16px;
+  color: #333;
+}
+.container .user .name image{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-left: 5px;
+  position: relative;
+  top: 5px
+}
+.container .user .coin{
+  padding-top: 5px
+}
+.container .user .coin image{
+  width: 28px;
+  height: 28px;
+  display: inline-block
+}
+.container .user .coin text{
+  font-size: 14px;
+  margin-left: 2px
+}
+.container .user .coin text text{
+  font-size: 14px
+}
+
+.container .list{
+  background: #FFF;
+  border-top: 1px solid #DDDDDD;
+  border-bottom: 1px solid #DDDDDD;
+  margin-top: 20px
+}
+.container .list .list-item{
+  padding: 15px 0;
+  position: relative;
+  overflow: hidden
+}
+.container .list .list-item::after{
+  content: "";
+  width: 100%;
+  display: block;
+  position: absolute;
+  height: 1px;
+  background: #DDDDDD;
+  bottom: 0;
+  left: 10px;
+}
+.container .list .list-item:last-child::after{
+  display: none
+}
+.container .list .list-item image.icon{
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  float: left;
+  margin-left: 10px;
+  margin-right: 5px
+}
+.container .list .list-item image.rightIcon{
+  width: 5px;
+  height: 9px;
+  position: absolute;
+  top: 50%;
+  margin-top: -5px;
+  right: 10px;
+}
+.container .list .list-item text{
+  font-size: 14px
+}
+.container .list .jilu image.icon{
+  width: 20px;
+  height: 20px;
+  margin-left: 14px;
+  margin-right: 7px;
+  position: relative;
+  top: 1px
+}

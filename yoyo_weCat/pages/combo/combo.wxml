@@ -1,0 +1,168 @@
+<!--exam.wxml-->
+<view class="exam">
+  <view class="top">
+    <image class="time-icon" style="display:none" src="../../images/chongzhijilu-icon.png"></image>
+    <text class="time" style="display:none">{{timeHour}}:{{timeMin}}:{{timeSec}}</text>
+    <button class="wrongBtn" bindtap="showWrong">错题集</button>
+    <text><text>{{nowCurrent+1}}</text>/<text>{{resData.LIST.length}}</text></text>
+    <text class="wrong" bindtap="showWrong">错误：<text>{{resData.wrongNumb}}</text></text>
+  </view>
+  <swiper class="swiper-cont" bindchange="swiperChange" current="{{nowCurrent}}">
+    <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
+      <swiper-item>
+        <view class="topic-cont">
+          <view class="topic">
+            <text class="type">{{topicType[list.topicType]}}</text><text>{{list.topicTitle}}</text>
+          </view>
+
+          <image class="topic-img" wx:if="{{list.topicImage!=''}}" src="{{hostUrl+list.topicImage}}" mode="widthFix"></image>
+
+            
+          <block wx:if="{{list.topicType=='1'}}">
+            <radio-group bindchange="selectOption">
+              <label class="radio">
+                <radio value="1" disabled="{{showType[list.topicDisable]}}"/>A.正确
+              </label>
+              <label class="radio">
+                <radio value="2" disabled="{{showType[list.topicDisable]}}"/>B.错误
+              </label>
+            </radio-group>
+          </block>
+
+          <block wx:if="{{list.topicType=='2'}}">
+            <radio-group bindchange="selectOption">
+              <label class="radio" wx:if="{{list.topicOptionA!=''}}">
+                <radio value="1" disabled="{{showType[list.topicDisable]}}"/>A.{{list.topicOptionA}}
+              </label>
+              <label class="radio" wx:if="{{list.topicOptionB!=''}}">
+                <radio value="2" disabled="{{showType[list.topicDisable]}}"/>B.{{list.topicOptionB}}
+              </label>
+              <label class="radio" wx:if="{{list.topicOptionC!=''}}">
+                <radio value="3" disabled="{{showType[list.topicDisable]}}"/>C.{{list.topicOptionC}}
+              </label>
+              <label class="radio" wx:if="{{list.topicOptionD!=''}}">
+                <radio value="4" disabled="{{showType[list.topicDisable]}}"/>D.{{list.topicOptionD}}
+              </label>
+            </radio-group>
+          </block>
+
+          <block wx:if="{{list.topicType=='3'}}">
+            <radio-group bindchange="selectOption">
+              <label class="radio" wx:if="{{list.topicOptionA!=''}}">
+                <radio value="1" disabled="{{showType[list.topicDisable]}}"/>A.{{list.topicOptionA}}
+              </label>
+              <label class="radio" wx:if="{{list.topicOptionB!=''}}">
+                <radio value="2" disabled="{{showType[list.topicDisable]}}"/>B.{{list.topicOptionB}}
+              </label>
+              <label class="radio" wx:if="{{list.topicOptionC!=''}}">
+                <radio value="3" disabled="{{showType[list.topicDisable]}}"/>C.{{list.topicOptionC}}
+              </label>
+              <label class="radio" wx:if="{{list.topicOptionD!=''}}">
+                <radio value="4" disabled="{{showType[list.topicDisable]}}"/>D.{{list.topicOptionD}}
+              </label>
+            </radio-group>
+          </block>
+
+        </view>
+        
+        <view class="sbtn">
+          <button class="check" type="primary" bindtap="showModel" wx:if="{{list.topicType=='3'}}">查看文章</button>
+          <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
+        </view>
+
+        <view class="right-cont" wx:if="{{list.showRight!='0'}}">
+          <view class="right">
+            <text class="r {{list.wrongTip}}">正确答案:{{showRight[list.topicRightOption]}}</text>
+          </view>
+          <view class="jiexi" wx:if="{{list.showExplain!='0'}}">
+            <text>{{list.explainText}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="btns">
+    <button class="prev" bindtap="prev">上一题</button>
+    <button class="submit" bindtap="submit">交 卷</button>
+    <button class="next" bindtap="next">下一题</button>
+  </view>
+  <view class="showmodel" wx:if="{{showModel}}">
+    <view class="textcont" animation="{{animationData}}">
+      <text>{{article}}</text>
+      <view class="close" bindtap="hideModel">
+        <image src="../../images/close.png"></image>
+      </view>
+    </view>
+  </view>
+  <swiper wx:if="{{showWrong}}" class="swiper-cont wrongSwiper" style="height: 100%; padding-bottom: 0">
+    <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
+      <swiper-item wx:if="{{list.isWrong}}">
+        <view class="topic-cont">
+          <view class="topic">
+            <text class="type">{{topicType[list.topicType]}}</text><text>{{list.topicTitle}}</text>
+          </view>
+
+          <image class="topic-img" wx:if="{{list.topicImage!=''}}" src="{{hostUrl+list.topicImage}}" mode="widthFix"></image>
+
+            
+          <block wx:if="{{list.topicType=='1'}}">
+              <view class="{{list.choose1}}">
+              A.正确
+              </view>
+              <view class="{{list.choose2}}">
+                B.错误
+              </view>
+          </block>
+
+          <block wx:if="{{list.topicType=='2'}}">
+              <view  class="{{list.choose1}}" wx:if="{{list.topicOptionA!=''}}">
+                A.{{list.topicOptionA}}
+              </view>
+              <view  class="{{list.choose2}}" wx:if="{{list.topicOptionB!=''}}">
+                B.{{list.topicOptionB}}
+              </view>
+              <view  class="{{list.choose3}}" wx:if="{{list.topicOptionC!=''}}">
+                C.{{list.topicOptionC}}
+              </view>
+              <view  class="{{list.choose4}}" wx:if="{{list.topicOptionD!=''}}">
+                D.{{list.topicOptionD}}
+              </view>
+          </block>
+
+          <block wx:if="{{list.topicType=='3'}}">
+              <view  class="{{list.choose1}}" wx:if="{{list.topicOptionA!=''}}">
+                A.{{list.topicOptionA}}
+              </view>
+
+              <view  class="{{list.choose2}}" wx:if="{{list.topicOptionB!=''}}">
+                B.{{list.topicOptionB}}
+              </view>
+              <view  class="{{list.choose3}}" wx:if="{{list.topicOptionC!=''}}">
+                C.{{list.topicOptionC}}
+              </view>
+              <view  class="{{list.choose4}}" wx:if="{{list.topicOptionD!=''}}">
+                D.{{list.topicOptionD}}
+              </view>
+          </block>
+        </view>
+<!--        
+        <view class="sbtn">
+          <button class="check" type="primary" bindtap="showModel" wx:if="{{list.topicType=='3'}}">查看文章</button>
+          <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
+        </view>-->
+
+        <view class="right-cont" wx:if="{{list.showRight!='0'}}">
+          <view class="right">
+            <text class="r rightTip">正确答案:{{showRight[list.topicRightOption]}}</text>
+            <!--<button bindtap="showExplain">查看解析</button>
+            <image src="../../images/star-icon.png"></image>
+            <text class="numb">x<text>{{userInfo.coin}}</text></text>-->
+          </view>
+        </view>
+        <view class="closeWrong">
+          <button bindtap="closeWrong">关闭</button>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

@@ -1,0 +1,8 @@
+<!--pages/result/result.wxml-->
+<view class="result">
+    <image src="{{imgList[showIndex]}}" mode="widthFix"></image>
+    <text class="big"><text>{{userScore}}</text>分</text>
+    <view class="btn">
+      <button type="primary" bindtap="returnHome">确 定</button>
+    </view>
+</view>

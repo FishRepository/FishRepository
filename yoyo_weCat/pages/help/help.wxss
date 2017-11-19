@@ -1,0 +1,25 @@
+/* pages/help/help.wxss */
+.help{
+  background: #FFF;
+  padding: 10px
+}
+.help image{
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 0 auto
+}
+.help text.title{
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0
+}
+.help text{
+  font-size: 14px;
+  text-indent: 2em;
+  display: block
+}
+.help text.s{
+  font-weight: bold
+}

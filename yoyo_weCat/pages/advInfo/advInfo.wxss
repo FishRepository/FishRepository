@@ -1,0 +1,8 @@
+/* pages/advInfo/advInfo.wxss */
+.advInfo{
+  width: 100%;
+}
+.advInfo image{
+  width: 100%;
+  height: auto
+}

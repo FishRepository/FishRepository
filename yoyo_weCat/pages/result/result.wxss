@@ -1,0 +1,24 @@
+/* pages/result/result.wxss */
+.result image{
+  width: 100%
+}
+.result text.big{
+  text-align: center;
+  display: block;
+  color: #F9C801;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid #00D96D;
+  line-height: 120px;
+  margin: 20px auto
+}
+.result text.big text{
+  font-size: 60px;
+}
+.result .btn{
+  padding: 10px
+}
+.result .btn button{
+  font-size: 14px
+}

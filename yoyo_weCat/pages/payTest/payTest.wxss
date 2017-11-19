@@ -1,0 +1,44 @@
+/* pages/payTest/payTest.wxss */
+.payTest{
+  background: #FEFEFE;
+  padding: 10px
+}
+.payTest .testList{
+  border: 1px solid #FEFEFE;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 5px #E2E2E2;
+  background: #FFF
+}
+.payTest .testList text.title{
+  font-size: 14px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 10px
+}
+.payTest .testList view{
+  text-align: center;
+  margin-bottom: 10px
+}
+.payTest .testList view text{
+  margin: 0 10px;
+  font-size: 14px;
+  color: #666;
+}
+.payTest .testList button{
+  border: none;
+  height: 30px;
+  line-height: 30px;
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  background: #00D96D
+}
+.payTest .testList .tip{
+  color: #FFC926;
+  font-size: 14px;
+  font-weight: bold
+}

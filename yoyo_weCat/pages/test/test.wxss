@@ -1,0 +1,7 @@
+/* pages/test/test.wxss */
+.content{
+  margin: 20px;
+  padding: 10px;
+  background: #000;
+  color: #FFF
+}

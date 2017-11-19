@@ -1,0 +1,35 @@
+/* pages/newOrder/newOrder.wxss */
+.order{
+  width: 100%;
+  padding: 30px 0;
+  text-align: center
+}
+.order .section text{
+  font-weight: bold;
+  color: #00D96D;
+}
+.order .choose{
+  text-align: center;
+  font-size: 14px;
+  color: #00D96D;
+}
+.order .btns{
+  padding: 20px
+}
+.order .btns navigator,.order .btns button{
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #FFF;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px
+}
+.order .btns navigator{
+  background: #00D96D;
+}
+.order .btns button{
+  background: rgba(224, 224, 0, 1);
+}

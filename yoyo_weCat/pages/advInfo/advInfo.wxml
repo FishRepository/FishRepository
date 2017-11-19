@@ -1,0 +1,4 @@
+<!--pages/advInfo/advInfo.wxml-->
+<view class="advInfo">
+  <image src="{{advImg}}" mode="widthFix"></image>
+</view>

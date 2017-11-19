@@ -1,0 +1,87 @@
+.pay{
+  height: 100%;
+  background: #EEE
+}
+.pay .coin-cont{
+  background: #FFF;
+}
+.pay .coin-cont .coin{
+  padding: 30px 0;
+  text-align: center;
+}
+.pay .coin-cont .coin .title{
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px
+}
+.pay .coin-cont .coin image{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+.pay .coin-cont .coin .sy{
+  color: #888;
+  font-size: 14px;
+  margin-left: 5px;
+}
+.pay .coin-cont .coin .sy text{
+  font-size: 16px;
+  color: #666;
+  margin-left: 3px
+}
+.pay .coin-cont .form{
+  width: 90%;
+  display: block;
+  margin: 20px auto;
+}
+.pay .coin-cont .form .inp{
+  text-align: center;
+  height: 40px
+}
+.pay .coin-cont .form .inp view{
+  display: inline-block;
+  width: 45%;
+  background: #F7F7F7;
+  height: 40px;
+  font-size: 14px;
+  float: left;
+  position: relative
+}
+.pay .coin-cont .form .inp view input{
+  height: 40px;
+  display: inline-block;
+  float: left;
+  font-size: 14px;
+  padding-left: 40px;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  top: 0
+}
+.pay .coin-cont .form .inp view image{
+  width: 30px;
+  height: 30px;
+  margin-top: 5px;
+  margin-left: 5px;
+  display: inline-block;
+  float: left
+}
+.pay .coin-cont .form .inp text{
+  font-size: 40px;
+  display: inline-block;
+  width: 10%;
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  color: #DDD;
+  text-align: center
+}
+.pay .coin-cont .form .tip{
+  padding: 20px 0;
+  font-size: 14px;
+  color: #666
+}
+.pay .coin-cont .form .btn{
+  padding: 20px 0px;
+}

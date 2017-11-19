@@ -1,0 +1,61 @@
+/* pages/wepay/wepay.wxss */
+.choose{
+  background: #EEE;
+  height: 100%
+}
+.choose .cont{
+  padding: 20px;
+  text-align: center
+}
+.choose .cont text{
+  font-size: 14px;
+  color: #333
+}
+.choose .cont .picker{
+  padding: 50px 0;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+.choose .cont .picker::after{
+  content: "";
+  display: block;
+  clear: left
+}
+.choose .cont .picker text{
+  color: #00D96D;
+  font-size: 12px
+}
+.choose .cont .picker>view{
+  display: block;
+  width: 50%;
+  float: left;
+  color: #333;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+}
+.choose .cont .picker>view view{
+  background: #e2e2e2;
+}
+.choose .cont .res{
+  color: #00D96D;
+  font-size: 16px;
+  text-align: center;
+  padding: 20px
+}
+.choose .cont .res text{
+  color: #00D96D
+}
+.choose .cont .btn{
+  background: #00D96D;
+  color: #FFF;
+  font-size: 16px;
+  padding: 0px;
+  border-radius: 5px
+}
+.choose .cont .yellow{
+  background: rgba(224, 224, 0, 1);
+  color: #FFF;
+  margin-top: 10px
+}

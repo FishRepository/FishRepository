@@ -1,0 +1,28 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/newChoose/newChoose",
+    "pages/clearStr/clearStr",
+    "pages/newOrder/newOrder",
+    "pages/newExam/newExam",
+    "pages/user/user",
+    "pages/exam/exam",
+    "pages/pay/pay",
+    "pages/record/record",
+    "pages/info/info",
+    "pages/wepay/wepay",
+    "pages/result/result",
+    "pages/payTest/payTest",
+    "pages/userExam/userExam",
+    "pages/combo/combo",
+    "pages/advInfo/advInfo",
+    "pages/help/help"
+  ],
+  "window":{
+    "backgroundTextStyle":"dark",
+    "navigationBarBackgroundColor": "#00D96D",
+    "navigationBarTitleText": "YOYO",
+    "navigationBarTextStyle":"#FFF",
+    "enablePullDownRefresh": true
+  }
+}

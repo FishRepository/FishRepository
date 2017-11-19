@@ -1,0 +1,41 @@
+.record{
+  background: #eee;
+  padding-top: 20px;
+  padding-bottom: 20px
+}
+.record .list{
+  width: 80%;
+  margin: 0px auto 20px;
+  background: #FFF;
+  border-radius: 10px;
+}
+.record .list .top{
+  border-bottom: 1px solid #EEE;
+  padding: 10px;
+}
+.record .list .top::after{
+  content: "";
+  display: block;
+  clear: both
+}
+.record .list .top .name{
+  color: #00D96D;
+  font-weight: bold;
+  font-size: 14px;
+  float: left
+}
+.record .list .top .time{
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+  float: right
+}
+.record .list .body{
+  padding: 10px;
+}
+.record .list .body text{
+  display: block;
+  padding: 5px 0;
+  color: #666;
+  font-size: 14px
+}

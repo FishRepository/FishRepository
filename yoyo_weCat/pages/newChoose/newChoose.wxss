@@ -1,0 +1,203 @@
+/**index.wxss**/
+.container {
+  height: 100%;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: #EEE
+} 
+.container .adv{
+  position: fixed;
+  display: block;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+.container .adv .closeAdv{
+  position: absolute;
+  right: 0px;
+  top: -8px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  background: #999;
+  color: #FFF;
+  font-size: 14px;
+  border-radius: 50%
+}
+.container .adv image{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.container .bg{
+  width: 100%;
+}
+.container .bg image{
+  width: 100%;
+}
+.container .userInfo{
+  position: relative;
+  z-index: 10;
+  margin-top: -100px;
+  width: 100%;
+  text-align: center;
+}
+.container .userInfo image.userImg{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #FFF;
+  box-shadow: 1px 1px 4px #000
+}
+.container .userInfo .info{
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  background: #FFF;
+  margin-top: -40px;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  border-radius: 10px
+}
+.container .userInfo .info .name{
+  color: #00D96D;
+  font-size: 14px;
+  font-weight: bold
+}
+.container .userInfo .info .tip{
+  padding: 20px;
+  font-size: 14px;
+  color: #666;
+}
+.container .userInfo .info .coin{
+  font-size: 14px;
+  color: #666
+}
+.container .userInfo .info .coin button{
+  font-size: 14px;
+  color: #FFF;
+  background: #00D96D;
+  width: 90%;
+  margin: 0 auto
+}
+.container .userInfo .info .coin image{
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 5px;
+  margin-right: 5px
+}
+.container .userInfo .info .coin navigator{
+  display: inline-block;
+  float: right;
+  margin-top: 6px;
+  margin-right: 20px
+}
+.container .userInfo .info .coin navigator:hover{
+  color: #00D96D
+}
+.container .test-cont{
+  width: 80%;
+  margin: 20px auto;
+  background: #FFF;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+.container .test-cont .title{
+  color: #00D96D;
+  font-size: 14px;
+  text-align: center;
+  display: block;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #EEE
+}
+.container .test-cont .test-list{
+  flex-direction: row;
+}
+.container .test-cont .test-list .flex-item{
+  display: inline-block;
+  width: 33.33%;
+  text-align: center;
+  padding: 20px 0 10px;
+  position: relative
+}
+.container .test-cont .test-list .flex-item:after{
+  content: "";
+  display: block;
+  width: 1px;
+  background: #EEE;
+  height: 50%;
+  position: absolute;
+  right: 0;
+  top: 25%;
+}
+.container .test-cont .test-list .flex-item:last-child::after{
+  display: none
+}
+.container .test-cont .test-list .flex-item navigator image{
+  width: 40px;
+  height: 40px;
+}
+.container .test-cont .test-list .flex-item navigator text{
+  display: block;
+  color: #00D96D;
+  font-size: 14px
+}
+.container .model{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 100
+}
+.container .model .box{
+  width: 50%;
+  height: 120px;
+  border-radius: 10px;
+  position: absolute;
+  padding: 0 10px;
+  left: 25%;
+  top: 50%;
+  margin-top: -60px;
+  margin-left: -10px;
+  background: #FFF;
+  font-size: 14px;
+  overflow: hidden
+}
+.container .model .box .tip{
+  color: #00D96D;
+  font-weight: bold;
+  display: block;
+  padding: 5px 0;
+  text-align: center
+}
+.container .model .box .text{
+  display: block;
+  padding: 10px 0;
+  width: 100%;
+  border-top: 1px solid #EEE;
+  color: #999
+}
+.container .model .box .btns button{
+  font-size: 14px;
+  width: 50%;
+  display: block;
+  float: left;
+  text-align: center;
+}
+.container .model .box .btns button::after{
+  display: none;
+}
+.container .model .box .btns button.y{
+  color: #00D96D;
+  font-weight: bold
+}
+.container .model .box .btns button.n{
+  color: #999
+}

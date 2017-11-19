@@ -1,0 +1,56 @@
+/* pages/wepay/wepay.wxss */
+.wepay{
+  background: #EEE;
+  height: 100%;
+  position: relative
+}
+.wepay .cont{
+  width: 90%;
+  background: #FFF;
+  border-radius: 10px;
+  position: absolute;
+  top: 20%;
+  left: 5%
+}
+.wepay .cont .title{
+  color: #00D96D;
+  border-bottom: 1px solid #EEE;
+  padding: 10px;
+  text-align: center;
+  display: block;
+  font-size: 14px
+}
+.wepay .cont view{
+  padding: 20px 10px;
+  text-align: center;
+}
+.wepay .cont view .tip{
+  color: #FFA64D;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: block
+}
+.wepay .cont view .money{
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 20px;
+  display: block
+}
+.wepay .cont view .money .big{
+  font-size: 30px;
+}
+.wepay .cont view .pay{
+  background: #00D96D;
+  color: #FFF;
+  margin-bottom: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px
+}
+.wepay .cont view .cancel{
+  background: #FFA64D;
+  color: #FFF;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px
+}

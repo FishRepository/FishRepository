@@ -1,0 +1,240 @@
+/**exam.wxss**/
+.exam{
+  height: 100%;
+  background: #EEE;
+  overflow-y: auto;
+  position: relative
+}
+.exam .top{
+  text-align: center;
+  color: #00D96D;
+  font-size: 14px;
+  padding: 10px
+}
+.exam .top .time-icon{
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  float: left;
+  margin-right: 5px;
+  position: relative;
+  top: 1px
+}
+.exam .top .time{
+  float: left
+}
+.exam .top .wrongBtn{
+  font-size: 12px;
+  background: #FBCB3B;
+  color: #FFF;
+  height: 20px;
+  line-height: 20px;
+  float: left
+}
+.exam .top .wrong{
+  float: right;
+}
+.exam .top .wrong text{
+  color: #FBCB3B
+}
+.exam .swiper-cont{
+  height: 80%;
+  padding-bottom: 50px
+}
+.exam .swiper-cont .topic-cont{
+  background: #FFF;
+  border-radius: 10px;
+  width: 85%;
+  margin: 0px auto;
+  padding: 10px
+}
+.exam .swiper-cont .topic-cont .topic{
+  color: #444;
+  font-size: 14px;
+  line-height: normal
+}
+.exam .swiper-cont .topic-cont .topic .type{
+  background: #00D96D;
+  color: #FFF;
+  border-radius: 3px;
+  font-size: 11px;
+  padding: 0 3px;
+  margin-right: 5px
+}
+.exam .swiper-cont .topic-cont .topic-img{
+  width: 100%
+}
+.exam .swiper-cont .topic-cont .radio{
+  font-size: 14px;
+  display: block;
+  padding: 5px 0
+}
+.exam .swiper-cont .topic-cont view{
+  font-size: 14px;
+  display: block;
+  padding: 5px 0
+}
+.exam .swiper-cont .topic-cont .radio radio{
+  position: relative;
+  top: -2px
+}
+.exam .swiper-cont .sbtn{
+  position: relative
+}
+.exam .swiper-cont .check{
+  font-size: 14px;
+  float: left;
+  left: 15px;
+  height: 30px;
+  border: none;
+  line-height: 30px;
+  position: absolute
+}
+.exam .swiper-cont .confirm{
+  width: 60px;
+  font-size: 14px;
+  margin: 10px auto;
+  height: 30px;
+  border: none;
+  line-height: 30px
+}
+.exam .swiper-cont .right-cont{
+  width: 85%;
+  margin: 0 auto;
+  background: #FFF;
+  border-radius: 10px;
+  padding: 10px
+}
+.exam .swiper-cont .right-cont .right{
+  font-size: 14px;
+  text-align: right;
+  height: 25px;
+  line-height: 25px;
+  margin-bottom: 5px
+}
+.exam .swiper-cont .right-cont .right .r{
+  float: left;
+}
+.exam .swiper-cont .right-cont .right button{
+  display: inline-block;
+  width: 60px;
+  font-size: 14px;
+  color: #FFF;
+  background: #00D96D;
+  margin-right: 5px;
+  height: 25px;
+  line-height: 25px;
+  padding: 0;
+  position: relative;
+  top: -6px
+}
+.exam .swiper-cont .right-cont .right image{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.exam .swiper-cont .right-cont .right .numb{
+  font-size: 10px;
+  color: #00D96D
+}
+.exam .swiper-cont .right-cont .right .numb text{
+  font-size: 14px
+}
+.exam .swiper-cont .right-cont .jiexi{
+  font-size: 14px;
+  border: 1px solid #00D96D;
+  border-radius: 5px;
+  padding: 5px
+}
+.exam .btns{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-align: center
+}
+.exam .btns button{
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  padding: 0;
+  line-height: 30px;
+  background: #00D96D;
+  font-size: 14px;
+  color: #FFF;
+  margin: 10px;
+}
+.exam .btns .prev{
+  float: left;
+}
+.exam .btns .next{
+  float: right;
+}
+.exam .btns .submit{
+  margin: 10px auto;
+  width: 100px;
+  display: none
+}
+.exam .showmodel{
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  position: fixed;
+  top: 0;
+  left: 0
+}
+.exam .showmodel .textcont{
+  width: 80%;
+  height: 80%;
+  margin: 10% auto;
+  overflow-y: auto;
+  background: #FFF;
+  border-radius: 10px;
+  padding: 10px;
+}
+.exam .showmodel .textcont text{
+  color: #333;
+  font-size: 14px;
+}
+.exam .showmodel .textcont .close{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background: #FFF;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden
+}
+.exam .showmodel .textcont .close image{
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+.exam .wrongTip{
+  color: #FF0000
+}
+.exam .rightTip{
+  color: #00D96D
+}
+.wrongSwiper{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background: #FFF;
+  z-index: 100;
+}
+.wrongSwiper .closeWrong{
+  margin: 20px;
+}
+.wrongSwiper .closeWrong button{
+  background: #00D96D;
+  color: #FFF;
+  font-size: 14px;
+  border-radius: 5px
+}
+.wrongSwiper .left{
+  font-size: 14px
+}

@@ -1,0 +1,65 @@
+/* pages/wepay/wepay.wxss */
+.choose{
+  background: #EEE;
+  height: 100%
+}
+.choose .cont{
+  padding: 20px;
+  text-align: center
+}
+.choose .cont text{
+  font-size: 14px;
+  color: #333
+}
+.choose .cont .picker{
+  padding: 50px 0;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: #00D96D
+}
+.choose .cont .picker::after{
+  content: "";
+  display: block;
+  clear: left
+}
+.choose .cont .picker text{
+  color: #00D96D;
+  font-size: 12px
+}
+.choose .cont .picker>view{
+  display: block;
+  width: 48%;
+  float: left;
+  margin-left: 1%;
+  color: #333;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+}
+.choose .cont .picker>view view{
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAnCAYAAAClpK6yAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwOS8xMS8xN4nmSIQAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAADV0lEQVRoge3av0vjYBzH8Xd+qIvSDrpU/4MO3qa4XG6TquAoilz7D2hv7SQILiqIs3A9xb9A7SRcwEUhgwUFBwcXnSsIbTF9nhty8WptPWvzo7V+xjSE8OLzfB+SVFlZWZm9vLzMSikjAFJKalPvWLdFVdX7eDye1K+vr9NSyoiLIqV8BvSJ5UQIEbm6ukrrkUjELBaLX10oKSVCiE+0OolGo6YipWR+fv68VCqNSimpVCoIIZ7QPrGcaJqWPzo6+qIDpNNpY2NjwyyXy6NCCGzbRghBpVL5bBoO1tzcnAGguAinp6fR9fV1s1gsjtq2jW3bT2BCiDDvN9SoqpqfnJw0MplMAarAAE5OThqidWO7FEXJx+NxY2dnp/B0rBbi+Pg4urm5aZZKpVEXrHZpdknyg4ODRi6XK1QffAEGkMvloltbW2a5XH5C67JNIA8YlmUVan9Q652dSCQKy8vLRl9fX17TNDRNQ1VVFEVBURTf7zbkNMSCBmAAU1NThUQiMdvT03PfRWj3wGwjLHgFDCCdTt9MTEwYXYJ2j9Osm9dOehUMYHV19bwaTVXVj4jmYp3/78T/gsFzNF3XPxram7GgwS7ZKJlM5svZ2Zn5+PgYcZ8GOnz3bAoL3tgwN2tra+djY2OGrusfoWlNY0GTYOCgjY+Pdzrau7DgHWDQ8WjvxoJ3gkHHorWEBS2AQcehtYwFTe6SjbK0tGRcXFz8dt9wtOnu+c2yLLPVi7TUMDfb29vmyMhIStd13Ka5LWuTpqW8wAKPwAB2d3ez1WiaprULWsqyrKxXF/NkSVZncXExeXt7+7PeC8gQlqenWOBhw9zs7e1lh4eHU+7DeohN8xwLfAADB81dniGh+YIFPoFBqGi+YYEPM6w2CwsLybu7u5+13wd8mmm+YoGPDXOzv7+fjcViQTTNdywIAAwCQQsECwICAwdtaGjohw9oP4LCggBmWG1mZmayDw8P3z2aab8sy0r6cJsNE1jD3BwcHCT7+/t/edC0wLEgBDD4h1b9UQVoBi0ULAgJDBy0gYGBZ02DN6GFhgUhzLDaTE9Pv5hp8PKfkH8TKhaE2DA3h4eHL2Ya1G1a6FjQBmDwJrS2wII2AQMHLRaLpXp7e/NVaHlN01LtggXwB/qTUCEWNqFbAAAAAElFTkSuQmCC) right center no-repeat #FFF;
+  background-size: 12px 6px;
+  background-position-x: 95%
+}
+.choose .cont .res{
+  color: #00D96D;
+  font-size: 16px;
+  text-align: center;
+  padding: 20px
+}
+.choose .cont .res text{
+  color: #00D96D
+}
+.choose .cont .btn{
+  background: #00D96D;
+  color: #FFF;
+  font-size: 16px;
+  padding: 0px;
+  border-radius: 5px
+}
+.choose .cont .yellow{
+  background: rgba(224, 224, 0, 1);
+  color: #FFF;
+  margin-top: 10px
+}
