@@ -21,6 +21,7 @@
 					<li class="list-group-item" data-src = "pages/yoyo-admin/advInfo.jsp">广告海报</li>
 					<li class="list-group-item" data-src = "pages/yoyo-admin/sectionList.jsp">章节管理</li>
 					<li class="list-group-item" data-src = "pages/yoyo-admin/sectionTopics.jsp">章节题目管理</li>
+                    <li class="list-group-item" data-src = "pages/yoyo-admin/englishClass.jsp">英语课程管理</li>
 				</ul>
 			</div>
 			<div class="col-lg-10 col-md-10 col-xs-10">
