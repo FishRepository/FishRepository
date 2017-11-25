@@ -780,4 +780,43 @@
 		from topic_section_table
 		where ID = #{TOPIC_ID, jdbcType=DECIMAL} 
 	</select>
+
+    <!-- 英语课程mapper数据库操作 -->
+    <select id="getEnglishClass" parameterType="Map" resultMap="java.util.HashMap">
+        select
+          ID as id,
+          CLASS_NAME as className,
+          IS_PAY as isPay,
+          MEMO_1 as memo1,
+          MEMO_2 as memo2,
+          MEMO_3 as memo3,
+          TEXT_4 as text4,
+          TEXT_5 as text5
+        from english_class where 1=1
+            <if test="id != null and id !=''">
+                and ID = #{id}
+            </if>
+            <if test="className != null and className !=''">
+                and CLASS_NAME like concat('%', #{className}, '%')
+            </if>
+            <if test="isPay != null and isPay !=''">
+                and IS_PAY = #{isPay}
+            </if>
+        order by ID desc
+    </select>
+
+    <insert id="addEnglishClass" parameterType="Map">
+        insert into english_class
+        (CLASS_NAME,IS_PAY,MEMO_1,MEMO_2,MEMO_3,TEXT_4,TEXT_5)
+        values
+        (#{className},#{isPay},#{memo1},#{memo2},#{memo3},#{text4},#{text5})
+    </insert>
+
+    <delete id="deleteEnglishClass" parameterType="Map">
+        delete FROM english_class WHERE ID = #{id}
+    </delete>
+
+    <update id="updateEnglishClass" parameterType="Map">
+        update english_class set CLASS_NAME = #{className},IS_PAY=#{isPay} where ID = #{id}
+    </update>
 </mapper>

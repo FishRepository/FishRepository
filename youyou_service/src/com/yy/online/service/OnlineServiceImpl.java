@@ -529,4 +529,36 @@ public class OnlineServiceImpl implements OnlineService{
 		resultMap.put(RESULT, SUCCESS);
 		return resultMap;
 	}
+
+    @Override
+    public Map<String, Object> getEnglishClass(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("LIST", this.onlineDao.getEnglishClass(parm));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> addEnglishClass(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.addEnglishClass(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> deleteEnglishClass(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.deleteEnglishClass(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> updateEnglishClass(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.updateEnglishClass(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
 }

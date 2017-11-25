@@ -714,4 +714,52 @@ public class OnlineController {
 		resultMap.put("data", JSONArray.fromObject("["+YoyoUtil.getConvert(codeString)+"]"));
 		return resultMap;
 	}
+
+    /*getEnglishClass 获取英语课程*/
+    @RequestMapping(params="method=getEnglishClass", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getEnglishClass (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("className", request.getParameter("className"));
+        parmMap.put("isPay", request.getParameter("isPay"));
+        resultMap = onlineService.getEnglishClass(parmMap);
+        return resultMap;
+    }
+
+    /*addEnglishClass 添加英语课程*/
+    @RequestMapping(params="method=addEnglishClass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addEnglishClass (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("className", request.getParameter("className"));
+        parmMap.put("isPay", request.getParameter("isPay"));
+        resultMap = onlineService.addEnglishClass(parmMap);
+        return resultMap;
+    }
+
+    /*updEnglishClass 修改英语课程*/
+    @RequestMapping(params="method=updEnglishClass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updEnglishClass (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("id", request.getParameter("id"));
+        parmMap.put("className", request.getParameter("className"));
+        parmMap.put("isPay", request.getParameter("isPay"));
+        resultMap = onlineService.updateEnglishClass(parmMap);
+        return resultMap;
+    }
+
+    /*delEnglishClass 删除英语课程*/
+    @RequestMapping(params="method=delEnglishClass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> delEnglishClass (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("id", request.getParameter("id"));
+        resultMap = onlineService.deleteEnglishClass(parmMap);
+        return resultMap;
+    }
 }

@@ -399,4 +399,31 @@ public interface OnlineService extends CoreService{
 	 */
 	public Map<String, Object> getSectionExplain(Map<String, Object> parm);
 
+    /**
+     * 获取英语课程列表
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> getEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 添加英语课程
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> addEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 删除英语课程
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> deleteEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 更新英语课程
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> updateEnglishClass(Map<String, Object> parm);
 }

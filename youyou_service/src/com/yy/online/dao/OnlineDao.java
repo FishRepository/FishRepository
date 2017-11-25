@@ -166,4 +166,32 @@ public interface OnlineDao {
 	
 	/*getSectionExplain  获取章节试题解析*/
 	public Map<String, Object> getSectionExplain(Map<String, Object> parm);
+
+    /**
+     * 获取英语课程列表
+     * @param parm
+     * @return
+     */
+    public List<Map<String,Object>> getEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 添加英语课程
+     * @param parm
+     * @return
+     */
+    public int addEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 删除英语课程
+     * @param param
+     * @return
+     */
+    public int deleteEnglishClass(Map<String, Object> param);
+
+    /**
+     * 更新英语课程
+     * @param param
+     * @return
+     */
+    public int updateEnglishClass(Map<String, Object> param);
 }
