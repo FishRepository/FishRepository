@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yy.online.dao.OnlineDao">
-	<!-- 用户注册 -->
-	<insert id="regUser" parameterType="Map">
-		insert into users_table(WID, NAME, SEX, COIN)
-		select 
-			#{WID, jdbcType=VARCHAR}, 
-			#{NAME, jdbcType=VARCHAR}, 
-			#{SEX, jdbcType=VARCHAR}, 
-			#{COIN, jdbcType=VARCHAR}
-		from dual
-		where not exists(
-			select #{WID, jdbcType=VARCHAR} from users_table
-			where WID = #{WID, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!-- 添加岗位 -->
-	<insert id="addPost" parameterType="Map">
-		insert into posts_table(NAME)
-		select #{NAME, jdbcType=VARCHAR}
-		from dual
-		where not exists(
-			select #{NAME, jdbcType=VARCHAR} from posts_table
-			where NAME = #{NAME, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!-- 获取所有岗位 -->
-	<select id="getPost" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
+    <!-- 用户注册 -->
+    <insert id="regUser" parameterType="Map">
+        insert into users_table(WID, NAME, SEX, COIN)
+        select
+        #{WID, jdbcType=VARCHAR},
+        #{NAME, jdbcType=VARCHAR},
+        #{SEX, jdbcType=VARCHAR},
+        #{COIN, jdbcType=VARCHAR}
+        from dual
+        where not exists(
+        select #{WID, jdbcType=VARCHAR} from users_table
+        where WID = #{WID, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 添加岗位 -->
+    <insert id="addPost" parameterType="Map">
+        insert into posts_table(NAME)
+        select #{NAME, jdbcType=VARCHAR}
+        from dual
+        where not exists(
+        select #{NAME, jdbcType=VARCHAR} from posts_table
+        where NAME = #{NAME, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获取所有岗位 -->
+    <select id="getPost" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
 		select ID as postId, NAME as postName from posts_table
 		]]>
-	</select>
-	
-	<!-- 添加证书 -->
-	<insert id="addCert" parameterType="Map">
-		insert into certificates_table(NAME, CLASS, SHARE_TYPE, TOTAL_SCORE, PASS_SCORE, EXAM_TIME, TOPIC_TYPE_A, TOPIC_TYPE_A_SCORE, TOPIC_TYPE_B, TOPIC_TYPE_B_SCORE, TOPIC_TYPE_C, TOPIC_TYPE_C_SCORE)
-		select 
-			#{NAME, jdbcType=VARCHAR}, 
-			#{CLASS, jdbcType=VARCHAR}, 
-			#{SHARE_TYPE, jdbcType=VARCHAR}, 
-			#{TOTAL_SCORE, jdbcType=VARCHAR}, 
-			#{PASS_SCORE, jdbcType=VARCHAR}, 
-			#{EXAM_TIME, jdbcType=VARCHAR}, 
-			#{TOPIC_TYPE_A, jdbcType=VARCHAR}, 
-			#{TOPIC_TYPE_A_SCORE, jdbcType=VARCHAR}, 
-			#{TOPIC_TYPE_B, jdbcType=VARCHAR}, 
-			#{TOPIC_TYPE_B_SCORE, jdbcType=VARCHAR}, 
-			#{TOPIC_TYPE_C, jdbcType=VARCHAR}, 
-			#{TOPIC_TYPE_C_SCORE, jdbcType=VARCHAR}
-		from dual
-		where not exists(
-			select 
-				#{NAME, jdbcType=VARCHAR}, 
-				#{CLASS, jdbcType=VARCHAR} 
-			from certificates_table
-			where 
-				NAME = #{NAME, jdbcType=VARCHAR} 
-				and CLASS = #{CLASS, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!-- 获取所有证书 -->
-	<select id="getCert" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-			ID as certId, 
-			CLASS as certClass, 
+    </select>
+
+    <!-- 添加证书 -->
+    <insert id="addCert" parameterType="Map">
+        insert into certificates_table(NAME, CLASS, SHARE_TYPE, TOTAL_SCORE, PASS_SCORE, EXAM_TIME, TOPIC_TYPE_A, TOPIC_TYPE_A_SCORE, TOPIC_TYPE_B, TOPIC_TYPE_B_SCORE, TOPIC_TYPE_C, TOPIC_TYPE_C_SCORE)
+        select
+        #{NAME, jdbcType=VARCHAR},
+        #{CLASS, jdbcType=VARCHAR},
+        #{SHARE_TYPE, jdbcType=VARCHAR},
+        #{TOTAL_SCORE, jdbcType=VARCHAR},
+        #{PASS_SCORE, jdbcType=VARCHAR},
+        #{EXAM_TIME, jdbcType=VARCHAR},
+        #{TOPIC_TYPE_A, jdbcType=VARCHAR},
+        #{TOPIC_TYPE_A_SCORE, jdbcType=VARCHAR},
+        #{TOPIC_TYPE_B, jdbcType=VARCHAR},
+        #{TOPIC_TYPE_B_SCORE, jdbcType=VARCHAR},
+        #{TOPIC_TYPE_C, jdbcType=VARCHAR},
+        #{TOPIC_TYPE_C_SCORE, jdbcType=VARCHAR}
+        from dual
+        where not exists(
+        select
+        #{NAME, jdbcType=VARCHAR},
+        #{CLASS, jdbcType=VARCHAR}
+        from certificates_table
+        where
+        NAME = #{NAME, jdbcType=VARCHAR}
+        and CLASS = #{CLASS, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获取所有证书 -->
+    <select id="getCert" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+			ID as certId,
+			CLASS as certClass,
 			NAME as certName,
 			SHARE_TYPE as certType,
 			TOTAL_SCORE as certTotalScore,
@@ -81,14 +81,14 @@
 			TOPIC_TYPE_C_SCORE as certTypeCScore
 		from certificates_table where CLASS = #{CLASS, jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 获取所有证书 by post -->
-	<select id="getCertByPost" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-			ID as certId, 
-			CLASS as certClass, 
+    </select>
+
+    <!-- 获取所有证书 by post -->
+    <select id="getCertByPost" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+			ID as certId,
+			CLASS as certClass,
 			NAME as certName,
 			SHARE_TYPE as certType,
 			TOTAL_SCORE as certTotalScore,
@@ -102,69 +102,69 @@
 			TOPIC_TYPE_C_SCORE as certTypeCScore
 		from certificates_table where CLASS = #{CLASS, jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 添加试题 -->
-	<insert id="addXls" parameterType="Map">
-		insert into topic_free_table(TYPE, POST_TYPE, CERT_TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, SHARE_TYPE, CERT_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
-		select #{TYPE, jdbcType=VARCHAR},
-			#{POST_TYPE, jdbcType=VARCHAR},
-			#{CERT_TYPE, jdbcType=VARCHAR},
-			#{ARTICLE, jdbcType=VARCHAR},
-			#{TITLE, jdbcType=VARCHAR},
-			#{IMAGE, jdbcType=VARCHAR},
-			#{OPTION_A, jdbcType=VARCHAR},
-			#{OPTION_B, jdbcType=VARCHAR},
-			#{OPTION_C, jdbcType=VARCHAR},
-			#{OPTION_D, jdbcType=VARCHAR},
-			#{RIGHT_OPTION, jdbcType=VARCHAR},
-			#{EXPLAIN_TEXT, jdbcType=VARCHAR},
-			#{CERT_CLASS, jdbcType=VARCHAR},
-			#{CERT_TEXT, jdbcType=VARCHAR},
-			0,0,0
-		from dual
-		where not exists(
-			select 
-				#{POST_TYPE, jdbcType=VARCHAR}, 
-				#{CERT_TYPE, jdbcType=VARCHAR}, 
-				#{TITLE, jdbcType=VARCHAR}, 
-				#{TYPE, jdbcType=VARCHAR} 
-			from topic_free_table
-			where TITLE = #{TITLE, jdbcType=VARCHAR} 
-			and TYPE = #{TYPE, jdbcType=VARCHAR} 
-			and POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
-			and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
-			
-		)
-	</insert>
-	
-	<!-- 搜索试题 -->
-	<select id="searchTopic" parameterType="Map" resultType="java.util.HashMap">
-		select 
-			ID as topicId, 
-			TITLE as topicTitle,
-			IMAGE as topicImage,
-			SHARE_TYPE as topicShareType
-		from topic_free_table 
-		where 
-			POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
-			and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
-			and TITLE like concat('%',#{TITLE, jdbcType=VARCHAR},'%')
-	</select>
-	
-	<!-- 试题添加图片 -->
-	<update id="updateTopicImage" parameterType="Map">
-		<![CDATA[
+    </select>
+
+    <!-- 添加试题 -->
+    <insert id="addXls" parameterType="Map">
+        insert into topic_free_table(TYPE, POST_TYPE, CERT_TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, SHARE_TYPE, CERT_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
+        select #{TYPE, jdbcType=VARCHAR},
+        #{POST_TYPE, jdbcType=VARCHAR},
+        #{CERT_TYPE, jdbcType=VARCHAR},
+        #{ARTICLE, jdbcType=VARCHAR},
+        #{TITLE, jdbcType=VARCHAR},
+        #{IMAGE, jdbcType=VARCHAR},
+        #{OPTION_A, jdbcType=VARCHAR},
+        #{OPTION_B, jdbcType=VARCHAR},
+        #{OPTION_C, jdbcType=VARCHAR},
+        #{OPTION_D, jdbcType=VARCHAR},
+        #{RIGHT_OPTION, jdbcType=VARCHAR},
+        #{EXPLAIN_TEXT, jdbcType=VARCHAR},
+        #{CERT_CLASS, jdbcType=VARCHAR},
+        #{CERT_TEXT, jdbcType=VARCHAR},
+        0,0,0
+        from dual
+        where not exists(
+        select
+        #{POST_TYPE, jdbcType=VARCHAR},
+        #{CERT_TYPE, jdbcType=VARCHAR},
+        #{TITLE, jdbcType=VARCHAR},
+        #{TYPE, jdbcType=VARCHAR}
+        from topic_free_table
+        where TITLE = #{TITLE, jdbcType=VARCHAR}
+        and TYPE = #{TYPE, jdbcType=VARCHAR}
+        and POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
+        and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
+
+        )
+    </insert>
+
+    <!-- 搜索试题 -->
+    <select id="searchTopic" parameterType="Map" resultType="java.util.HashMap">
+        select
+        ID as topicId,
+        TITLE as topicTitle,
+        IMAGE as topicImage,
+        SHARE_TYPE as topicShareType
+        from topic_free_table
+        where
+        POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
+        and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
+        and TITLE like concat('%',#{TITLE, jdbcType=VARCHAR},'%')
+    </select>
+
+    <!-- 试题添加图片 -->
+    <update id="updateTopicImage" parameterType="Map">
+        <![CDATA[
 		update topic_free_table set IMAGE = #{IMAGE, jdbcType=VARCHAR} where ID = #{ID, jdbcType=DECIMAL}
 		]]>
-	</update>
-	
-	
-	
-	
-	<!-- 添加付费试题 -->
-	<insert id="addPayXls" parameterType="Map">
-		<![CDATA[insert into topic_pay_table(TYPE, POST_TYPE, CERT_TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, SHARE_TYPE, CERT_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
+    </update>
+
+
+
+
+    <!-- 添加付费试题 -->
+    <insert id="addPayXls" parameterType="Map">
+        <![CDATA[insert into topic_pay_table(TYPE, POST_TYPE, CERT_TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, SHARE_TYPE, CERT_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
 		select #{TYPE, jdbcType=VARCHAR},
 			#{POST_TYPE, jdbcType=VARCHAR},
 			#{CERT_TYPE, jdbcType=VARCHAR},
@@ -181,48 +181,48 @@
 			#{CERT_TEXT, jdbcType=VARCHAR},
 			0,0,1
 		from dual]]>
-		where not exists(
-			select 
-				#{TYPE, jdbcType=VARCHAR},
-				#{POST_TYPE, jdbcType=VARCHAR}, 
-				#{CERT_TYPE, jdbcType=VARCHAR},
-				#{TITLE, jdbcType=VARCHAR}
-			from topic_pay_table
-			where TITLE = #{TITLE, jdbcType=VARCHAR} 
-			and TYPE = #{TYPE, jdbcType=VARCHAR} 
-			<if test="CERT_CLASS != 1">
-				<![CDATA[and POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR} 
+        where not exists(
+        select
+        #{TYPE, jdbcType=VARCHAR},
+        #{POST_TYPE, jdbcType=VARCHAR},
+        #{CERT_TYPE, jdbcType=VARCHAR},
+        #{TITLE, jdbcType=VARCHAR}
+        from topic_pay_table
+        where TITLE = #{TITLE, jdbcType=VARCHAR}
+        and TYPE = #{TYPE, jdbcType=VARCHAR}
+        <if test="CERT_CLASS != 1">
+            <![CDATA[and POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
 				and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}]]>
-			</if>
-		)
-	</insert>
-	
-	<!-- 搜索付费试题 -->
-	<select id="searchPayTopic" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-			ID as topicId, 
+        </if>
+        )
+    </insert>
+
+    <!-- 搜索付费试题 -->
+    <select id="searchPayTopic" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+			ID as topicId,
 			TITLE as topicTitle,
 			IMAGE as topicImage
-		from topic_pay_table 
+		from topic_pay_table
 		where TITLE like concat('%',#{TITLE, jdbcType=VARCHAR},'%')
 		]]>
-	</select>
-	
-	<!-- 付费试题添加图片 -->
-	<update id="updatePayTopicImage" parameterType="Map">
-		<![CDATA[
+    </select>
+
+    <!-- 付费试题添加图片 -->
+    <update id="updatePayTopicImage" parameterType="Map">
+        <![CDATA[
 		update topic_pay_table set IMAGE = #{IMAGE, jdbcType=VARCHAR} where ID = #{ID, jdbcType=DECIMAL}
 		]]>
-	</update>
-	
-	<!-- 通过类型获取题目配置 -->
-	<select id="getCertConf" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-			select 
-				ID as cert_id, 
+    </update>
+
+    <!-- 通过类型获取题目配置 -->
+    <select id="getCertConf" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+			select
+				ID as cert_id,
 				CLASS as cert_class,
-				NAME as cert_name, 
+				NAME as cert_name,
 				SHARE_TYPE as cert_type,
 				TOTAL_SCORE as total_score,
 				PASS_SCORE as poss_score,
@@ -233,17 +233,17 @@
 				TOPIC_TYPE_B_SCORE as topic_b_score,
 				TOPIC_TYPE_C as topic_c_numb,
 				TOPIC_TYPE_C_SCORE as topic_c_score
-			from certificates_table where 
-				ID=#{CERT_TYPE,jdbcType=DECIMAL} 
+			from certificates_table where
+				ID=#{CERT_TYPE,jdbcType=DECIMAL}
 				and CLASS=#{POST_TYPE,jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 获取免费试题 -->
-	<select id="getTopicByRang" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-		ID as topicId, 
+    </select>
+
+    <!-- 获取免费试题 -->
+    <select id="getTopicByRang" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+		ID as topicId,
 		ARTICLE as topicArticle,
 		TITLE as topicTitle,
 		IMAGE as topicImage,
@@ -257,22 +257,22 @@
 		SHOW_RIGHT as showRight,
 		SHOW_EXPLAIN as showExplain
 		from topic_free_table where ]]>
-		<if test="SHARE_TYPE == 1">
-			<![CDATA[ CERT_TEXT = #{CERT_TEXT, jdbcType=VARCHAR} and ]]>
-		</if>
-		<if test="SHARE_TYPE != 1">
-			<![CDATA[ POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR} and ]]>
-			<![CDATA[CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR} and ]]>
-		</if>
-		<![CDATA[TYPE = #{TYPE, jdbcType=VARCHAR}]]>
-		order by rand() limit #{NUMBER, jdbcType=INTEGER}
-	</select>
-	
-	<!-- 获取付费试题 -->
-	<select id="getPayTopicByRang" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-		ID as topicId, 
+        <if test="SHARE_TYPE == 1">
+            <![CDATA[ CERT_TEXT = #{CERT_TEXT, jdbcType=VARCHAR} and ]]>
+        </if>
+        <if test="SHARE_TYPE != 1">
+            <![CDATA[ POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR} and ]]>
+            <![CDATA[CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR} and ]]>
+        </if>
+        <![CDATA[TYPE = #{TYPE, jdbcType=VARCHAR}]]>
+        order by rand() limit #{NUMBER, jdbcType=INTEGER}
+    </select>
+
+    <!-- 获取付费试题 -->
+    <select id="getPayTopicByRang" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+		ID as topicId,
 		ARTICLE as topicArticle,
 		TITLE as topicTitle,
 		IMAGE as topicImage,
@@ -287,164 +287,164 @@
 		EXPLAIN_TEXT as explainText,
 		SHOW_EXPLAIN as showExplain
 		from topic_pay_table where ]]>
-		<![CDATA[EXAM_CLASS = #{EXAM_ID, jdbcType=VARCHAR}]]>
-	</select>
-	
-	<!-- 获取用户信息 -->
-	<select id="getUserInfo" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-			ID as user_id, 
+        <![CDATA[EXAM_CLASS = #{EXAM_ID, jdbcType=VARCHAR}]]>
+    </select>
+
+    <!-- 获取用户信息 -->
+    <select id="getUserInfo" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+			ID as user_id,
 			WID as openid,
 			NAME as user_name,
 			SEX as user_sex,
 			PHONE as user_phone,
 			EMAIL as user_email,
 			COIN as user_coin
-		from users_table 
-		where 
-			WID=#{OPENID,jdbcType=VARCHAR} 
+		from users_table
+		where
+			WID=#{OPENID,jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 修改用户信息 -->
-	<update id="updateUserInfo" parameterType="Map">
-		<![CDATA[
-		update users_table 
-		set 
+    </select>
+
+    <!-- 修改用户信息 -->
+    <update id="updateUserInfo" parameterType="Map">
+        <![CDATA[
+		update users_table
+		set
 			NAME = #{NAME, jdbcType=VARCHAR},
 			SEX = #{SEX, jdbcType=VARCHAR},
 			PHONE = #{PHONE, jdbcType=VARCHAR},
 			EMAIL = #{EMAIL, jdbcType=VARCHAR}
-		where 
+		where
 			WID=#{OPENID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!-- 充值 -->
-	<insert id="pay" parameterType="Map">
-		insert into order_table(WID, ORDER_NUMBER, ORDER_STATE, ORDER_TYPE, ORDER_MONEY, USER_ORDER_TIME)
-		values(
-			#{OPENID, jdbcType=VARCHAR},
-			#{ORDER_NUMBER, jdbcType=VARCHAR},
-			#{ORDER_STATE, jdbcType=VARCHAR},
-			#{ORDER_TYPE, jdbcType=VARCHAR},
-			#{ORDER_MONEY, jdbcType=VARCHAR},
-			#{USER_ORDER_TIME, jdbcType=VARCHAR}
-			)
-	</insert>
-	
-	<!-- 获取用户解析币 -->
-	<select id="getUserCoin" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
+    </update>
+
+    <!-- 充值 -->
+    <insert id="pay" parameterType="Map">
+        insert into order_table(WID, ORDER_NUMBER, ORDER_STATE, ORDER_TYPE, ORDER_MONEY, USER_ORDER_TIME)
+        values(
+        #{OPENID, jdbcType=VARCHAR},
+        #{ORDER_NUMBER, jdbcType=VARCHAR},
+        #{ORDER_STATE, jdbcType=VARCHAR},
+        #{ORDER_TYPE, jdbcType=VARCHAR},
+        #{ORDER_MONEY, jdbcType=VARCHAR},
+        #{USER_ORDER_TIME, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获取用户解析币 -->
+    <select id="getUserCoin" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
 			COIN as user_coin
-		from users_table 
-		where 
-			WID=#{OPENID,jdbcType=VARCHAR} 
+		from users_table
+		where
+			WID=#{OPENID,jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 用户充值解析币 -->
-	<update id="rechargeCoin" parameterType="Map">
-		<![CDATA[
-		update users_table 
-		set 
+    </select>
+
+    <!-- 用户充值解析币 -->
+    <update id="rechargeCoin" parameterType="Map">
+        <![CDATA[
+		update users_table
+		set
 			COIN = COIN+#{COIN, jdbcType=VARCHAR}
-		where 
+		where
 			WID=#{OPENID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!-- 用户花费解析币 -->
-	<update id="subCoin" parameterType="Map">
-		<![CDATA[
-		update users_table 
-		set 
+    </update>
+
+    <!-- 用户花费解析币 -->
+    <update id="subCoin" parameterType="Map">
+        <![CDATA[
+		update users_table
+		set
 			COIN = COIN - #{COIN, jdbcType=VARCHAR}
-		where 
+		where
 			WID=#{OPENID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!-- 获取试题解析 -->
-	<select id="getTopicExplain" parameterType="Map" resultType="java.util.HashMap">
-		select 
-			EXPLAIN_TEXT as topicExplain
-		from  
-		<if test="PAY_TYPE==0">
-			<![CDATA[
+    </update>
+
+    <!-- 获取试题解析 -->
+    <select id="getTopicExplain" parameterType="Map" resultType="java.util.HashMap">
+        select
+        EXPLAIN_TEXT as topicExplain
+        from
+        <if test="PAY_TYPE==0">
+            <![CDATA[
 			topic_free_table
 			]]>
-		</if>
-		<if test="PAY_TYPE==1">
-			<![CDATA[
+        </if>
+        <if test="PAY_TYPE==1">
+            <![CDATA[
 			topic_pay_table
 			]]>
-		</if>
-		where ID = #{TOPIC_ID, jdbcType=DECIMAL} 
-	</select>
-	
-	<!-- 获取订单列表 -->
-	<select id="getOrderList" parameterType="Map" resultType="java.util.HashMap">
-		select 
-			ID as order_id,
-			WID as openId,
-			DATE_FORMAT(ORDER_TIME, '%Y-%m-%d %k:%i') as order_time,
-			USER_ORDER_TIME as user_order_time,
-			ORDER_NUMBER as order_number,
-			ORDER_STATE as order_state,
-			ORDER_TYPE as order_type,
-			ORDER_MONEY as order_money
-		from  order_table
-		where WID = #{WID, jdbcType=VARCHAR} 
-	</select>
-	
-	<!-- 删除试题 -->
-	<delete id="delTopic" parameterType="Map">
-		delete from 
-		<if test="PAY_TYPE==0">
-			<![CDATA[
+        </if>
+        where ID = #{TOPIC_ID, jdbcType=DECIMAL}
+    </select>
+
+    <!-- 获取订单列表 -->
+    <select id="getOrderList" parameterType="Map" resultType="java.util.HashMap">
+        select
+        ID as order_id,
+        WID as openId,
+        DATE_FORMAT(ORDER_TIME, '%Y-%m-%d %k:%i') as order_time,
+        USER_ORDER_TIME as user_order_time,
+        ORDER_NUMBER as order_number,
+        ORDER_STATE as order_state,
+        ORDER_TYPE as order_type,
+        ORDER_MONEY as order_money
+        from  order_table
+        where WID = #{WID, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 删除试题 -->
+    <delete id="delTopic" parameterType="Map">
+        delete from
+        <if test="PAY_TYPE==0">
+            <![CDATA[
 			topic_free_table
 			]]>
-		</if>
-		<if test="PAY_TYPE==1">
-			<![CDATA[
+        </if>
+        <if test="PAY_TYPE==1">
+            <![CDATA[
 			topic_pay_table
 			]]>
-		</if>
-		where id = 
-		<![CDATA[
+        </if>
+        where id =
+        <![CDATA[
 			#{ID, jdbcType=DECIMAL}
 		]]>
-	</delete>
+    </delete>
 
 
-	<!-- 管理员登录 -->
-	<select id="adminLogin" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
+    <!-- 管理员登录 -->
+    <select id="adminLogin" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
 		select id as user_id, admin_name from online_admin where admin_name=#{adminName,jdbcType=VARCHAR} and admin_password=#{adminPassword,jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	
-	<!-- 获取用户列表 -->
-	<select id="getUserByPage" resultType="java.util.HashMap">
-		select 
-		NAME as user_name,
-		SEX as user_sex,
-		PHONE as user_phone,
-		EMAIL as user_email
-		from users_table limit 
-		<![CDATA[
+    </select>
+
+
+    <!-- 获取用户列表 -->
+    <select id="getUserByPage" resultType="java.util.HashMap">
+        select
+        NAME as user_name,
+        SEX as user_sex,
+        PHONE as user_phone,
+        EMAIL as user_email
+        from users_table limit
+        <![CDATA[
 			#{begin,jdbcType=VARCHAR},
 			#{end,jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 添加试卷 -->
-	<insert id="addExamClass" parameterType="Map">
-		<![CDATA[insert into pay_table(NAME, PAY, POST_TYPE, CERT_TYPE, TOTAL_SCORE, PASS_SCORE, TOPIC_TYPE_A, TOPIC_TYPE_B, TOPIC_TYPE_C, TOPIC_TYPE_A_SCORE, TOPIC_TYPE_B_SCORE, TOPIC_TYPE_C_SCORE)
+    </select>
+
+    <!-- 添加试卷 -->
+    <insert id="addExamClass" parameterType="Map">
+        <![CDATA[insert into pay_table(NAME, PAY, POST_TYPE, CERT_TYPE, TOTAL_SCORE, PASS_SCORE, TOPIC_TYPE_A, TOPIC_TYPE_B, TOPIC_TYPE_C, TOPIC_TYPE_A_SCORE, TOPIC_TYPE_B_SCORE, TOPIC_TYPE_C_SCORE)
 		select #{examName, jdbcType=VARCHAR},
 			#{examPay, jdbcType=VARCHAR},
 			#{postType, jdbcType=VARCHAR},
@@ -458,49 +458,49 @@
 			#{certTypeScore2, jdbcType=VARCHAR},
 			#{certTypeScore3, jdbcType=VARCHAR}
 		from dual]]>
-		where not exists(
-			select 
-				#{postType, jdbcType=VARCHAR},
-				#{certType, jdbcType=VARCHAR}, 
-				#{examName, jdbcType=VARCHAR}
-			from pay_table
-			where NAME = #{examName, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!-- 获取试卷列表 -->
-	<select id="getExamList" resultType="java.util.HashMap">
-		select 
-		ID as examClass,
-		NAME as exam_name,
-		TOPIC_TYPE_A as topicANumb,
-		TOPIC_TYPE_B as topicBNumb,
-		TOPIC_TYPE_C as topicCNumb,
-		TOTAL_SCORE as totalScore,
-		PASS_SCORE as passScore,
-		PAY as pay
-		from pay_table where
-		<![CDATA[
+        where not exists(
+        select
+        #{postType, jdbcType=VARCHAR},
+        #{certType, jdbcType=VARCHAR},
+        #{examName, jdbcType=VARCHAR}
+        from pay_table
+        where NAME = #{examName, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获取试卷列表 -->
+    <select id="getExamList" resultType="java.util.HashMap">
+        select
+        ID as examClass,
+        NAME as exam_name,
+        TOPIC_TYPE_A as topicANumb,
+        TOPIC_TYPE_B as topicBNumb,
+        TOPIC_TYPE_C as topicCNumb,
+        TOTAL_SCORE as totalScore,
+        PASS_SCORE as passScore,
+        PAY as pay
+        from pay_table where
+        <![CDATA[
 			POST_TYPE = #{postType,jdbcType=VARCHAR} and CERT_TYPE = #{certType,jdbcType=VARCHAR}
 		]]>
-	</select>
-	
-	<!-- 获取所有试卷 -->
-	<select id="getAllExam" resultType="java.util.HashMap">
-		select 
-		ID as examClass,
-		NAME as exam_name,
-		TOPIC_TYPE_A as topicANumb,
-		TOPIC_TYPE_B as topicBNumb,
-		TOPIC_TYPE_C as topicCNumb,
-		TOTAL_SCORE as totalScore,
-		PASS_SCORE as passScore
-		from pay_table
-	</select>
-	
-	<!-- 添加试卷试题 -->
-	<insert id="addExamXls" parameterType="Map">
-		<![CDATA[insert into topic_pay_table(EXAM_CLASS, TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
+    </select>
+
+    <!-- 获取所有试卷 -->
+    <select id="getAllExam" resultType="java.util.HashMap">
+        select
+        ID as examClass,
+        NAME as exam_name,
+        TOPIC_TYPE_A as topicANumb,
+        TOPIC_TYPE_B as topicBNumb,
+        TOPIC_TYPE_C as topicCNumb,
+        TOTAL_SCORE as totalScore,
+        PASS_SCORE as passScore
+        from pay_table
+    </select>
+
+    <!-- 添加试卷试题 -->
+    <insert id="addExamXls" parameterType="Map">
+        <![CDATA[insert into topic_pay_table(EXAM_CLASS, TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
 		select #{EXAM_CLASS, jdbcType=VARCHAR},
 			#{TYPE, jdbcType=VARCHAR},
 			#{ARTICLE, jdbcType=VARCHAR},
@@ -514,248 +514,248 @@
 			#{EXPLAIN_TEXT, jdbcType=VARCHAR},
 			0,0,0
 		from dual]]>
-		where not exists(
-			select #{TITLE, jdbcType=VARCHAR}
-			from topic_pay_table
-			where TITLE = #{TITLE, jdbcType=VARCHAR} 
-			and TYPE = #{EXAM_CLASS, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!-- 获取一类套卷 -->
-	<select id="getExamByClass" resultType="java.util.HashMap">
-		select 
-		ID as examClass,
-		NAME as exam_name,
-		TOPIC_TYPE_A as topicANumb,
-		TOPIC_TYPE_B as topicBNumb,
-		TOPIC_TYPE_C as topicCNumb,
-		TOTAL_SCORE as totalScore,
-		PASS_SCORE as passScore,
-		PAY as pay
-		from pay_table where
-		TYPE = #{EXAM_CLASS, jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 用户购买试题 -->
-	<insert id="insertUserExam" parameterType="Map">
-		insert into user_exams(WID, EXAM_ID, TIME_END)
-		values(
-			#{OPENID, jdbcType=VARCHAR},
-			#{EXAM_ID, jdbcType=VARCHAR},
-			#{TIME, jdbcType=TIMESTAMP}
-			)
-	</insert>
-	
-	<!-- 获取用户所有套卷 -->
-	<select id="getUserExamList" resultType="java.util.HashMap">
-		select 
-		EXAM_ID as examId,
-		DATE_FORMAT(TIME_END, '%Y-%m-%d %k:%i') as timeEnd
-		from user_exams where
-		WID = #{openid, jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 通过试卷id获取试卷详情 -->
-	<select id="getExamInfo" resultType="java.util.HashMap">
-		select 
-		ID as examClass,
-		TOPIC_TYPE_A as topic_a_numb,
-		TOPIC_TYPE_B as topic_b_numb,
-		TOPIC_TYPE_C as topic_c_numb,
-		TOPIC_TYPE_A_SCORE as topic_a_score,
-		TOPIC_TYPE_B_SCORE as topic_b_score,
-		TOPIC_TYPE_C_SCORE as topic_c_score,
-		TOTAL_SCORE as total_score,
-		POST_TYPE as postType,
-		CERT_TYPE as certType,
-		NAME as cert_name,
-		PASS_SCORE as poss_score
-		from pay_table where
-		ID = #{EXAM_ID, jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 添加首页广告 -->
-	<insert id="addAdv" parameterType="Map">
-		insert into adv_table(NAME, IMAGE, ADV_SHOW)
-		select #{NAME, jdbcType=VARCHAR},
-		#{IMAGE, jdbcType=VARCHAR},
-		#{ADV_SHOW, jdbcType=VARCHAR}
-		from dual
-		where not exists(
-			select #{NAME, jdbcType=VARCHAR} from adv_table
-			where NAME = #{NAME, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!-- 获取所有广告位 -->
-	<select id="getAllAdv" parameterType="Map" resultType="java.util.HashMap">
-		select * from adv_table
-	</select>
-	
-	<!-- 删除广告位 -->
-	<delete id="delAdv" parameterType="Map">
-		delete from adv_table where ID = #{advId, jdbcTyle = DECIMAL}
-	</delete>
-	
-	<!-- 获取显示广告位 -->
-	<select id="getShowAdv" parameterType="Map" resultType="java.util.HashMap">
-		select * from adv_table where SHOW = #{advShow, jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 更新广告 -->
-	<update id="updataAdv" parameterType="Map">
-		<![CDATA[
-		update adv_table 
-		set 
+        where not exists(
+        select #{TITLE, jdbcType=VARCHAR}
+        from topic_pay_table
+        where TITLE = #{TITLE, jdbcType=VARCHAR}
+        and TYPE = #{EXAM_CLASS, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获取一类套卷 -->
+    <select id="getExamByClass" resultType="java.util.HashMap">
+        select
+        ID as examClass,
+        NAME as exam_name,
+        TOPIC_TYPE_A as topicANumb,
+        TOPIC_TYPE_B as topicBNumb,
+        TOPIC_TYPE_C as topicCNumb,
+        TOTAL_SCORE as totalScore,
+        PASS_SCORE as passScore,
+        PAY as pay
+        from pay_table where
+        TYPE = #{EXAM_CLASS, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 用户购买试题 -->
+    <insert id="insertUserExam" parameterType="Map">
+        insert into user_exams(WID, EXAM_ID, TIME_END)
+        values(
+        #{OPENID, jdbcType=VARCHAR},
+        #{EXAM_ID, jdbcType=VARCHAR},
+        #{TIME, jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <!-- 获取用户所有套卷 -->
+    <select id="getUserExamList" resultType="java.util.HashMap">
+        select
+        EXAM_ID as examId,
+        DATE_FORMAT(TIME_END, '%Y-%m-%d %k:%i') as timeEnd
+        from user_exams where
+        WID = #{openid, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 通过试卷id获取试卷详情 -->
+    <select id="getExamInfo" resultType="java.util.HashMap">
+        select
+        ID as examClass,
+        TOPIC_TYPE_A as topic_a_numb,
+        TOPIC_TYPE_B as topic_b_numb,
+        TOPIC_TYPE_C as topic_c_numb,
+        TOPIC_TYPE_A_SCORE as topic_a_score,
+        TOPIC_TYPE_B_SCORE as topic_b_score,
+        TOPIC_TYPE_C_SCORE as topic_c_score,
+        TOTAL_SCORE as total_score,
+        POST_TYPE as postType,
+        CERT_TYPE as certType,
+        NAME as cert_name,
+        PASS_SCORE as poss_score
+        from pay_table where
+        ID = #{EXAM_ID, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 添加首页广告 -->
+    <insert id="addAdv" parameterType="Map">
+        insert into adv_table(NAME, IMAGE, ADV_SHOW)
+        select #{NAME, jdbcType=VARCHAR},
+        #{IMAGE, jdbcType=VARCHAR},
+        #{ADV_SHOW, jdbcType=VARCHAR}
+        from dual
+        where not exists(
+        select #{NAME, jdbcType=VARCHAR} from adv_table
+        where NAME = #{NAME, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获取所有广告位 -->
+    <select id="getAllAdv" parameterType="Map" resultType="java.util.HashMap">
+        select * from adv_table
+    </select>
+
+    <!-- 删除广告位 -->
+    <delete id="delAdv" parameterType="Map">
+        delete from adv_table where ID = #{advId, jdbcTyle = DECIMAL}
+    </delete>
+
+    <!-- 获取显示广告位 -->
+    <select id="getShowAdv" parameterType="Map" resultType="java.util.HashMap">
+        select * from adv_table where SHOW = #{advShow, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 更新广告 -->
+    <update id="updataAdv" parameterType="Map">
+        <![CDATA[
+		update adv_table
+		set
 			NAME = #{NAME, jdbcType=VARCHAR},
 			IMAGE = #{IMAGE, jdbcType=VARCHAR}
-		where 
+		where
 			ID=#{ID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!-- 不显示广告 -->
-	<update id="updataAdvShow" parameterType="Map">
-		<![CDATA[
-		update adv_table 
-		set 
+    </update>
+
+    <!-- 不显示广告 -->
+    <update id="updataAdvShow" parameterType="Map">
+        <![CDATA[
+		update adv_table
+		set
 			ADV_SHOW = #{ADV_SHOW, jdbcType=VARCHAR}
-		where 
+		where
 			ID=#{ID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!-- 删除试卷 -->
-	<delete id="delUserExam">
-		<![CDATA[delete FROM user_exams WHERE TIME_END < sysdate()]]>
-	</delete>
-	
-	<!-- 查找试卷 -->
-	<select id="getUserExam" parameterType="Map" resultType="int">
-		select COUNT(*) FROM user_exams WHERE EXAM_ID = #{examId, jdbcType=VARCHAR} and WID = #{openid, jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 海报信息 -->
-	<update id="updateAdvInfo">
-		<![CDATA[
-		update adv_info 
-		set 
+    </update>
+
+    <!-- 删除试卷 -->
+    <delete id="delUserExam">
+        <![CDATA[delete FROM user_exams WHERE TIME_END < sysdate()]]>
+    </delete>
+
+    <!-- 查找试卷 -->
+    <select id="getUserExam" parameterType="Map" resultType="int">
+        select COUNT(*) FROM user_exams WHERE EXAM_ID = #{examId, jdbcType=VARCHAR} and WID = #{openid, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 海报信息 -->
+    <update id="updateAdvInfo">
+        <![CDATA[
+		update adv_info
+		set
 			IMAGE = #{IMAGE, jdbcType=VARCHAR}
-		where 
+		where
 			ID=#{ID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!-- 获取海报 -->
-	<select id="getAdvInfo" parameterType="Map" resultType="java.util.HashMap">
-		select * FROM adv_info WHERE ID = #{advId, jdbcType=DECIMAL}
-	</select>
-	
-	<!-- addSection 添加章节-->
-	<insert id="addSection" parameterType="Map">
-		insert into topic_section_list(NAME, POST_TYPE, CERT_TYPE)
-		select #{name, jdbcType=VARCHAR},
-		#{postType, jdbcType=VARCHAR},
-		#{certType, jdbcType=VARCHAR}
-		from dual
-		where not exists(
-			select #{name, jdbcType=VARCHAR} from topic_section_list
-			where NAME = #{name, jdbcType=VARCHAR} and
-			POST_TYPE = #{postType, jdbcType=VARCHAR} and
-			CERT_TYPE = #{certType, jdbcType=VARCHAR}
-		)
-	</insert>
-	
-	<!--delSection  删除章节 -->
-	<delete id="delSection">
-		<![CDATA[delete FROM topic_section_list WHERE ID = #{id, jdbcType=VARCHAR}]]>
-	</delete>
-	
-	<!-- updataSection  修改章节 -->
-	<update id="updataSection">
-		<![CDATA[
-		update topic_section_list 
-		set 
+    </update>
+
+    <!-- 获取海报 -->
+    <select id="getAdvInfo" parameterType="Map" resultType="java.util.HashMap">
+        select * FROM adv_info WHERE ID = #{advId, jdbcType=DECIMAL}
+    </select>
+
+    <!-- addSection 添加章节-->
+    <insert id="addSection" parameterType="Map">
+        insert into topic_section_list(NAME, POST_TYPE, CERT_TYPE)
+        select #{name, jdbcType=VARCHAR},
+        #{postType, jdbcType=VARCHAR},
+        #{certType, jdbcType=VARCHAR}
+        from dual
+        where not exists(
+        select #{name, jdbcType=VARCHAR} from topic_section_list
+        where NAME = #{name, jdbcType=VARCHAR} and
+        POST_TYPE = #{postType, jdbcType=VARCHAR} and
+        CERT_TYPE = #{certType, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--delSection  删除章节 -->
+    <delete id="delSection">
+        <![CDATA[delete FROM topic_section_list WHERE ID = #{id, jdbcType=VARCHAR}]]>
+    </delete>
+
+    <!-- updataSection  修改章节 -->
+    <update id="updataSection">
+        <![CDATA[
+		update topic_section_list
+		set
 			NAME = #{name, jdbcType=VARCHAR}
-		where 
+		where
 			ID=#{ID,jdbcType=VARCHAR}
 		]]>
-	</update>
-	
-	<!--getSection  获取章节  -->
-	<select id="getSection" parameterType="Map" resultType="java.util.HashMap">
-		select * FROM topic_section_list WHERE POST_TYPE = #{postType, jdbcType=VARCHAR} and CERT_TYPE = #{certType, jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 添加章节试题 -->
-	<insert id="addSectionTopic" parameterType="Map">
-		insert into topic_section_table(TYPE, POST_TYPE, CERT_TYPE, SECTION_TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, SHARE_TYPE, CERT_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
-		select #{TYPE, jdbcType=VARCHAR},
-			#{POST_TYPE, jdbcType=VARCHAR},
-			#{CERT_TYPE, jdbcType=VARCHAR},
-			#{SECTION_TYPE, jdbcType=VARCHAR},
-			#{ARTICLE, jdbcType=VARCHAR},
-			#{TITLE, jdbcType=VARCHAR},
-			#{IMAGE, jdbcType=VARCHAR},
-			#{OPTION_A, jdbcType=VARCHAR},
-			#{OPTION_B, jdbcType=VARCHAR},
-			#{OPTION_C, jdbcType=VARCHAR},
-			#{OPTION_D, jdbcType=VARCHAR},
-			#{RIGHT_OPTION, jdbcType=VARCHAR},
-			#{EXPLAIN_TEXT, jdbcType=VARCHAR},
-			#{CERT_CLASS, jdbcType=VARCHAR},
-			#{CERT_TEXT, jdbcType=VARCHAR},
-			0,0,0
-		from dual
-		where not exists(
-			select 
-				#{POST_TYPE, jdbcType=VARCHAR}, 
-				#{CERT_TYPE, jdbcType=VARCHAR}, 
-				#{SECTION_TYPE, jdbcType=VARCHAR},
-				#{TITLE, jdbcType=VARCHAR}, 
-				#{TYPE, jdbcType=VARCHAR} 
-			from topic_section_table
-			where TITLE = #{TITLE, jdbcType=VARCHAR} 
-			and TYPE = #{TYPE, jdbcType=VARCHAR} 
-			and POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
-			and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
-			and SECTION_TYPE = #{SECTION_TYPE, jdbcType=VARCHAR}
-			
-		)
-	</insert>
-	
-	<!-- 搜索章节试题 -->
-	<select id="searchSectionTopic" parameterType="Map" resultType="java.util.HashMap">
-		select 
-			ID as topicId, 
-			TITLE as topicTitle,
-			IMAGE as topicImage
-		from topic_section_table 
-		where 
-			POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
-			and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
-			and SECTION_TYPE = #{SECTION_TYPE, jdbcType=VARCHAR}
-			and TITLE like concat('%',#{TITLE, jdbcType=VARCHAR},'%')
-	</select>
-	
-	<!-- 删除章节试题 -->
-	<delete id="delSectionTopic">
-		<![CDATA[delete FROM topic_section_table WHERE ID = #{id, jdbcType=VARCHAR}]]>
-	</delete>
-	
-	<!-- updateSectionTopicImage  修改章节试题  添加图片-->
-	<update id="updateSectionTopicImage" parameterType="Map">
-		<![CDATA[
+    </update>
+
+    <!--getSection  获取章节  -->
+    <select id="getSection" parameterType="Map" resultType="java.util.HashMap">
+        select * FROM topic_section_list WHERE POST_TYPE = #{postType, jdbcType=VARCHAR} and CERT_TYPE = #{certType, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 添加章节试题 -->
+    <insert id="addSectionTopic" parameterType="Map">
+        insert into topic_section_table(TYPE, POST_TYPE, CERT_TYPE, SECTION_TYPE, ARTICLE, TITLE, IMAGE, OPTION_A, OPTION_B, OPTION_C, OPTION_D, RIGHT_OPTION, EXPLAIN_TEXT, SHARE_TYPE, CERT_TEXT, TOPIC_DISABLE, SHOW_RIGHT, SHOW_EXPLAIN)
+        select #{TYPE, jdbcType=VARCHAR},
+        #{POST_TYPE, jdbcType=VARCHAR},
+        #{CERT_TYPE, jdbcType=VARCHAR},
+        #{SECTION_TYPE, jdbcType=VARCHAR},
+        #{ARTICLE, jdbcType=VARCHAR},
+        #{TITLE, jdbcType=VARCHAR},
+        #{IMAGE, jdbcType=VARCHAR},
+        #{OPTION_A, jdbcType=VARCHAR},
+        #{OPTION_B, jdbcType=VARCHAR},
+        #{OPTION_C, jdbcType=VARCHAR},
+        #{OPTION_D, jdbcType=VARCHAR},
+        #{RIGHT_OPTION, jdbcType=VARCHAR},
+        #{EXPLAIN_TEXT, jdbcType=VARCHAR},
+        #{CERT_CLASS, jdbcType=VARCHAR},
+        #{CERT_TEXT, jdbcType=VARCHAR},
+        0,0,0
+        from dual
+        where not exists(
+        select
+        #{POST_TYPE, jdbcType=VARCHAR},
+        #{CERT_TYPE, jdbcType=VARCHAR},
+        #{SECTION_TYPE, jdbcType=VARCHAR},
+        #{TITLE, jdbcType=VARCHAR},
+        #{TYPE, jdbcType=VARCHAR}
+        from topic_section_table
+        where TITLE = #{TITLE, jdbcType=VARCHAR}
+        and TYPE = #{TYPE, jdbcType=VARCHAR}
+        and POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
+        and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
+        and SECTION_TYPE = #{SECTION_TYPE, jdbcType=VARCHAR}
+
+        )
+    </insert>
+
+    <!-- 搜索章节试题 -->
+    <select id="searchSectionTopic" parameterType="Map" resultType="java.util.HashMap">
+        select
+        ID as topicId,
+        TITLE as topicTitle,
+        IMAGE as topicImage
+        from topic_section_table
+        where
+        POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR}
+        and CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR}
+        and SECTION_TYPE = #{SECTION_TYPE, jdbcType=VARCHAR}
+        and TITLE like concat('%',#{TITLE, jdbcType=VARCHAR},'%')
+    </select>
+
+    <!-- 删除章节试题 -->
+    <delete id="delSectionTopic">
+        <![CDATA[delete FROM topic_section_table WHERE ID = #{id, jdbcType=VARCHAR}]]>
+    </delete>
+
+    <!-- updateSectionTopicImage  修改章节试题  添加图片-->
+    <update id="updateSectionTopicImage" parameterType="Map">
+        <![CDATA[
 		update topic_section_table set IMAGE = #{IMAGE, jdbcType=VARCHAR} where ID = #{ID, jdbcType=DECIMAL}
 		]]>
-	</update>
-	
-	<!-- 获取章节试题 -->
-	<select id="getSectionTopic" parameterType="Map" resultType="java.util.HashMap">
-		<![CDATA[ 
-		select 
-		ID as topicId, 
+    </update>
+
+    <!-- 获取章节试题 -->
+    <select id="getSectionTopic" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+		select
+		ID as topicId,
 		ARTICLE as topicArticle,
 		TITLE as topicTitle,
 		IMAGE as topicImage,
@@ -769,54 +769,53 @@
 		SHOW_RIGHT as showRight,
 		SHOW_EXPLAIN as showExplain
 		from topic_section_table where ]]>
-		<![CDATA[ POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR} and ]]>
-		<![CDATA[CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR} and ]]>
-		<![CDATA[SECTION_TYPE = #{SECTION_TYPE, jdbcType=VARCHAR}]]>
-	</select>
-	<!-- 获取章节试题解析 -->
-	<select id="getSectionExplain" parameterType="Map" resultType="java.util.HashMap">
-		select 
-			EXPLAIN_TEXT as topicExplain
-		from topic_section_table
-		where ID = #{TOPIC_ID, jdbcType=DECIMAL} 
-	</select>
+        <![CDATA[ POST_TYPE = #{POST_TYPE, jdbcType=VARCHAR} and ]]>
+        <![CDATA[CERT_TYPE = #{CERT_TYPE, jdbcType=VARCHAR} and ]]>
+        <![CDATA[SECTION_TYPE = #{SECTION_TYPE, jdbcType=VARCHAR}]]>
+    </select>
+    <!-- 获取章节试题解析 -->
+    <select id="getSectionExplain" parameterType="Map" resultType="java.util.HashMap">
+        select
+        EXPLAIN_TEXT as topicExplain
+        from topic_section_table
+        where ID = #{TOPIC_ID, jdbcType=DECIMAL}
+    </select>
 
     <!-- 英语课程mapper数据库操作 -->
-    <select id="getEnglishClass" parameterType="Map" resultMap="java.util.HashMap">
-        select
-          ID as id,
-          CLASS_NAME as className,
-          IS_PAY as isPay,
-          MEMO_1 as memo1,
-          MEMO_2 as memo2,
-          MEMO_3 as memo3,
-          TEXT_4 as text4,
-          TEXT_5 as text5
-        from english_class where 1=1
-            <if test="id != null and id !=''">
-                and ID = #{id}
-            </if>
-            <if test="className != null and className !=''">
-                and CLASS_NAME like concat('%', #{className}, '%')
-            </if>
-            <if test="isPay != null and isPay !=''">
-                and IS_PAY = #{isPay}
-            </if>
-        order by ID desc
+    <select id="getEnglishClass" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[select
+        ID as id,
+        CLASS_NAME as className,
+        IS_PAY as isPay,
+        MEMO_1 as memo1,
+        MEMO_2 as memo2,
+        MEMO_3 as memo3,
+        TEXT_4 as text4,
+        TEXT_5 as text5
+        from english_class where
+        IS_PAY = #{isPay, jdbcType=DECIMAL}
+        and CLASS_NAME like concat('%',#{className, jdbcType=VARCHAR},'%')
+        order by ID desc]]>
     </select>
 
     <insert id="addEnglishClass" parameterType="Map">
         insert into english_class
         (CLASS_NAME,IS_PAY,MEMO_1,MEMO_2,MEMO_3,TEXT_4,TEXT_5)
         values
-        (#{className},#{isPay},#{memo1},#{memo2},#{memo3},#{text4},#{text5})
+        (#{className, jdbcType=VARCHAR},
+        #{isPay, jdbcType=DECIMAL},
+        #{memo1, jdbcType=VARCHAR},
+        #{memo2, jdbcType=VARCHAR},
+        #{memo3, jdbcType=VARCHAR},
+        #{text4, jdbcType=VARCHAR},
+        #{text5, jdbcType=VARCHAR})
     </insert>
 
     <delete id="deleteEnglishClass" parameterType="Map">
-        delete FROM english_class WHERE ID = #{id}
+        delete FROM english_class WHERE ID = #{id, jdbcType=DECIMAL}
     </delete>
 
     <update id="updateEnglishClass" parameterType="Map">
-        update english_class set CLASS_NAME = #{className},IS_PAY=#{isPay} where ID = #{id}
+        update english_class set CLASS_NAME = #{className, jdbcType=VARCHAR},IS_PAY=#{isPay, jdbcType=DECIMAL} where ID = #{id, jdbcType=DECIMAL}
     </update>
 </mapper>
