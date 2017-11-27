@@ -561,4 +561,60 @@ public class OnlineServiceImpl implements OnlineService{
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }
+
+    @Override
+    public Map<String, Object> updateEnglishClassPic(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.updateEnglishClassPic(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getAllEnglishClass() {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("LIST", this.onlineDao.getAllEnglishClass());
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getEnglishChap(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("LIST", this.onlineDao.getEnglishChap(parm));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> addEnglishChap(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.addEnglishChap(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> deleteEnglishChap(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.deleteEnglishChap(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> updateEnglishChap(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.updateEnglishChap(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getChapByClassId(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("LIST", this.onlineDao.getChapByClassId(parm));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
 }

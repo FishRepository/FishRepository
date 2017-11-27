@@ -426,4 +426,52 @@ public interface OnlineService extends CoreService{
      * @return
      */
     public Map<String, Object> updateEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 更新课程图片
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> updateEnglishClassPic(Map<String, Object> parm);
+
+    /**
+     * 获取所有英语课程
+     * @return
+     */
+    public Map<String, Object> getAllEnglishClass();
+
+    /**
+     * 获取英语课程章节列表
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> getEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 添加英语课程章节
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> addEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 删除英语课程章节
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> deleteEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 更新英语课程章节
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> updateEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 获取所有英语课程
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> getChapByClassId(Map<String, Object> parm);
 }

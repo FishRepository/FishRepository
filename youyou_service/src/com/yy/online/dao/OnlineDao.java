@@ -183,15 +183,60 @@ public interface OnlineDao {
 
     /**
      * 删除英语课程
-     * @param param
+     * @param parm
      * @return
      */
-    public int deleteEnglishClass(Map<String, Object> param);
+    public int deleteEnglishClass(Map<String, Object> parm);
 
     /**
      * 更新英语课程
-     * @param param
+     * @param parm
      * @return
      */
-    public int updateEnglishClass(Map<String, Object> param);
+    public int updateEnglishClass(Map<String, Object> parm);
+
+    /**
+     * 更新课程图片
+     */
+    public int updateEnglishClassPic(Map<String, Object> parm);
+
+    /**
+     * 获取所有英语课程列表
+     * @return
+     */
+    public List<Map<String,Object>> getAllEnglishClass();
+
+    /**
+     * 获取英语课程章节列表
+     * @param parm
+     * @return
+     */
+    public List<Map<String,Object>> getEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 添加英语课程章节
+     * @param parm
+     * @return
+     */
+    public int addEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 删除英语课程章节
+     * @param parm
+     * @return
+     */
+    public int deleteEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 更新英语课程章节
+     * @param parm
+     * @return
+     */
+    public int updateEnglishChap(Map<String, Object> parm);
+
+    /**
+     * 获取所以英语课程列表
+     * @return
+     */
+    public List<Map<String,Object>> getChapByClassId(Map<String, Object> parm);
 }

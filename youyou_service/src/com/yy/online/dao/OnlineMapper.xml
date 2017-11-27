@@ -787,6 +787,7 @@
         ID as id,
         CLASS_NAME as className,
         IS_PAY as isPay,
+        CLASS_PIC as classPic,
         MEMO_1 as memo1,
         MEMO_2 as memo2,
         MEMO_3 as memo3,
@@ -818,4 +819,68 @@
     <update id="updateEnglishClass" parameterType="Map">
         update english_class set CLASS_NAME = #{className, jdbcType=VARCHAR},IS_PAY=#{isPay, jdbcType=DECIMAL} where ID = #{id, jdbcType=DECIMAL}
     </update>
+
+    <update id="updateEnglishClassPic" parameterType="Map">
+        update english_class set CLASS_PIC = #{classPic, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
+    </update>
+
+    <select id="getAllEnglishClass" resultType="java.util.HashMap">
+        <![CDATA[
+            select
+              ID as classId,
+              CLASS_NAME as className
+            from english_class
+            order by ID desc
+        ]]>
+    </select>
+
+    <!-- 课程章节增删改查 -->
+    <select id="getEnglishChap" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+            select
+                a.ID as id,
+                (select b.CLASS_NAME from english_class b where b.ID=a.CLASS_ID) as className,
+                a.CHAP_NAME as chapName,
+                MEMO_1 as memo1,
+                MEMO_2 as memo2,
+                MEMO_3 as memo3,
+                TEXT_4 as text4,
+                TEXT_5 as text5
+            from english_chap a where
+            CLASS_ID = #{classId, jdbcType=DECIMAL}
+            and CHAP_NAME like concat('%',#{chapName, jdbcType=VARCHAR},'%')
+            order by ID desc
+        ]]>
+    </select>
+
+    <insert id="addEnglishChap" parameterType="Map">
+        insert into english_chap
+        (CLASS_ID,CHAP_NAME,MEMO_1,MEMO_2,MEMO_3,TEXT_4,TEXT_5)
+        values
+        (#{classId, jdbcType=DECIMAL},
+        #{chapName, jdbcType=VARCHAR},
+        #{memo1, jdbcType=VARCHAR},
+        #{memo2, jdbcType=VARCHAR},
+        #{memo3, jdbcType=VARCHAR},
+        #{text4, jdbcType=VARCHAR},
+        #{text5, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteEnglishChap" parameterType="Map">
+        delete FROM english_chap WHERE ID = #{id, jdbcType=DECIMAL}
+    </delete>
+
+    <update id="updateEnglishChap" parameterType="Map">
+        update english_chap set CHAP_NAME = #{chapName, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
+    </update>
+
+    <select id="getChapByClassId" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[
+            select
+              ID as chapId,
+              CHAP_NAME as chapName
+            from english_chap where CLASS_ID = #{classId, jdbcType=DECIMAL}
+            order by ID desc
+        ]]>
+    </select>
 </mapper>
