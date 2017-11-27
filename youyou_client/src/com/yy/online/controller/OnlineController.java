@@ -762,4 +762,85 @@ public class OnlineController {
         resultMap = onlineService.deleteEnglishClass(parmMap);
         return resultMap;
     }
+
+    /*添加课程图片*/
+    @RequestMapping(params="method=updateEnglishClassPic", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateEnglishClassPic (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
+        String urlPath = "/pictures/";
+        parmMap.put("id", request.getParameter("topicId"));
+        parmMap.put("classPic", request.getParameter("topicImage")==null?"":Img64Util.imgUrl(request.getParameter("topicImage"),realPath,"", urlPath));
+        resultMap = onlineService.updateEnglishClassPic(parmMap);
+        return resultMap;
+    }
+
+    /*获取所有英语课程*/
+    @RequestMapping(params="method=getSelClass", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getSelClass (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap = onlineService.getAllEnglishClass();
+        return resultMap;
+    }
+
+    /*getEnglishClassChap 获取英语课程章节*/
+    @RequestMapping(params="method=getEnglishClassChap", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("classId", request.getParameter("classId"));
+        parmMap.put("chapName", request.getParameter("chapName"));
+        resultMap = onlineService.getEnglishChap(parmMap);
+        return resultMap;
+    }
+
+    /*addEnglishClassChap 添加英语课程章节*/
+    @RequestMapping(params="method=addEnglishClassChap", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("classId", request.getParameter("classId"));
+        parmMap.put("chapName", request.getParameter("chapName"));
+        resultMap = onlineService.addEnglishChap(parmMap);
+        return resultMap;
+    }
+
+    /*updEnglishClassChap 修改英语课程章节*/
+    @RequestMapping(params="method=updEnglishClassChap", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("id", request.getParameter("id"));
+        parmMap.put("chapName", request.getParameter("chapName"));
+        resultMap = onlineService.updateEnglishChap(parmMap);
+        return resultMap;
+    }
+
+    /*delEnglishClassChap 删除英语课程*/
+    @RequestMapping(params="method=delEnglishClassChap", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> delEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("id", request.getParameter("id"));
+        resultMap = onlineService.deleteEnglishChap(parmMap);
+        return resultMap;
+    }
+
+    /*根据课程获取章节*/
+    @RequestMapping(params="method=getChapByClassId", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getChapByClassId (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("classId", request.getParameter("classId"));
+        resultMap = onlineService.getChapByClassId(parmMap);
+        return resultMap;
+    }
 }

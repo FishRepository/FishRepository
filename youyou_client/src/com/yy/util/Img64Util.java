@@ -31,6 +31,7 @@ public class Img64Util {
 		return bytes;
 	}
 	public static String imgUrl(String img64Str, String path, String userId, String urlPath) throws IOException{
+        hasFile(path);
 		String y = Calendar.getInstance().get(Calendar.YEAR)+"";
 		String m = Calendar.getInstance().get(Calendar.MONTH)+ 1 +"";
 		String timeString = y+m;

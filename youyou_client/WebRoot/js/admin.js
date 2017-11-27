@@ -16,5 +16,6 @@ function delCookie(name) {
 	if(cval != null)
 		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
-var urlPath = "http://111.111.125.238:8080/youyou_client";
+var urlPath = "http://127.0.0.1:8080/youyou_client";
+// var urlPath = "http://111.111.125.238:8080/youyou_client";
 //var urlPath = "https://www.yoyotec.com/youyou_client";
