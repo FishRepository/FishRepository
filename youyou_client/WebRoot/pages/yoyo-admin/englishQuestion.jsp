@@ -28,7 +28,7 @@
             </select>
         </div>
         <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
-            <label><small class="text-danger">包含图片的题目请手动上传图片</small></label>
+            <label></label>
             <button type="button" class="btn btn-default btn-block btn-success" id="addXls">导入</button>
         </div>
     </div>
@@ -88,8 +88,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" id="addQtImage" class="btn btn-primary" data-id="" data-pay="0">提交更改</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" id="addQtImage" class="btn btn-primary" data-id="" data-pay="0">开始上传</button>
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="button" id="addQtVol" class="btn btn-primary" data-id="" data-pay="0">开始上传</button>
                 </div>
             </div>
@@ -147,9 +147,16 @@
         $("#addXls").click(function(){
             var classId = $("#selClassId").val();
             var chapId = $("#selChapId").val();
-            if($("#xls").val()==""){
-                alert("请选择xls文件");
-                return;
+            if(!classId){
+                bootbox.alert({title: "提示", message: "请选择课程！"});
+                return false;
+            }else if(!chapId){
+                bootbox.alert({title: "提示", message: "请选择章节！"});
+                return false;
+            }
+            if(!$("#xls").val()){
+                bootbox.alert({title: "提示", message: "请选择类型为.xls的Excel文件！"});
+                return false;
             }
             for(var i in XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])){
                 var parm = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])[i];
@@ -162,13 +169,12 @@
                     async:true,
                     success:function(d){
                         if(d.RESULT!="SUCCESS"){
-                            alert("第"+i+"题上传失败");
                             return false;
                         }
                     }
                 });
             }
-            alert("导入成功！");
+            bootbox.alert({title: "提示", message: "导入成功！"});
         });
 
         $("#searchBtn").click(function(){
@@ -192,7 +198,7 @@
                     if(data.RESULT=="SUCCESS"){
                         $("#qtVolModal").modal('hide');
                         refleshTable();
-                        alert("上传成功！");
+                        bootbox.alert({title: "提示", message: "上传成功！"});
                     }
                 }
             });
@@ -265,25 +271,36 @@
     }
 
     function del(id,t){
-        if(window.confirm('确定删除该记录吗？')){
-            $.ajax({
-                type:"post",
-                data:{
-                    id:id
+        bootbox.confirm({
+            title: '提示',
+            message: '确定删除该记录吗？',
+            buttons: {
+                cancel: {
+                    label: '取消'
                 },
-                url:urlPath+"/admin.do?method=delEnglishQuestion",
-                async:true,
-                success:function(d){
-                    if(d.RESULT=="SUCCESS"){
-                        alert("删除成功");
-                        $(t).parents("tr").remove();
-                    }
+                confirm: {
+                    label: '确认'
                 }
-            });
-            return true;
-        }else{
-            return false;
-        }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type:"post",
+                        data:{
+                            id:id
+                        },
+                        url:urlPath+"/admin.do?method=delEnglishQuestion",
+                        async:true,
+                        success:function(d){
+                            if(d.RESULT=="SUCCESS"){
+                                $(t).parents("tr").remove();
+                                bootbox.alert({title: "提示", message: "删除成功！"});
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     function changeAdd(p,c){

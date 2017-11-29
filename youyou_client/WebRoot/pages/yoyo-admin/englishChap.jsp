@@ -18,7 +18,7 @@
             </select>
         </div>
         <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-            <label>输入章节名称</label>
+            <label>章节名称</label>
             <input type="text" id="chapNameAdd" class="form-control" placeholder="输入章节名称"/>
         </div>
         <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
@@ -38,7 +38,7 @@
                 </select>
             </div>
             <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                <label>输入章节名称</label>
+                <label>章节名称</label>
                 <input type="text" id="chapNameQ" class="form-control" placeholder="输入章节名称"/>
             </div>
             <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" id="btnUpd">提交修改</button>
                 </div>
             </div>
@@ -121,10 +121,10 @@
             var selClassId = $("#selClassAdd").val();
             var chapNameAdd = $("#chapNameAdd").val();
             if(!selClassId){
-                alert("请选择要添加章节的课程！");
+                bootbox.alert({title: "提示", message: "请选择要添加章节的课程！"});
                 return false;
             }else if(!chapNameAdd){
-                alert("请输入章节名称！");
+                bootbox.alert({title: "提示", message: "请输入章节名称！"});
                 return false;
             }else{
                 $.ajax({
@@ -138,7 +138,7 @@
                     success:function(d){
                         if(d.RESULT=="SUCCESS"){
                             refleshTable();
-                            alert("添加成功");
+                            bootbox.alert({title: "提示", message: "添加成功！"});
                         }
                     }
                 });
@@ -154,30 +154,41 @@
     }
 
     function del(id,t){
-        if(window.confirm('确定删除该记录吗？')){
-            $.ajax({
-                type:"post",
-                data:{
-                    id:id
+        bootbox.confirm({
+            title: '提示',
+            message: '确定删除该记录吗？',
+            buttons: {
+                cancel: {
+                    label: '取消'
                 },
-                url:urlPath+"/admin.do?method=delEnglishClassChap",
-                async:true,
-                success:function(d){
-                    if(d.RESULT=="SUCCESS"){
-                        $(t).parents("tr").remove();
-                        alert("删除成功");
-                    }
+                confirm: {
+                    label: '确认'
                 }
-            });
-            return true;
-        }else{
-            return false;
-        }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type:"post",
+                        data:{
+                            id:id
+                        },
+                        url:urlPath+"/admin.do?method=delEnglishClassChap",
+                        async:true,
+                        success:function(d){
+                            if(d.RESULT=="SUCCESS"){
+                                $(t).parents("tr").remove();
+                                bootbox.alert({title: '提示', message: '删除成功！'});
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     function updEgClass(){
         var a=$('#mChapId').val();
-        var b=$('#MchapName').val();
+        var b=$('#mChapName').val();
         $.ajax({
             type:"post",
             data:{
@@ -190,7 +201,7 @@
                 if(d.RESULT=="SUCCESS"){
                     $("#myModal").modal('hide');
                     refleshTable();
-                    alert("修改成功");
+                    bootbox.alert({title: '提示', message: '修改成功！'});
                 }
             }
         });

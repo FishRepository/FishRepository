@@ -150,7 +150,7 @@ $(function(){
                                             $("#nextview").attr("src",'');
                                             $("#myModalPic").modal('hide');
                                             refleshTable();
-                                            alert("添加成功！");
+                                            bootbox.alert({title: '提示', message: '上传成功！'});
                                         }
                                     }
                                 });
@@ -174,7 +174,7 @@ $(function(){
                                             $("#nextview").attr("src",'');
                                             $("#qtPicModal").modal('hide');
                                             refleshTable();
-                                            alert("添加成功！");
+                                            bootbox.alert({title: '提示', message: '上传成功！'});
                                         }
                                     }
                                 });

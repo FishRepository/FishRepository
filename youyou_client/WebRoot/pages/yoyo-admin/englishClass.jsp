@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" id="btnUpd">提交修改</button>
                 </div>
             </div>
@@ -124,8 +124,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" id="addImageEgPic" class="btn btn-primary" data-id="">提交更改</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" id="addImageEgPic" class="btn btn-primary" data-id="">开始上传</button>
                 </div>
             </div>
         </div>
@@ -146,8 +146,8 @@
             var className = $("#className").val();
             var isPay = $("#isPay").val();
             if(!className){
-                alert("课程名称不能为空！");
-                return;
+                bootbox.alert({title: "提示", message: "请输入课程名称！"});
+                return false;
             }else{
                 $.ajax({
                     type:"post",
@@ -159,9 +159,8 @@
                     },
                     success:function(d){
                         if(d.RESULT=="SUCCESS"){
-                            alert("添加成功");
-//                            location.reload();
                             refleshTable();
+                            bootbox.alert({title: "提示", message: "添加成功！"});
                         }
                     }
                 });
@@ -177,25 +176,36 @@
     }
 
     function del(id,t){
-        if(window.confirm('确定删除该记录吗？')){
-            $.ajax({
-                type:"post",
-                data:{
-                    id:id
+        bootbox.confirm({
+            title: '提示',
+            message: '确定删除该记录吗？',
+            buttons: {
+                cancel: {
+                    label: '取消'
                 },
-                url:urlPath+"/admin.do?method=delEnglishClass",
-                async:true,
-                success:function(d){
-                    if(d.RESULT=="SUCCESS"){
-                        alert("删除成功")
-                        $(t).parents("tr").remove();
-                    }
+                confirm: {
+                    label: '确认'
                 }
-            });
-            return true;
-        }else{
-            return false;
-        }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type:"post",
+                        data:{
+                            id:id
+                        },
+                        url:urlPath+"/admin.do?method=delEnglishClass",
+                        async:true,
+                        success:function(d){
+                            if(d.RESULT=="SUCCESS"){
+                                $(t).parents("tr").remove();
+                                bootbox.alert({title: '提示', message: '删除成功！'});
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     function updEgClass(){
@@ -214,8 +224,8 @@
             success:function(d){
                 if(d.RESULT=="SUCCESS"){
                     $("#myModal").modal('hide');
-                    alert("修改成功");
                     refleshTable();
+                    bootbox.alert({title: '提示', message: '修改成功！'});
                 }
             }
         });

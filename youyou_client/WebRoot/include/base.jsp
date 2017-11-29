@@ -20,6 +20,7 @@ response.setHeader("pragma", "no-cache");
 
 <script src="<%=path%>/js/xlsx.full.min.js"></script>
 <script src="<%=path%>/js/admin.js"></script>
+<script src="<%=path%>/js/bootbox.min.js"></script>
 
 <link href="<%=path%>/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="<%=path%>/css/admin.css" rel="stylesheet"/>
