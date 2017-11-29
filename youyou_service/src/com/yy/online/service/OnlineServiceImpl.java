@@ -617,4 +617,45 @@ public class OnlineServiceImpl implements OnlineService{
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }
+
+    @Override
+    public Map<String, Object> addEnglishQuestion(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.addEnglishQuestion(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getEnglishQuestion(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("LIST", this.onlineDao.getEnglishQuestion(parm));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> delEnglishQuestion(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.delEnglishQuestion(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> updateEnglishQuestionPic(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.updateEnglishQuestionPic(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> updateEnglishQuestionVol(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.updateEnglishQuestionVol(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
 }

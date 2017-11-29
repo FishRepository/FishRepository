@@ -10,18 +10,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yy.util.AudioUploadUtil;
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.yy.online.service.OnlineService;
 import com.yy.util.Img64Util;
 import com.yy.util.YoyoUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller("admin.do")
 public class OnlineController {
@@ -841,6 +841,76 @@ public class OnlineController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         parmMap.put("classId", request.getParameter("classId"));
         resultMap = onlineService.getChapByClassId(parmMap);
+        return resultMap;
+    }
+
+    /*导入英语试题*/
+    @RequestMapping(params="method=addEnglishQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("chapId", request.getParameter("chapId"));
+        parmMap.put("qtType", request.getParameter("type"));
+        parmMap.put("qtContent", request.getParameter("title"));
+        parmMap.put("optionA", request.getParameter("option_a") != null?request.getParameter("option_a"):"");
+        parmMap.put("optionB", request.getParameter("option_b") != null?request.getParameter("option_b"):"");
+        parmMap.put("optionC", request.getParameter("option_c") != null?request.getParameter("option_c"):"");
+        parmMap.put("optionD", request.getParameter("option_d") != null?request.getParameter("option_d"):"");
+        parmMap.put("rightOption", request.getParameter("right_option") != null?request.getParameter("right_option"):"");
+        parmMap.put("explanTxt", request.getParameter("explain") != null?request.getParameter("explain"):"");
+        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("explain"):"");
+        resultMap = onlineService.addEnglishQuestion(parmMap);
+        return resultMap;
+    }
+
+    /*getEnglishQuestion 根据英语课程、章节获取试题*/
+    @RequestMapping(params="method=getEnglishQuestion", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("chapId", request.getParameter("chapId"));
+        resultMap = onlineService.getEnglishQuestion(parmMap);
+        return resultMap;
+    }
+
+    /*delEnglishQuestion 删除英语试题*/
+    @RequestMapping(params="method=delEnglishQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> delEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("id", request.getParameter("id"));
+        resultMap = onlineService.delEnglishQuestion(parmMap);
+        return resultMap;
+    }
+
+    /*添加英语试题图片*/
+    @RequestMapping(params="method=updateEnglishQuestionPic", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateEnglishQuestionPic (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
+        String urlPath = "/pictures/";
+        parmMap.put("id", request.getParameter("topicId"));
+        parmMap.put("picUrl", request.getParameter("topicImage")==null?"":Img64Util.imgUrl(request.getParameter("topicImage"),realPath,"", urlPath));
+        resultMap = onlineService.updateEnglishQuestionPic(parmMap);
+        return resultMap;
+    }
+
+    /*添加英语试题图片*/
+    @RequestMapping(params="method=updateEnglishQuestionVol", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateEnglishQuestionVol (HttpServletRequest request,@RequestParam(value="targetId")String targetId, @RequestBody MultipartFile audio) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        String realPath = request.getSession().getServletContext().getRealPath("/") + "audio/";
+        String urlPath = "/audio/";
+        parmMap.put("id",targetId);
+        parmMap.put("voUrl",AudioUploadUtil.storeAudio(realPath,urlPath,audio));
+        resultMap=onlineService.updateEnglishQuestionVol(parmMap);
         return resultMap;
     }
 }

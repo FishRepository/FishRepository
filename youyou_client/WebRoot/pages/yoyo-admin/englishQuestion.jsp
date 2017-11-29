@@ -50,13 +50,14 @@
         </div>
     </div>
     <div class="form-group clearfix">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
             <tr>
-                <th width="10%">序号</th>
-                <th width="10%">题型</th>
-                <th width="30%">题目</th>
-                <th width="20%">图片</th>
+                <th width="5%">序号</th>
+                <th width="5%">题型</th>
+                <th width="40%">题目</th>
+                <th width="10%">图片</th>
+                <th width="20%">音频</th>
                 <th width="20%">操作</th>
             </tr>
             </thead>
@@ -64,13 +65,14 @@
             </tbody>
         </table>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="qtPicModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">添加图片</h4>
+                    <h4 class="modal-title">添加图片</h4>
                 </div>
+                <audio></audio>
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -87,7 +89,35 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" id="addImage1" class="btn btn-primary" data-id="" data-pay="0">提交更改</button>
+                    <button type="button" id="addQtImage" class="btn btn-primary" data-id="" data-pay="0">提交更改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="qtVolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">添加音频</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label>选择音频文件</label><%--这里只允许指定上传音频文件--%>
+                            <input class="btn btn-default" type="file" multiple id="volFile" accept="audio/*"/>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label>音频预览</label>
+                            <div class="form-control-sty2 " id="preVolView">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="addQtVol" class="btn btn-primary" data-id="" data-pay="0">开始上传</button>
                 </div>
             </div>
         </div>
@@ -115,32 +145,25 @@
         });
 
         $("#addXls").click(function(){
-            var post = $("#posts").val();
-            var cert = $("#certs").val();
-            var section = $("#sections").val();
-            var pay = 0;
-            var share_type = $("#certs").find("option:selected").attr("data-type");
-            var cert_text = $("#certs").find("option:selected").text();
+            var classId = $("#selClassId").val();
+            var chapId = $("#selChapId").val();
             if($("#xls").val()==""){
                 alert("请选择xls文件");
                 return;
             }
             for(var i in XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])){
                 var parm = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])[i];
-                parm.post_type = post;
-                parm.cert_type = cert;
-                parm.section_type = section;
-                parm.pays_type = pay;
-                parm.cert_class = share_type;
-                parm.cert_text = cert_text;
+                parm.classId = classId;
+                parm.chapId = chapId;
                 $.ajax({
                     type:"post",
                     data:parm,
-                    url:urlPath+"/admin.do?method=addSectionTopic",
+                    url:urlPath+"/admin.do?method=addEnglishQuestion",
                     async:true,
                     success:function(d){
                         if(d.RESULT!="SUCCESS"){
                             alert("第"+i+"题上传失败");
+                            return false;
                         }
                     }
                 });
@@ -149,31 +172,119 @@
         });
 
         $("#searchBtn").click(function(){
-            var post = $("#posts1").val();
-            var cert = $("#certs1").val();
-            var section = $("#sections1").val();
-            var text = $("#text").val();
-            var share_type = $("#certs1").find("option:selected").attr("data-type");
+            refleshTable();
+        });
+
+        /**点击上传音频**/
+        $('#addQtVol').on('click',function(){
+            var formData = new FormData();
+            formData.append("targetId",$(this).attr("data-id"));
+            formData.append("audio",document.getElementById("volFile").files[0]);
             $.ajax({
-                type:"post",
-                url:urlPath+"/admin.do?method=searchSectionTopic",
-                data:{
-                    post_type:post,
-                    cert_type:cert,
-                    section_type:section,
-                    title:text
-                },
+                processData: false,
+                contentType: false,
+                url:urlPath+"/admin.do?method=updateEnglishQuestionVol",
+                type:'POST',
+                dataType:'json',
+                data:formData,
                 async:true,
-                success:function(d){
-                    var tr = '';
-                    for(var i=0;i<d.LIST.length;i++){
-                        tr+='<tr><td>'+d.LIST[i].topicTitle+'</td><td><a href="'+urlPath+d.LIST[i].topicImage+'">'+d.LIST[i].topicImage+'</a></td><td><a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" onclick="setId(\''+d.LIST[i].topicId+'\')">添加图片</a><a class="btn btn-sm btn-danger" onclick="delTopic(\''+d.LIST[i].topicId+'\',this)">删除</a></td></tr>';
+                success:function(data){
+                    if(data.RESULT=="SUCCESS"){
+                        $("#qtVolModal").modal('hide');
+                        refleshTable();
+                        alert("上传成功！");
                     }
-                    $(".search-list").html(tr)
                 }
             });
         });
     });
+
+    /**
+     * 音频控件初始化
+     **/
+    window.onload=function(){
+        var file=document.getElementById("volFile");
+        file.onchange=function(){
+            var divNode2 = document.getElementById("preVolView");
+            var textNode = divNode2.childNodes[0];
+            divNode2.removeChild(textNode);
+            $("#preVolView").append("<audio id=\"volAudio\" controls></audio>");
+            $("#volAudio").attr("src",window.URL.createObjectURL(file.files[0]));
+        }
+    };
+
+    function refleshTable(){
+        var chapId = $("#selChapIdQ").val();
+        $.ajax({
+            type:"get",
+            url:urlPath+"/admin.do?method=getEnglishQuestion",
+            data:{
+                chapId:chapId
+            },
+            async:true,
+            success:function(d){
+                var tr="";
+                for (var i = 0; i < d.LIST.length; i++) {
+                    var x = d.LIST[i].qtType == 1 ? '听力' : '会话';
+                    var pic='';
+                    if(d.LIST[i].picUrl){
+                        pic='<img width="100" height="100" class="img-thumbnail" src="'+urlPath+d.LIST[i].picUrl+'" /img>';
+                    }
+                    var vol='';
+                    if(d.LIST[i].voUrl){
+                        var ul=d.LIST[i].voUrl;
+                        var ulName=ul.substring(ul.lastIndexOf('/')+1,ul.length);
+                        vol='<span><h4>'+ulName+'</h4></span><audio id="volAudio" controls src="'+urlPath+d.LIST[i].voUrl+'"></audio>';
+                    }
+                    tr += '<tr>' +
+                        '<td>' + (i + 1) + '</td>' +
+                        '<td>'+x+'</td>' +
+                        '<td>' + d.LIST[i].qtContent + '</td>' +
+                        '<td>' + pic + '</td>' +
+                        '<td>' + vol + '</td>' +
+                        '<td>'+
+                        '<a class="btn btn-info" onclick="opVolModal(\'' + d.LIST[i].id + '\')">上传音频</a>' +
+                        '<a class="btn btn-info" onclick="opQtPicModal(\'' + d.LIST[i].id + '\')">上传图片</a>' +
+                        '<a class="btn btn-danger" onclick="del(\'' + d.LIST[i].id + '\',this)">删除</a>' +
+                        '</td>' +
+                        '</tr>'
+                }
+                $(".search-list").html(tr);
+            }
+        });
+    }
+
+    function opVolModal(qtId){
+        $("#addQtVol").attr("data-id",qtId);
+        $("#qtVolModal").modal('show');
+    }
+
+    function opQtPicModal(qtId){
+        $("#addQtImage").attr("data-id",qtId);
+        $("#qtPicModal").modal('show');
+    }
+
+    function del(id,t){
+        if(window.confirm('确定删除该记录吗？')){
+            $.ajax({
+                type:"post",
+                data:{
+                    id:id
+                },
+                url:urlPath+"/admin.do?method=delEnglishQuestion",
+                async:true,
+                success:function(d){
+                    if(d.RESULT=="SUCCESS"){
+                        alert("删除成功");
+                        $(t).parents("tr").remove();
+                    }
+                }
+            });
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     function changeAdd(p,c){
         var selClassId = $(p).val();

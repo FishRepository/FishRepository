@@ -461,9 +461,44 @@ public interface OnlineService {
     public Map<String, Object> updateEnglishChap(Map<String, Object> parm);
 
     /**
-     * 获取所有英语课程
+     * 获取所有英语课程章节
      * @param parm
      * @return
      */
     public Map<String, Object> getChapByClassId(Map<String, Object> parm);
+
+    /**
+     * 添加英语试题
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> addEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 获取英语试题
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> getEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 删除英语试题
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> delEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 更新英语试题图片
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> updateEnglishQuestionPic(Map<String, Object> parm);
+
+    /**
+     * 更新英语试题音频地址
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> updateEnglishQuestionVol(Map<String, Object> parm);
 }

@@ -155,6 +155,30 @@ $(function(){
                                     }
                                 });
                             });
+
+                            $('#addQtImage').on('click',function(){
+                                var topic_id = $(this).attr("data-id");
+                                //alert('传给后台base64文件数据为：'+resizeImgBase64.substr(22));
+                                $.ajax({
+                                    url:urlPath+"/admin.do?method=updateEnglishQuestionPic",
+                                    type:'POST',
+                                    dataType:'json',
+                                    data:{
+                                        topicId:topic_id,
+                                        topicImage:resizeImgBase64.substr(23)
+                                    },
+                                    async:true,
+                                    success:function(data){
+                                        if(data.RESULT=="SUCCESS"){
+                                            $("#upFile").val('');
+                                            $("#nextview").attr("src",'');
+                                            $("#qtPicModal").modal('hide');
+                                            refleshTable();
+                                            alert("添加成功！");
+                                        }
+                                    }
+                                });
+                            });
   
                         }  
                         ,debug:true  

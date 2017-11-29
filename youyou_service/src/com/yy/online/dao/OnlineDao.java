@@ -235,8 +235,38 @@ public interface OnlineDao {
     public int updateEnglishChap(Map<String, Object> parm);
 
     /**
-     * 获取所以英语课程列表
+     * 获取所有英语课程列表
      * @return
      */
     public List<Map<String,Object>> getChapByClassId(Map<String, Object> parm);
+
+    /**
+     * 添加英语试题
+     * @param parm
+     * @return
+     */
+    public int addEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 获取所有的英语试题
+     * @return
+     */
+    public List<Map<String,Object>> getEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 删除所有的英语试题
+     * @param parm
+     * @return
+     */
+    public int delEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 更新英语试题图片
+     */
+    public int updateEnglishQuestionPic(Map<String, Object> parm);
+
+    /**
+     * 更新英语试题音频地址
+     */
+    public int updateEnglishQuestionVol(Map<String, Object> parm);
 }

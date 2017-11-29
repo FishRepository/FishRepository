@@ -883,4 +883,57 @@
             order by ID desc
         ]]>
     </select>
+
+    <insert id="addEnglishQuestion" parameterType="Map">
+        insert into english_question
+        (CHAP_ID,QT_TYPE,QT_CONTENT,OPTION_A,OPTION_B,OPTION_C,OPTION_D,RIGHT_OPTION,EXPLAN_TXT,QT_DIF)
+        values
+        (#{chapId, jdbcType=DECIMAL},
+        #{qtType, jdbcType=DECIMAL},
+        #{qtContent, jdbcType=VARCHAR},
+        #{optionA, jdbcType=VARCHAR},
+        #{optionB, jdbcType=VARCHAR},
+        #{optionC, jdbcType=VARCHAR},
+        #{optionD, jdbcType=VARCHAR},
+        #{rightOption, jdbcType=DECIMAL},
+        #{explanTxt, jdbcType=VARCHAR},
+        #{qtDif, jdbcType=DECIMAL})
+    </insert>
+
+    <select id="getEnglishQuestion" parameterType="Map" resultType="java.util.HashMap">
+        select
+          ID as id,
+          CHAP_ID as chapId,
+          QT_TYPE as qtType,
+          QT_CONTENT as qtContent,
+          VO_URL as voUrl,
+          PIC_URL as picUrl,
+          OPTION_A as optionA,
+          OPTION_B as optionB,
+          OPTION_C as optionC,
+          OPTION_D as optionD,
+          RIGHT_OPTION as rightOption,
+          EXPLAN_TXT as explanTxt,
+          QT_DIF as qtDif,
+          MEMO_1 as memo1,
+          MEMO_2 as memo2,
+          MEMO_3 as memo3,
+          TEXT_4 as text4,
+          TEXT_5 as text5
+         from english_question where
+         CHAP_ID = #{chapId, jdbcType=DECIMAL}
+            order by ID desc
+    </select>
+
+    <delete id="delEnglishQuestion" parameterType="Map">
+        delete FROM english_question WHERE ID = #{id, jdbcType=DECIMAL}
+    </delete>
+
+    <update id="updateEnglishQuestionPic" parameterType="Map">
+        update english_question set PIC_URL = #{picUrl, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
+    </update>
+
+    <update id="updateEnglishQuestionVol" parameterType="Map">
+        update english_question set VO_URL = #{voUrl, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
+    </update>
 </mapper>
