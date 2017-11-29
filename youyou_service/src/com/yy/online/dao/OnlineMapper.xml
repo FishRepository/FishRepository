@@ -925,6 +925,20 @@
             order by ID desc
     </select>
 
+    <update id="updEnglishQuestion" parameterType="Map">
+        update english_question set
+        QT_TYPE = #{qtType, jdbcType=VARCHAR},
+        QT_DIF = #{qtDif, jdbcType=VARCHAR},
+        QT_CONTENT = #{qtContent, jdbcType=VARCHAR},
+        OPTION_A = #{optionA, jdbcType=VARCHAR},
+        OPTION_B = #{optionB, jdbcType=VARCHAR},
+        OPTION_C = #{optionC, jdbcType=VARCHAR},
+        OPTION_D = #{optionD, jdbcType=VARCHAR},
+        RIGHT_OPTION = #{rightOption, jdbcType=VARCHAR},
+        EXPLAN_TXT = #{explanTxt, jdbcType=VARCHAR}
+        where ID = #{id, jdbcType=DECIMAL}
+    </update>
+
     <delete id="delEnglishQuestion" parameterType="Map">
         delete FROM english_question WHERE ID = #{id, jdbcType=DECIMAL}
     </delete>

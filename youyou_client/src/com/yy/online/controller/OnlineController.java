@@ -859,7 +859,7 @@ public class OnlineController {
         parmMap.put("optionD", request.getParameter("option_d") != null?request.getParameter("option_d"):"");
         parmMap.put("rightOption", request.getParameter("right_option") != null?request.getParameter("right_option"):"");
         parmMap.put("explanTxt", request.getParameter("explain") != null?request.getParameter("explain"):"");
-        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("explain"):"");
+        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("qt_dif"):"");
         resultMap = onlineService.addEnglishQuestion(parmMap);
         return resultMap;
     }
@@ -872,6 +872,26 @@ public class OnlineController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getEnglishQuestion(parmMap);
+        return resultMap;
+    }
+
+    /*updEnglishQuestion 修改英语试题*/
+    @RequestMapping(params="method=updEnglishQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("id", request.getParameter("id"));
+        parmMap.put("qtType", request.getParameter("qtType"));
+        parmMap.put("qtDif", request.getParameter("qtDif"));
+        parmMap.put("qtContent", request.getParameter("qtContent"));
+        parmMap.put("optionA", request.getParameter("optionA"));
+        parmMap.put("optionB", request.getParameter("optionB"));
+        parmMap.put("optionC", request.getParameter("optionC"));
+        parmMap.put("optionD", request.getParameter("optionD"));
+        parmMap.put("rightOption", request.getParameter("rightOption"));
+        parmMap.put("explanTxt", request.getParameter("explanTxt"));
+        resultMap = onlineService.updEnglishQuestion(parmMap);
         return resultMap;
     }
 

@@ -254,7 +254,14 @@ public interface OnlineDao {
     public List<Map<String,Object>> getEnglishQuestion(Map<String, Object> parm);
 
     /**
-     * 删除所有的英语试题
+     * 修改英语试题
+     * @param parm
+     * @return
+     */
+    public int updEnglishQuestion(Map<String, Object> parm);
+
+    /**
+     * 删除英语试题
      * @param parm
      * @return
      */

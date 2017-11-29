@@ -54,17 +54,89 @@
             <thead>
             <tr>
                 <th width="5%">序号</th>
-                <th width="5%">题型</th>
-                <th width="40%">题目</th>
+                <th width="5%">题目类型</th>
+                <th width="5%">问题类型</th>
+                <th width="30%">题目</th>
                 <th width="10%">图片</th>
                 <th width="20%">音频</th>
-                <th width="20%">操作</th>
+                <th width="25%">操作</th>
             </tr>
             </thead>
             <tbody class="search-list">
             </tbody>
         </table>
     </div>
+
+    <!-- 修改模态框（Modal） -->
+    <div id="qtUpdModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog" style="width:1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">修改试题</h4>
+                    <input type="hidden" id="questionId"/>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                            <label>题目类型</label>
+                            <select id="qtType" class="form-control">
+                                <option value="1">听力</option>
+                                <option value="2">会话</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                            <label>问题类型</label>
+                            <select id="qtDif" class="form-control">
+                                <option value="1">判断题</option>
+                                <option value="2">单选题</option>
+                                <option value="3">阅读题</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label>题目内容</label>
+                            <textarea id="qtContent" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            <label>A</label>
+                            <input type="text" id="optionA" class="form-control" placeholder=""/>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            <label>B</label>
+                            <input type="text" id="optionB" class="form-control" placeholder=""/>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            <label>C</label>
+                            <input type="text" id="optionC" class="form-control" placeholder=""/>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            <label>D</label>
+                            <input type="text" id="optionD" class="form-control" placeholder=""/>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            <label>正确选项</label>
+                            <select id="rightOption" class="form-control">
+                                <option value="1">A</option>
+                                <option value="2">B</option>
+                                <option value="3">C</option>
+                                <option value="4">D</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label>题目解释说明</label>
+                            <textarea id="explanTxt" class="form-control" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btnUpd">提交修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片上传模态框（Modal） -->
     <div class="modal fade" id="qtPicModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -95,7 +167,7 @@
         </div>
     </div>
 
-
+    <!-- 音频上传模态框（Modal） -->
     <div class="modal fade" id="qtVolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,11 +246,16 @@
                     }
                 });
             }
+            refleshTable();
             bootbox.alert({title: "提示", message: "导入成功！"});
         });
 
         $("#searchBtn").click(function(){
             refleshTable();
+        });
+
+        $("#btnUpd").click(function () {
+            updEnglishQuestion();
         });
 
         /**点击上传音频**/
@@ -203,6 +280,11 @@
                 }
             });
         });
+
+        // 给modal绑定事件
+        $('#qtVolModal').on('hidden.bs.modal', function () {
+            stopOtherAudio();
+        });
     });
 
     /**
@@ -214,10 +296,16 @@
             var divNode2 = document.getElementById("preVolView");
             var textNode = divNode2.childNodes[0];
             divNode2.removeChild(textNode);
-            $("#preVolView").append("<audio id=\"volAudio\" controls></audio>");
+            $("#preVolView").append("<audio id=\"volAudio\" controls onclick='stopOtherAudio()'></audio>");
             $("#volAudio").attr("src",window.URL.createObjectURL(file.files[0]));
         }
     };
+
+    function stopOtherAudio(){
+        $('audio').not(this).each(function(){
+            this.pause();
+        });
+    }
 
     function refleshTable(){
         var chapId = $("#selChapIdQ").val();
@@ -232,6 +320,7 @@
                 var tr="";
                 for (var i = 0; i < d.LIST.length; i++) {
                     var x = d.LIST[i].qtType == 1 ? '听力' : '会话';
+                    var y = d.LIST[i].qtDif == 1 ? '判断题' : (d.LIST[i].qtDif == 2 ?'单选题' : '阅读题');
                     var pic='';
                     if(d.LIST[i].picUrl){
                         pic='<img width="100" height="100" class="img-thumbnail" src="'+urlPath+d.LIST[i].picUrl+'" /img>';
@@ -240,15 +329,17 @@
                     if(d.LIST[i].voUrl){
                         var ul=d.LIST[i].voUrl;
                         var ulName=ul.substring(ul.lastIndexOf('/')+1,ul.length);
-                        vol='<span><h4>'+ulName+'</h4></span><audio id="volAudio" controls src="'+urlPath+d.LIST[i].voUrl+'"></audio>';
+                        vol='<span><h4>'+ulName+'</h4></span><audio controls src="'+urlPath+d.LIST[i].voUrl+'" onclick="stopOtherAudio()"></audio>';
                     }
                     tr += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
                         '<td>'+x+'</td>' +
+                        '<td>'+y+'</td>' +
                         '<td>' + d.LIST[i].qtContent + '</td>' +
                         '<td>' + pic + '</td>' +
                         '<td>' + vol + '</td>' +
                         '<td>'+
+                        '<a class="btn btn-primary" onclick="opUpdModal(\'' + d.LIST[i].id + '\',\'' + d.LIST[i].qtType + '\',\'' + d.LIST[i].qtDif + '\',\'' + d.LIST[i].qtContent + '\',\'' + d.LIST[i].optionA + '\',\'' + d.LIST[i].optionB + '\',\'' + d.LIST[i].optionC + '\',\'' + d.LIST[i].optionD + '\',\'' + d.LIST[i].rightOption + '\',\'' + d.LIST[i].explanTxt + '\')">修改</a>' +
                         '<a class="btn btn-info" onclick="opVolModal(\'' + d.LIST[i].id + '\')">上传音频</a>' +
                         '<a class="btn btn-info" onclick="opQtPicModal(\'' + d.LIST[i].id + '\')">上传图片</a>' +
                         '<a class="btn btn-danger" onclick="del(\'' + d.LIST[i].id + '\',this)">删除</a>' +
@@ -260,6 +351,20 @@
         });
     }
 
+    function opUpdModal(id,qtType,qtDif,qtContent,optionA,optionB,optionC,optionD,rightOption,explanTxt){
+        $("#questionId").val(id);
+        $("#qtType").val(qtType);
+        $("#qtDif").val(qtDif);
+        $("#qtContent").val(qtContent);
+        $("#optionA").val(optionA);
+        $("#optionB").val(optionB);
+        $("#optionC").val(optionC);
+        $("#optionD").val(optionD);
+        $("#rightOption").val(rightOption);
+        $("#explanTxt").val(explanTxt);
+        $("#qtUpdModal").modal('show');
+    }
+
     function opVolModal(qtId){
         $("#addQtVol").attr("data-id",qtId);
         $("#qtVolModal").modal('show');
@@ -268,6 +373,33 @@
     function opQtPicModal(qtId){
         $("#addQtImage").attr("data-id",qtId);
         $("#qtPicModal").modal('show');
+    }
+
+    function updEnglishQuestion(){
+        $.ajax({
+            type:"post",
+            data:{
+                id:$("#questionId").val(),
+                qtType:$("#qtType").val(),
+                qtDif:$("#qtDif").val(),
+                qtContent:$("#qtContent").val(),
+                optionA:$("#optionA").val(),
+                optionB:$("#optionB").val(),
+                optionC:$("#optionC").val(),
+                optionD:$("#optionD").val(),
+                rightOption:$("#rightOption").val(),
+                explanTxt:$("#explanTxt").val()
+            },
+            url:urlPath+"/admin.do?method=updEnglishQuestion",
+            async:true,
+            success:function(d){
+                if(d.RESULT=="SUCCESS"){
+                    $("#qtUpdModal").modal('hide');
+                    refleshTable();
+                    bootbox.alert({title: '提示', message: '修改成功！'});
+                }
+            }
+        });
     }
 
     function del(id,t){

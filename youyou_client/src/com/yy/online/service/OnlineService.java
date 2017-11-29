@@ -482,6 +482,13 @@ public interface OnlineService {
     public Map<String, Object> getEnglishQuestion(Map<String, Object> parm);
 
     /**
+     * 修改英语试题
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> updEnglishQuestion(Map<String, Object> parm);
+
+    /**
      * 删除英语试题
      * @param parm
      * @return
