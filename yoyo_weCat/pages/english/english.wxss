@@ -1,0 +1,17 @@
+.englishCourse-image {display: flex;flex-direction:row;}
+
+.englishCourse-image .englishCourse-imageView{flex-direction:row;}
+
+.englishCourse-image .englishCourse-imageView image{width: 120px;height: 180px;display: inline-block;overflow: hidden;margin: 10px}
+
+.englishCourse-image .englishCourse-imageText {margin-left:10px;margin-top: 10px;flex-direction:row;font-size: 18px;}
+
+.englishCourse-title{font-style: normal;font-size: 18px;color: slategrey;}
+
+.englishCourse-desc .label{font-style: normal;font-size: 15px;color: slategrey;}
+
+.englishCourse-desc{font-style: normal;font-size: 15px;float: none;margin-left:10px;margin-bottom: 20px;color: slategrey;}
+
+.englishCourse-desc .englishCourse-txt{line-height:10px; text-indent:2em; text-align:right; letter-spacing:2px;word-wrap: break-word;}
+
+.line{width:90%;height:2rpx;background:#aaa;margin: 20px;}

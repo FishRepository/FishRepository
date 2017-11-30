@@ -1,0 +1,45 @@
+<block wx:if="{{showLoading}}">
+  <view class="page-loading">
+    <text class="weui-loading"/><text class="loading-text">玩命加载中1111</text>
+  </view>
+</block>
+<block wx:else>
+  <scroll-view style="height: 100%;" scroll-y="true" class="container englishCourse-list" bindscroll="scroll" bindscrolltolower="scrolltolower">
+    <block wx:for-items="{{englishCourse}}" wx:for-item="item">
+      <view class="englishCourse-item" bindtap="viewDetail" data-id="{{item.id}}" data-title="{{item.ecTitle}}">
+        <view class="englishCourse-image">
+          <view class="englishCourse-imageView">
+            <image src="{{item.ecImg}}"></image>
+          </view>
+          <view class="englishCourse-imageText">
+            <text class="englishCourse-title">{{item.ecTitle}}</text>
+          </view>
+        </view>
+        <view class="englishCourse-info">
+          <view class="englishCourse-desc">
+            <text class="label">描述</text>
+            <view>
+              <text class="englishCourse-txt">{{item.ecDesc}}</text>
+            </view>
+          </view>
+          <view wx: if="{{index < englishCourse.length-1 }}">
+              <view class="line" id="{{englishCourse.length}}"></view>
+          </view>
+        </view> 
+      </view>
+    </block>
+    <view class="load-more-wrap">
+      <block wx:if="{{hasMore}}">
+        <view class="load-content">
+          <text class="weui-loading"/><text class="loading-text">玩命加载中</text>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="load-content">
+          <text>没有更多内容了</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</block>
+
