@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -549,7 +550,13 @@ public class OnlineServiceImpl implements OnlineService{
     @Override
     public Map<String, Object> deleteEnglishClass(Map<String, Object> parm) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
+        int classId= Integer.parseInt(String.valueOf(parm.get("id")));
+        //先删课程
         this.onlineDao.deleteEnglishClass(parm);
+        //再删章节
+        this.onlineDao.deleteEnglishChapByClassId(classId);
+        //最后删课程
+        this.onlineDao.deleteEnglishQuestionByClassId(classId);
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }
@@ -597,7 +604,11 @@ public class OnlineServiceImpl implements OnlineService{
     @Override
     public Map<String, Object> deleteEnglishChap(Map<String, Object> parm) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
+        int chapId= Integer.parseInt(String.valueOf(parm.get("id")));
+        //先删章节
         this.onlineDao.deleteEnglishChap(parm);
+        //再删课程
+        this.onlineDao.deleteEnglishQuestionByChapId(chapId);
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }
@@ -662,6 +673,51 @@ public class OnlineServiceImpl implements OnlineService{
     public Map<String, Object> updateEnglishQuestionVol(Map<String, Object> parm) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         this.onlineDao.updateEnglishQuestionVol(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getAllEnglishData() {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        //获取英语课程数据
+        List<Map<String,Object>> listClass=this.onlineDao.getAllEnglishClassData();
+        if(listClass!=null&&listClass.size()>0){
+            for(Map<String,Object> mapClass:listClass){
+                //根据课程查章节
+                int classId= Integer.parseInt(String.valueOf(mapClass.get("ID")));
+                List<Map<String,Object>> listChap=this.onlineDao.getAllEnglishChapDataByClassId(classId);
+                if(listChap!=null&&listChap.size()>0){
+                    //将章节数据装到每一个课程里
+                    mapClass.put("ENGLISH_CHAP",listChap);
+                    for(Map<String,Object> mapChap:listChap){
+                        int chapId= Integer.parseInt(String.valueOf(mapChap.get("ID")));
+                        List<Map<String,Object>> listQuestion=this.onlineDao.getAllEnglishQuestionDataByChapId(chapId);
+                        if(listQuestion!=null&&listQuestion.size()>0){
+                            //将试题数据装到每一个章节里
+                            mapChap.put("ENGLISH_QUESTION",listQuestion);
+                        }
+                    }
+                }
+            }
+        }
+        resultMap.put("ENGLISG_CLASS",listClass);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> addEnglishPayRecord(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        this.onlineDao.addEnglishPayRecord(parm);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getEnglishPayRecord(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("LIST", this.onlineDao.getEnglishPayRecord(parm));
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }

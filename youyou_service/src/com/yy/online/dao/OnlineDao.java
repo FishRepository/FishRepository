@@ -276,4 +276,57 @@ public interface OnlineDao {
      * 更新英语试题音频地址
      */
     public int updateEnglishQuestionVol(Map<String, Object> parm);
+
+    /**
+     * 根据课程删除章节
+     * @param classId
+     * @return
+     */
+    public int deleteEnglishChapByClassId(int classId);
+
+    /**
+     * 根据章节删除试题
+     * @param chapId
+     * @return
+     */
+    public int deleteEnglishQuestionByChapId(int chapId);
+
+    /**
+     * 根据课程删除试题
+     * @param chapId
+     * @return
+     */
+    public int deleteEnglishQuestionByClassId(int chapId);
+
+    /**
+     * 获取全量英语课程数据
+     * @return
+     */
+    public List<Map<String,Object>> getAllEnglishClassData();
+
+    /**
+     * 获取全量英语章节数据
+     * @return
+     */
+    public List<Map<String,Object>> getAllEnglishChapDataByClassId(int classId);
+
+    /**
+     * 获取全量英语试题数据
+     * @return
+     */
+    public List<Map<String,Object>> getAllEnglishQuestionDataByChapId(int classId);
+
+    /**
+     * 插入英语课程购买记录表
+     * @param parm
+     * @return
+     */
+    public int addEnglishPayRecord(Map<String, Object> parm);
+
+    /**
+     * 获取英语课程购买记录
+     * @param parm
+     * @return
+     */
+    public List<Map<String,Object>> getEnglishPayRecord(Map<String, Object> parm);
 }

@@ -508,4 +508,24 @@ public interface OnlineService {
      * @return
      */
     public Map<String, Object> updateEnglishQuestionVol(Map<String, Object> parm);
+
+    /**
+     * 获取英语全量数据(包括课程-章节-试题)
+     * @return
+     */
+    public Map<String, Object> getAllEnglishData();
+
+    /**
+     * 插入用户英语课程购买记录
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> addEnglishPayRecord(Map<String, Object> parm);
+
+    /**
+     * 查询用户英语课程购买记录
+     * @param parm
+     * @return
+     */
+    public Map<String, Object> getEnglishPayRecord(Map<String, Object> parm);
 }

@@ -781,6 +781,15 @@
         where ID = #{TOPIC_ID, jdbcType=DECIMAL}
     </select>
 
+
+
+
+
+
+
+
+
+
     <!-- 英语课程mapper数据库操作 -->
     <select id="getEnglishClass" parameterType="Map" resultType="java.util.HashMap">
         <![CDATA[select
@@ -793,7 +802,7 @@
         MEMO_3 as memo3,
         TEXT_4 as text4,
         TEXT_5 as text5
-        from english_class where
+        from english_class where MEMO_1='NOR' and
         IS_PAY = #{isPay, jdbcType=DECIMAL}
         and CLASS_NAME like concat('%',#{className, jdbcType=VARCHAR},'%')
         order by ID desc]]>
@@ -805,16 +814,16 @@
         values
         (#{className, jdbcType=VARCHAR},
         #{isPay, jdbcType=DECIMAL},
-        #{memo1, jdbcType=VARCHAR},
+        'NOR',
         #{memo2, jdbcType=VARCHAR},
         #{memo3, jdbcType=VARCHAR},
         #{text4, jdbcType=VARCHAR},
         #{text5, jdbcType=VARCHAR})
     </insert>
 
-    <delete id="deleteEnglishClass" parameterType="Map">
-        delete FROM english_class WHERE ID = #{id, jdbcType=DECIMAL}
-    </delete>
+    <update id="deleteEnglishClass" parameterType="Map">
+        update english_class set MEMO_1='DEL' WHERE ID = #{id, jdbcType=DECIMAL}
+    </update>
 
     <update id="updateEnglishClass" parameterType="Map">
         update english_class set CLASS_NAME = #{className, jdbcType=VARCHAR},IS_PAY=#{isPay, jdbcType=DECIMAL} where ID = #{id, jdbcType=DECIMAL}
@@ -829,12 +838,14 @@
             select
               ID as classId,
               CLASS_NAME as className
-            from english_class
+            from english_class where MEMO_1='NOR'
             order by ID desc
         ]]>
     </select>
 
-    <!-- 课程章节增删改查 -->
+
+
+    <!-- 章节增删改查 -->
     <select id="getEnglishChap" parameterType="Map" resultType="java.util.HashMap">
         <![CDATA[
             select
@@ -846,7 +857,7 @@
                 MEMO_3 as memo3,
                 TEXT_4 as text4,
                 TEXT_5 as text5
-            from english_chap a where
+            from english_chap a where MEMO_1='NOR' and
             CLASS_ID = #{classId, jdbcType=DECIMAL}
             and CHAP_NAME like concat('%',#{chapName, jdbcType=VARCHAR},'%')
             order by ID desc
@@ -859,16 +870,16 @@
         values
         (#{classId, jdbcType=DECIMAL},
         #{chapName, jdbcType=VARCHAR},
-        #{memo1, jdbcType=VARCHAR},
+        'NOR',
         #{memo2, jdbcType=VARCHAR},
         #{memo3, jdbcType=VARCHAR},
         #{text4, jdbcType=VARCHAR},
         #{text5, jdbcType=VARCHAR})
     </insert>
 
-    <delete id="deleteEnglishChap" parameterType="Map">
-        delete FROM english_chap WHERE ID = #{id, jdbcType=DECIMAL}
-    </delete>
+    <update id="deleteEnglishChap" parameterType="Map">
+        update english_chap set MEMO_1='DEL' WHERE ID = #{id, jdbcType=DECIMAL}
+    </update>
 
     <update id="updateEnglishChap" parameterType="Map">
         update english_chap set CHAP_NAME = #{chapName, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
@@ -879,14 +890,17 @@
             select
               ID as chapId,
               CHAP_NAME as chapName
-            from english_chap where CLASS_ID = #{classId, jdbcType=DECIMAL}
+            from english_chap where MEMO_1='NOR' and CLASS_ID = #{classId, jdbcType=DECIMAL}
             order by ID desc
         ]]>
     </select>
 
+
+
+    <!-- 试题增删改查 -->
     <insert id="addEnglishQuestion" parameterType="Map">
         insert into english_question
-        (CHAP_ID,QT_TYPE,QT_CONTENT,OPTION_A,OPTION_B,OPTION_C,OPTION_D,RIGHT_OPTION,EXPLAN_TXT,QT_DIF)
+        (CHAP_ID,QT_TYPE,QT_CONTENT,OPTION_A,OPTION_B,OPTION_C,OPTION_D,RIGHT_OPTION,EXPLAN_TXT,QT_DIF,MEMO_1,MEMO_2,MEMO_3,TEXT_4,TEXT_5)
         values
         (#{chapId, jdbcType=DECIMAL},
         #{qtType, jdbcType=DECIMAL},
@@ -897,7 +911,12 @@
         #{optionD, jdbcType=VARCHAR},
         #{rightOption, jdbcType=DECIMAL},
         #{explanTxt, jdbcType=VARCHAR},
-        #{qtDif, jdbcType=DECIMAL})
+        #{qtDif, jdbcType=DECIMAL},
+        'NOR',
+        #{memo2, jdbcType=VARCHAR},
+        #{memo3, jdbcType=VARCHAR},
+        #{text4, jdbcType=VARCHAR},
+        #{text5, jdbcType=VARCHAR})
     </insert>
 
     <select id="getEnglishQuestion" parameterType="Map" resultType="java.util.HashMap">
@@ -920,14 +939,28 @@
           MEMO_3 as memo3,
           TEXT_4 as text4,
           TEXT_5 as text5
-         from english_question where
+         from english_question where MEMO_1='NOR' and
          CHAP_ID = #{chapId, jdbcType=DECIMAL}
             order by ID desc
     </select>
 
-    <delete id="delEnglishQuestion" parameterType="Map">
-        delete FROM english_question WHERE ID = #{id, jdbcType=DECIMAL}
-    </delete>
+    <update id="updEnglishQuestion" parameterType="Map">
+        update english_question set
+        QT_TYPE = #{qtType, jdbcType=VARCHAR},
+        QT_DIF = #{qtDif, jdbcType=VARCHAR},
+        QT_CONTENT = #{qtContent, jdbcType=VARCHAR},
+        OPTION_A = #{optionA, jdbcType=VARCHAR},
+        OPTION_B = #{optionB, jdbcType=VARCHAR},
+        OPTION_C = #{optionC, jdbcType=VARCHAR},
+        OPTION_D = #{optionD, jdbcType=VARCHAR},
+        RIGHT_OPTION = #{rightOption, jdbcType=VARCHAR},
+        EXPLAN_TXT = #{explanTxt, jdbcType=VARCHAR}
+        where ID = #{id, jdbcType=DECIMAL}
+    </update>
+
+    <update id="delEnglishQuestion" parameterType="Map">
+        update english_question set MEMO_1='DEL' WHERE ID = #{id, jdbcType=DECIMAL}
+    </update>
 
     <update id="updateEnglishQuestionPic" parameterType="Map">
         update english_question set PIC_URL = #{picUrl, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
@@ -936,4 +969,32 @@
     <update id="updateEnglishQuestionVol" parameterType="Map">
         update english_question set VO_URL = #{voUrl, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
     </update>
+
+
+
+    <!-- 英语课程、章节、试题关联删除 -->
+    <update id="deleteEnglishChapByClassId" parameterType="java.lang.Integer">
+        update english_chap set MEMO_1='DEL' where CLASS_ID=#{classId}
+    </update>
+
+    <update id="deleteEnglishQuestionByChapId" parameterType="java.lang.Integer">
+        update english_question set MEMO_1='DEL' where CHAP_ID=#{chapId}
+    </update>
+
+    <update id="deleteEnglishQuestionByClassId" parameterType="java.lang.Integer">
+        update english_question set MEMO_1='DEL' where CHAP_ID in (select ID from english_chap where CLASS_ID=#{classId})
+    </update>
+
+    <!-- 英语微信接口增删改查 -->
+    <select id="getAllEnglishClassData" resultType="java.util.HashMap">
+        select * from english_class where MEMO_1='NOR'
+    </select>
+
+    <select id="getAllEnglishChapDataByClassId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select * from english_chap where MEMO_1='NOR' and CLASS_ID=#{classId}
+    </select>
+
+    <select id="getAllEnglishQuestionDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select * from english_question where MEMO_1='NOR' and CHAP_ID=#{chapId}
+    </select>
 </mapper>
