@@ -680,28 +680,26 @@ public class OnlineServiceImpl implements OnlineService{
     @Override
     public Map<String, Object> getAllEnglishData() {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        //获取英语课程数据
         List<Map<String,Object>> listClass=this.onlineDao.getAllEnglishClassData();
-        if(listClass!=null&&listClass.size()>0){
-            for(Map<String,Object> mapClass:listClass){
-                //根据课程查章节
-                int classId= Integer.parseInt(String.valueOf(mapClass.get("ID")));
-                List<Map<String,Object>> listChap=this.onlineDao.getAllEnglishChapDataByClassId(classId);
-                if(listChap!=null&&listChap.size()>0){
-                    //将章节数据装到每一个课程里
-                    mapClass.put("ENGLISH_CHAP",listChap);
-                    for(Map<String,Object> mapChap:listChap){
-                        int chapId= Integer.parseInt(String.valueOf(mapChap.get("ID")));
-                        List<Map<String,Object>> listQuestion=this.onlineDao.getAllEnglishQuestionDataByChapId(chapId);
-                        if(listQuestion!=null&&listQuestion.size()>0){
-                            //将试题数据装到每一个章节里
-                            mapChap.put("ENGLISH_QUESTION",listQuestion);
-                        }
-                    }
-                }
-            }
-        }
-        resultMap.put("ENGLISG_CLASS",listClass);
+        resultMap.put("LIST",listClass);
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getAllEnglishChapDataByClassId(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        int classId= Integer.parseInt(String.valueOf(parm.get("classId")));
+        resultMap.put("LIST", this.onlineDao.getAllEnglishChapDataByClassId(classId));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getAllEnglishQuestionDataByChapId(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        int chapId= Integer.parseInt(String.valueOf(parm.get("chapId")));
+        resultMap.put("LIST", this.onlineDao.getAllEnglishQuestionDataByChapId(chapId));
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }

@@ -933,4 +933,35 @@ public class OnlineController {
         resultMap=onlineService.updateEnglishQuestionVol(parmMap);
         return resultMap;
     }
+
+    /*获取所有英语课程*/
+    @RequestMapping(params="method=getAllEnglishClassData", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getAllEnglishClassData (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap = onlineService.getAllEnglishData();
+        return resultMap;
+    }
+
+    /*根据课程ID获取章节列表*/
+    @RequestMapping(params="method=getAllEnglishChapDataByClassId", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getAllEnglishChapDataByClassId (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("classId", request.getParameter("classId"));
+        resultMap = onlineService.getAllEnglishChapDataByClassId(parmMap);
+        return resultMap;
+    }
+
+    /*根据章节ID获取试题列表*/
+    @RequestMapping(params="method=getAllEnglishQuestionDataByChapId", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getAllEnglishQuestionDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("chapId", request.getParameter("chapId"));
+        resultMap = onlineService.getAllEnglishQuestionDataByChapId(parmMap);
+        return resultMap;
+    }
 }

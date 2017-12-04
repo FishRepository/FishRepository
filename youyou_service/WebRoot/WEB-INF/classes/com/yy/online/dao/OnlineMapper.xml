@@ -997,4 +997,19 @@
     <select id="getAllEnglishQuestionDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
         select * from english_question where MEMO_1='NOR' and CHAP_ID=#{chapId}
     </select>
+
+
+    <!-- 英语购买记录增删改查 -->
+    <insert id="addEnglishPayRecord" parameterType="Map">
+        insert into english_pay(WID, CLASS_ID, ORDER_ID)
+        values(
+            #{WID, jdbcType=VARCHAR},
+            #{CLASS_ID, jdbcType=DECIMAL},
+            #{ORDER_ID, jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <select id="getEnglishPayRecord" parameterType="Map" resultType="java.util.HashMap">
+        select * from english_pay a left join order_table b on a.ORDER_ID=b.ID order by PAY_TIME DESC
+    </select>
 </mapper>

@@ -516,6 +516,18 @@ public interface OnlineService {
     public Map<String, Object> getAllEnglishData();
 
     /**
+     * 根据课程ID获取章节列表
+     * @return
+     */
+    public Map<String, Object> getAllEnglishChapDataByClassId(Map<String, Object> parm);
+
+    /**
+     * 根据章节ID获取试题列表
+     * @return
+     */
+    public Map<String, Object> getAllEnglishQuestionDataByChapId(Map<String, Object> parm);
+
+    /**
      * 插入用户英语课程购买记录
      * @param parm
      * @return
