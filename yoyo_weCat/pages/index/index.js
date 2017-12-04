@@ -137,12 +137,16 @@ Page({
     } catch (e) {
       
     }
-    wx.navigateTo({
+    try {
+      wx.switchTab({
       url: '/pages/newChoose/newChoose?postType=' + that.data.postVal + 
       '&certType=' + that.data.certVal +
       '&certText=' + that.data.certText +
       '&postText=' + that.data.postText
     })
+    } catch (e) {
+      console.log(e);
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

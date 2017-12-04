@@ -19,11 +19,12 @@ Page({
     var that = this
     that.setData({
       userInfo: app.globalData.userInfo,
-      postType: options.postType,
-      certType: options.certType,
-      postText: options.postText,
-      certText: options.certText
+      postType: options.postType || wx.getStorageSync("postVal"),
+      certType: options.certType || wx.getStorageSync("certVal"),
+      postText: options.postText || wx.getStorageSync("postText"),
+      certText: options.certText || wx.getStorageSync("certText")
     })
+    console.log(wx.getStorageSync("postText"));
     var openid = app.globalData.openid
     that.getOurUserInfo(openid);
     that.getAdv();

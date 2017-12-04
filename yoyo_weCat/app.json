@@ -1,8 +1,8 @@
 {
   "pages":[
-    "pages/english/english",
     "pages/index/index",
     "pages/newChoose/newChoose",
+    "pages/english/english",
     "pages/clearStr/clearStr",
     "pages/newOrder/newOrder",
     "pages/newExam/newExam",
@@ -32,16 +32,16 @@
     "color": "black",
     "list": [
       {
-        "pagePath": "pages/newChoose/newChoose",
-        "text": "在线测试",
-        "iconPath": "images/exam-icon-off.png",
-        "selectedIconPath": "images/exam-icon-on.png"
-      },
-      {
-        "pagePath": "pages/english/english",
-        "text": "英语测试",
+        "pagePath": "pages/index/index",
+        "text": "首页",
         "iconPath": "images/english-icon-off.png",
         "selectedIconPath": "images/english-icon-on.png"
+      },
+      {
+        "pagePath": "pages/newChoose/newChoose",
+        "text": "测试",
+        "iconPath": "images/exam-icon-off.png",
+        "selectedIconPath": "images/exam-icon-on.png"
       },
       {
         "pagePath": "pages/user/user",
