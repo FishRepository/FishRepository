@@ -150,7 +150,6 @@ $(function(){
                                             $("#nextview").attr("src",'');
                                             $("#myModalPic").modal('hide');
                                             refleshTable();
-                                            bootbox.alert({title: '提示', message: '上传成功！'});
                                         }
                                     }
                                 });
