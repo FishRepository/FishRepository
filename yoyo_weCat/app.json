@@ -17,7 +17,9 @@
     "pages/combo/combo",
     "pages/advInfo/advInfo",
     "pages/help/help",
-    "pages/english/english"
+    "pages/english/english",
+    "pages/englishChap/englishChap",
+    "pages/englishQuestion/englishQuestion"
   ],
   "window":{
     "backgroundTextStyle":"dark",
@@ -25,28 +27,5 @@
     "navigationBarTitleText": "YOYO",
     "navigationBarTextStyle":"#FFF",
     "enablePullDownRefresh": true
-  },
-  "tabBar": {
-    "color": "black",
-    "list": [
-      {
-        "pagePath": "pages/newChoose/newChoose",
-        "text": "在线测试",
-        "iconPath": "images/exam-icon-off.png",
-        "selectedIconPath": "images/exam-icon-on.png"
-      },
-      {
-        "pagePath": "pages/english/english",
-        "text": "英语测试",
-        "iconPath": "images/english-icon-off.png",
-        "selectedIconPath": "images/english-icon-on.png"
-      },
-      {
-        "pagePath": "pages/user/user",
-        "text": "我的",
-        "iconPath": "images/user-icon-off.png",
-        "selectedIconPath": "images/user-icon-on.png"
-      }
-    ]
   }
 }
