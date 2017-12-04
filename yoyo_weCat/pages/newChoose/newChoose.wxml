@@ -34,20 +34,26 @@
 <!--/pages/result/result?passScore=' + pass + '&userScore=' + userScore-->
 <!--/pages/choose/choose?payType=0-->
         <navigator url="/pages/clearStr/clearStr?payType=0&type=sxcs&postType={{postType}}&certType={{certType}}">
-          <image src="../../images/kaoshi-icon-1.jpg"></image>
+          <image src="../../images/k1.png"></image>
           <text>模拟测试</text>
         </navigator>
       </view>
       <view class="flex-item">
         <navigator url="/pages/newOrder/newOrder?payType=0&type=mncs&postType={{postType}}&certType={{certType}}">
-          <image src="../../images/kaoshi-icon-2.jpg"></image>
+          <image src="../../images/k4.png"></image>
           <text>顺序测试</text>
         </navigator>
       </view>
       <view class="flex-item">
         <navigator url="/pages/payTest/payTest?payType=1&postType={{postType}}&certType={{certType}}"> 
-          <image src="../../images/kaoshi-icon-3.jpg"></image>
+          <image src="../../images/k2.png"></image>
           <text>真题测试</text>
+        </navigator>
+      </view>
+      <view class="flex-item">
+        <navigator url="/pages/english/english"> 
+          <image src="../../images/k3.png"></image>
+          <text>英语测试</text>
         </navigator>
       </view>
     </view>
