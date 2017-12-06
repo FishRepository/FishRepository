@@ -954,7 +954,7 @@ public class OnlineController {
         return resultMap;
     }
 
-    /*根据章节ID获取试题列表*/
+    /*根据章节ID获取所有试题列表*/
     @RequestMapping(params="method=getAllEnglishQuestionDataByChapId", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getAllEnglishQuestionDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -962,6 +962,28 @@ public class OnlineController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getAllEnglishQuestionDataByChapId(parmMap);
+        return resultMap;
+    }
+
+    /*根据章节ID获取听力试题列表*/
+    @RequestMapping(params="method=getAllEnglishQuestionListenDataByChapId", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getAllEnglishQuestionListenDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("chapId", request.getParameter("chapId"));
+        resultMap = onlineService.getAllEnglishQuestionListenDataByChapId(parmMap);
+        return resultMap;
+    }
+
+    /*根据章节ID获取会话试题列表*/
+    @RequestMapping(params="method=getAllEnglishQuestionTalkDataByChapId", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getAllEnglishQuestionTalkDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("chapId", request.getParameter("chapId"));
+        resultMap = onlineService.getAllEnglishQuestionTalkDataByChapId(parmMap);
         return resultMap;
     }
 }

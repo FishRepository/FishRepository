@@ -995,9 +995,16 @@
     </select>
 
     <select id="getAllEnglishQuestionDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
-        select * from english_question where MEMO_1='NOR' and CHAP_ID=#{chapId}
+        select * from english_question where MEMO_1='NOR' and CHAP_ID=#{chapId} order by QT_TYPE,ID
     </select>
 
+    <select id="getAllEnglishQuestionListenDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select * from english_question where MEMO_1='NOR' and QT_TYPE=1 and CHAP_ID=#{chapId} order by QT_TYPE,ID
+    </select>
+
+    <select id="getAllEnglishQuestionTalkDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select * from english_question where MEMO_1='NOR' and QT_TYPE=2 and CHAP_ID=#{chapId} order by QT_TYPE,ID
+    </select>
 
     <!-- 英语购买记录增删改查 -->
     <insert id="addEnglishPayRecord" parameterType="Map">

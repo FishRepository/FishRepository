@@ -705,6 +705,24 @@ public class OnlineServiceImpl implements OnlineService{
     }
 
     @Override
+    public Map<String, Object> getAllEnglishQuestionListenDataByChapId(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        int chapId= Integer.parseInt(String.valueOf(parm.get("chapId")));
+        resultMap.put("LIST", this.onlineDao.getAllEnglishQuestionListenDataByChapId(chapId));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getAllEnglishQuestionTalkDataByChapId(Map<String, Object> parm) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        int chapId= Integer.parseInt(String.valueOf(parm.get("chapId")));
+        resultMap.put("LIST", this.onlineDao.getAllEnglishQuestionTalkDataByChapId(chapId));
+        resultMap.put(RESULT, SUCCESS);
+        return resultMap;
+    }
+
+    @Override
     public Map<String, Object> addEnglishPayRecord(Map<String, Object> parm) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         this.onlineDao.addEnglishPayRecord(parm);

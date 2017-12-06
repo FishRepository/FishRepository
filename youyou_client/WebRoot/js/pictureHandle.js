@@ -173,7 +173,6 @@ $(function(){
                                             $("#nextview").attr("src",'');
                                             $("#qtPicModal").modal('hide');
                                             refleshTable();
-                                            bootbox.alert({title: '提示', message: '上传成功！'});
                                         }
                                     }
                                 });

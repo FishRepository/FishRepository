@@ -522,10 +522,22 @@ public interface OnlineService {
     public Map<String, Object> getAllEnglishChapDataByClassId(Map<String, Object> parm);
 
     /**
-     * 根据章节ID获取试题列表
+     * 根据章节ID获取所有试题列表
      * @return
      */
     public Map<String, Object> getAllEnglishQuestionDataByChapId(Map<String, Object> parm);
+
+    /**
+     * 根据章节ID获取听力试题列表
+     * @return
+     */
+    public Map<String, Object> getAllEnglishQuestionListenDataByChapId(Map<String, Object> parm);
+
+    /**
+     * 根据章节ID获取会话试题列表
+     * @return
+     */
+    public Map<String, Object> getAllEnglishQuestionTalkDataByChapId(Map<String, Object> parm);
 
     /**
      * 插入用户英语课程购买记录

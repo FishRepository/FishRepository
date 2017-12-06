@@ -317,6 +317,18 @@ public interface OnlineDao {
     public List<Map<String,Object>> getAllEnglishQuestionDataByChapId(int classId);
 
     /**
+     * 获取全量英语听力试题数据
+     * @return
+     */
+    public List<Map<String,Object>> getAllEnglishQuestionListenDataByChapId(int classId);
+
+    /**
+     * 获取全量英语会话试题数据
+     * @return
+     */
+    public List<Map<String,Object>> getAllEnglishQuestionTalkDataByChapId(int classId);
+
+    /**
      * 插入英语课程购买记录表
      * @param parm
      * @return
