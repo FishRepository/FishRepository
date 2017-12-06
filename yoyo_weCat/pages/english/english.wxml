@@ -1,4 +1,4 @@
-<scroll-view style="height: 100%;" scroll-y="true" class="container film-list" bindscroll="scroll" bindscrolltolower="scrolltolower">
+<scroll-view style="height: 100%;background: #eee;" scroll-y="true" class="container film-list" bindscroll="scroll" bindscrolltolower="scrolltolower">
   <block wx:for-items="{{LIST}}" wx:for-item="item">
     <view class="film-item" bindtap="viewDetail" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
       <view class="film-image">
@@ -7,17 +7,13 @@
         </block>
         <block wx:else>
         <view class="load-content">
-          <image style="background-color: #d9d9d9;" src="../../images/mainClassBg.png"></image>
+          <image style="background-color: #d9d9d9;" src="../../images/defaultBook.jpg"></image>
         </view>
       </block>
       </view>
       <view class="film-info">
-        <view>
           <text class="film-title">{{item.CLASS_NAME}}</text>
-        </view>
-        <view>
           <text class="film-year">{{payType[item.IS_PAY]}}</text>
-        </view>
       </view>
     </view>
   </block>

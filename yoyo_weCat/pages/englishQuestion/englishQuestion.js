@@ -6,29 +6,18 @@ Page({
   data: {
     resData: {},
     userInfo: {},
-    showModel: false,
-    animationData: {},
-    hostUrl: "",
+    hostUrl: app.globalData.hostUrl,
     topicType: ["", "判断题", "单选题", "阅读理解"],
-    showType: ["", true, false],
     showRight: ["", "A", "B", "C", "D"],
+    qtType:["","听力测试","会话测试"],
     nowCurrent: 0,
-    payType: "",
-    wrongNumb: 0,
+    wrongNumb: 0, 
     rightNumb: 0,
-    timeHour: "00",
-    timeMin: "00",
-    timeSec: "00",
-    article: "",
-    topicResult: "",
-    userScore: 0,
-    showWrong: false,
-    wrongTip: "wrongTip"
+    showExplain:false
   },
   /**
    * 生命周期函数--监听页面加载
    */
-
   onLoad: function (options) {
     var that = this;
     that.setData({
@@ -48,7 +37,7 @@ Page({
             resData: res.data
           });
           that.setData({
-            nowCurrent: that.data.resData.nowCurrent
+            nowCurrent: that.data.nowCurrent
           })
         },
         fail: function () {
@@ -80,37 +69,23 @@ Page({
         }
       })
   },
-  countDown: function (seconds) {
+  getOurUserInfo: function () {
     var that = this;
-    var time = setInterval(function () {
-      var day = 0, hour = 0, minute = 0, second = 0;
-      if (seconds > 0) {
-        day = Math.floor(seconds / (60 * 60 * 24));
-        hour = Math.floor(seconds / (60 * 60)) - (day * 24);
-        minute = Math.floor(seconds / 60) - (day * 24 * 60) - (hour * 60);
-        second = Math.floor(seconds) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
-        if (minute <= 9) minute = '0' + minute;
-        if (second <= 9) second = '0' + second;
+    var openid = app.globalData.openid;
+    wx.request({
+      url: app.globalData.hostUrl + '/admin.do?method=getUserCoin', //获取平台用户解析币
+      method: 'get',
+      data: {
+        'WID': openid
+      },
+      success: function (d) {
         that.setData({
-          timeHour: hour,
-          timeMin: minute,
-          timeSec: second
-        })
-        seconds--;
-        that.setData({
-          resTime: seconds
-        })
-        if (seconds == 0) {
-          clearTimeout(time)
-        }
-      } else {
-        var pass = that.data.resData.poss_score;
-        var userScore = that.data.userScore;
-        wx.navigateTo({
-          url: '/pages/result/result?passScore=' + pass + '&userScore=' + userScore
+          userInfo: {
+            coin: d.data.user_coin
+          }
         })
       }
-    }, 1000)
+    })
   },
   selectOption: function (e) {
     var that = this;
@@ -124,23 +99,35 @@ Page({
     var choose2 = "resData.LIST[" + index + "].choose2";
     var choose3 = "resData.LIST[" + index + "].choose3";
     var choose4 = "resData.LIST[" + index + "].choose4";
+    param[chooseItem] = that.data.topicResult;
     switch (that.data.topicResult) {
       case "1":
-        param[choose1] = "wrongTip";
+        param[choose1] = true;
+        param[choose2] = false;
+        param[choose3] = false;
+        param[choose4] = false;
         break;
       case "2":
-        param[choose2] = "wrongTip";
+        param[choose1] = false;
+        param[choose2] = true;
+        param[choose3] = false;
+        param[choose4] = false;
         break;
       case "3":
-        param[choose3] = "wrongTip";
+        param[choose1] = false;
+        param[choose2] = false;
+        param[choose3] = true;
+        param[choose4] = false;
         break;
       case "4":
-        param[choose4] = "wrongTip";
+        param[choose1] = false;
+        param[choose2] = false;
+        param[choose3] = false;
+        param[choose4] = true;
         break;
       default:
         break
     }
-    param[chooseItem] = that.data.topicResult;
     that.setData(param);
   },
   swiperChange: function (e) {
@@ -164,51 +151,30 @@ Page({
     }
     var param = {};
     var showRight = "resData.LIST[" + that.data.nowCurrent + "].showRight";
-    var topicDisable = "resData.LIST[" + that.data.nowCurrent + "].topicDisable";
     var btnDisabled = "resData.LIST[" + that.data.nowCurrent + "].btnDisabled";
+    var radioDisabled = "resData.LIST[" + that.data.nowCurrent + "].radioDisabled";
     param[showRight] = '1';
-    param[topicDisable] = '1';
     param[btnDisabled] = true;
+    param[radioDisabled] = true;
     that.setData(param);
+    var rn = that.data.resData.rightNumb > 0 ? that.data.resData.rightNumb:0;
+    var wn = that.data.resData.wrongNumb > 0 ? that.data.resData.wrongNumb : 0;
     if (that.data.resData.LIST[index].RIGHT_OPTION == that.data.topicResult) {
       var param = {};
-      var wrongTip = "resData.LIST[" + index + "].wrongTip";
-      var userScore = "resData.userScore";
       var rightNumb = "resData.rightNumb";
-      param[rightNumb] = that.data.resData.rightNumb + 1;
-      param[userScore] = that.data.userScore;
-      param[wrongTip] = "rightTip";
-      switch (that.data.resData.LIST[index].QT_DIF) {
-        case "1":
-          param[userScore] = that.data.resData.userScore + parseFloat(that.data.resData.topic_a_score);
-          break;
-        case "2":
-          param[userScore] = that.data.resData.userScore + parseFloat(that.data.resData.topic_b_score);
-          break;
-        case "3":
-          param[userScore] = that.data.resData.userScore + parseFloat(that.data.resData.topic_c_score);
-          break;
-        default:
-          break;
-      }
+      param[rightNumb] = rn + 1;
+      var isWrong = "resData.LIST[" + index + "].isWrong";
+      param[isWrong] = false;
       that.setData(param);
     } else {
       var param = {};
       var wrongNumb = "resData.wrongNumb";
+      param[wrongNumb] = wn + 1;
       var isWrong = "resData.LIST[" + index + "].isWrong";
-      var wrongTip = "resData.LIST[" + index + "].wrongTip";
-      param[wrongNumb] = that.data.resData.wrongNumb + 1;
       param[isWrong] = true;
-      param[wrongTip] = "wrongTip";
       that.setData(param);
     }
     wx.setStorageSync(that.data.key, that.data.resData)
-  },
-  showWrong: function () {
-    var that = this;
-    that.setData({
-      showWrong: true
-    })
   },
   prev: function () {
     var that = this;
@@ -229,37 +195,96 @@ Page({
       })
     }
   },
-  submit: function () {
+  showExplain: function () {
     var that = this;
-    var pass = that.data.resData.poss_score;
-    var userScore = that.data.resData.userScore;
-    var totalScore = that.data.resData.total_score;
+    var index = that.data.nowCurrent;
+    var topicId = that.data.resData.LIST[index].topicId;
+    var payType = that.data.payType;
+    if (that.data.userInfo.coin != 0) {
+      if (that.data.resData.LIST[index].showExplain == '0') {
+        wx.showModal({
+          title: '提示',
+          content: '查看解析将花费1解析币',
+          success: function (res) {
+            if (res.confirm) {
+              wx.request({
+                url: app.globalData.hostUrl + '/admin.do?method=getTopicExplain',
+                data: {
+                  "topicId": topicId,
+                  "payType": payType
+                },
+                method: "post",
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                success: function (res) {
+                  if (res.data.RESULT == "SUCCESS") {
 
-    var totleNumb = that.data.resData.LIST.length;
-    var wrongNumb = that.data.resData.wrongNumb + that.data.resData.rightNumb;
-    var residueNumb = totleNumb - wrongNumb;
-    if (residueNumb > 0) {
+                    var param = {};
+                    var showExplain = "resData.LIST[" + that.data.nowCurrent + "].showExplain";
+                    param[showExplain] = '1';
+                    var explain = "resData.LIST[" + that.data.nowCurrent + "].explain";
+                    if (res.data.EXPLAIN.topicExplain == "") {
+                      param[explain] = "此题没有解析";
+                      that.setData(param);
+                    } else {
+                      param[explain] = res.data.EXPLAIN.topicExplain;
+                      that.setData(param);
+                      that.subCoin()
+                    }
+                  } else {
+                    wx.showToast({
+                      title: '获取解析失败，请稍后再尝试',
+                    })
+                  }
+                }
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
+    } else {
       wx.showModal({
         title: '提示',
-        content: '您还有' + residueNumb + '未做，确定提交？',
+        content: '解析币不足，去充值？',
         success: function (res) {
           if (res.confirm) {
             wx.navigateTo({
-              url: '/pages/result/result?passScore=' + pass + '&userScore=' + userScore
+              url: '/pages/pay/pay?back=1',
             })
-          } else {
-
-          }
+          } else (
+            console.log('取消充值')
+          )
         }
       })
     }
   },
-  closeWrong: function () {
-    var that = this;
-    that.setData({
-      showWrong: false
-    })
-  },
+  // submit: function () {
+  //   var that = this;
+  //   var pass = that.data.resData.poss_score;
+  //   var userScore = that.data.resData.userScore;
+  //   var totalScore = that.data.resData.total_score;
+  //   var totleNumb = that.data.resData.LIST.length;
+  //   var wrongNumb = that.data.wrongNumb + that.data.rightNumb;
+  //   var residueNumb = totleNumb - wrongNumb;
+  //   if (residueNumb > 0) {
+  //     wx.showModal({
+  //       title: '提示',
+  //       content: '您还有' + residueNumb + '未做，确定提交？',
+  //       success: function (res) {
+  //         if (res.confirm) {
+  //           wx.navigateTo({
+  //             url: '/pages/result/result?passScore=' + pass + '&userScore=' + userScore
+  //           })
+  //         } else {
+
+  //         }
+  //       }
+  //     })
+  //   }
+  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -272,14 +297,14 @@ Page({
    */
   onShow: function () {
     var that = this;
+    that.getOurUserInfo();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    var that = this;
-    clearTimeout(that.countDown.time)
+
   },
 
   /**
@@ -309,4 +334,5 @@ Page({
   onShareAppMessage: function () {
 
   }
+  
 })

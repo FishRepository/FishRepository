@@ -1,99 +1,79 @@
 <!--exam.wxml-->
 <view class="exam">
   <view class="top">
-    <image class="time-icon" style="display:none" src="../../images/chongzhijilu-icon.png"></image>
-    <text class="time" style="display:none">{{timeHour}}:{{timeMin}}:{{timeSec}}</text>
-    <button wx:if="{{wrongNumb>0}}" class="wrongBtn" bindtap="showWrong">错题集</button>
+    <text wx:if="{{resData.rightNumb>0}}" class="wrongBtn">正确：<text>{{resData.rightNumb}}</text></text>
     <text><text>{{nowCurrent+1}}</text>/<text>{{resData.LIST.length}}</text></text>
-    <text wx:if="{{wrongNumb>0}}" class="wrong">错误：<text>{{resData.wrongNumb}}</text></text>
+    <text wx:if="{{resData.wrongNumb>0}}" class="wrong">错误：<text>{{resData.wrongNumb}}</text></text>
   </view>
+
   <swiper class="swiper-cont" bindchange="swiperChange" current="{{nowCurrent}}">
-    <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
+    <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:for-index="idx">
+      
       <swiper-item>
         <view class="topic-cont">
+          <view class="qtType">
+              <text>{{qtType[list.QT_TYPE]}}</text>
+            </view>
+          <block wx:if="{{list.QT_TYPE=='1'}}">
+            <block wx:if="{{list.VO_URL?true:false}}">
+              <audio name="听力{{idx+1}}" author="海证" src="{{hostUrl}}{{list.VO_URL}}" controls></audio>
+            </block>
+          </block>
+          <block wx:else>
+            <!-- 会话功能暂时不做 -->
+          </block>
+
           <view class="topic">
             <text class="type">{{topicType[list.QT_DIF]}}</text><text>{{list.QT_CONTENT}}</text>
           </view>
+
           <!-- <image class="topic-img" src="{{hostUrl}}{{list.PIC_URL}}" mode="widthFix"></image> -->
-          <block wx:if="{{list.QT_DIF=='1'}}">
-            <radio-group bindchange="selectOption">
-              <label class="radio">
-                <radio value="1" disabled="{{showType[list.MEMO_2]}}"/>A.正确
+          <radio-group bindchange="selectOption">
+              <label class="radio" wx:if="{{list.OPTION_A?true:false}}">
+                <radio value="1" checked="{{list.choose1}}" disabled="{{list.radioDisabled}}"/>A.{{list.OPTION_A}}
               </label>
-              <label class="radio">
-                <radio value="2" disabled="{{showType[list.MEMO_2]}}"/>B.错误
+              <label class="radio" wx:if="{{list.OPTION_B?true:false}}">
+                <radio value="2" checked="{{list.choose2}}" disabled="{{list.radioDisabled}}"/>B.{{list.OPTION_B}}
               </label>
-            </radio-group>
-          </block>
-          <block wx:if="{{list.QT_DIF=='2'}}">
-            <radio-group bindchange="selectOption">
-              <label class="radio" wx:if="{{list.OPTION_A!=''}}">
-                <radio value="1" disabled="{{showType[list.MEMO_2]}}"/>A.{{list.OPTION_A}}
+              <label class="radio" wx:if="{{list.OPTION_C?true:false}}">
+                <radio value="3" checked="{{list.choose3}}" disabled="{{list.radioDisabled}}"/>C.{{list.OPTION_C}}
               </label>
-              <label class="radio" wx:if="{{list.OPTION_B!=''}}">
-                <radio value="2" disabled="{{showType[list.MEMO_2]}}"/>B.{{list.OPTION_B}}
+              <label class="radio" wx:if="{{list.OPTION_D?true:false}}">
+                <radio value="4" checked="{{list.choose4}}" disabled="{{list.radioDisabled}}"/>D.{{list.OPTION_D}}
               </label>
-              <label class="radio" wx:if="{{list.OPTION_C!=''}}">
-                <radio value="3" disabled="{{showType[list.MEMO_2]}}"/>C.{{list.OPTION_C}}
-              </label>
-              <label class="radio" wx:if="{{list.OPTION_D!=''}}">
-                <radio value="4" disabled="{{showType[list.MEMO_2]}}"/>D.{{list.OPTION_D}}
-              </label>
-            </radio-group>
-          </block>
+          </radio-group>
+
           <view class="sbtn">
             <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
           </view>
-          <view class="right-cont" wx:if="{{list.showRight!='0'}}">
+
+          <view class="right-cont" wx:if="{{list.showRight=='1'}}">
             <view class="right">
-              <text class="r {{list.wrongTip}}">正确答案:{{showRight[list.RIGHT_OPTION]}}</text>
+              <block wx:if="{{list.isWrong}}">
+                <text class="isWrong">正确答案：{{showRight[list.RIGHT_OPTION]}}</text>
+              </block>
+              <block wx:else>
+                <text class="isRight">正确答案：{{showRight[list.RIGHT_OPTION]}}</text>
+              </block>
+              
+              <button bindtap="showExplain">查看解析</button>
+              <image src="../../images/star-icon.png"></image>
+                <text class="numb">x<text>{{userInfo.coin}}</text></text>
+            </view>
+            <view class="jiexi" wx:if="{{showExplain}}">
+              <text>{{list.EXPLAN_TXT}}</text>
             </view>
           </view>
+
         </view>
       </swiper-item>
     </block>
   </swiper>
 
   <view class="btns">
-    <button class="prev" bindtap="prev">上一题</button>
-    <button class="submit" bindtap="submit">交 卷</button>
-    <button class="next" bindtap="next">下一题</button>
+    <button wx:if="{{nowCurrent>0?true:false}}" class="prev" bindtap="prev">上一题</button>
+    <!-- <button class="submit" bindtap="submit">交 卷</button> -->
+    <button wx:if="{{nowCurrent<(resData.LIST.length-1)?true:false}}" class="next" bindtap="next">下一题</button>
   </view>
 
-  <swiper wx:if="{{showWrong}}" class="swiper-cont wrongSwiper" style="height: 100%; padding-bottom: 0">
-    <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
-      <swiper-item wx:if="{{list.isWrong}}">
-        <view class="topic-cont">
-          <view class="topic">
-            <text class="type">{{topicType[list.topicType]}}</text><text>{{list.topicTitle}}</text>
-          </view>
-          <image class="topic-img" wx:if="{{list.topicImage!=''}}" src="{{hostUrl+list.topicImage}}" mode="widthFix"></image>
-          <block wx:if="{{list.topicType=='2'}}">
-              <view  class="{{list.choose1}}" wx:if="{{list.topicOptionA!=''}}">
-                A.{{list.topicOptionA}}
-              </view>
-              <view  class="{{list.choose2}}" wx:if="{{list.topicOptionB!=''}}">
-                B.{{list.topicOptionB}}
-              </view>
-              <view  class="{{list.choose3}}" wx:if="{{list.topicOptionC!=''}}">
-                C.{{list.topicOptionC}}
-              </view>
-              <view  class="{{list.choose4}}" wx:if="{{list.topicOptionD!=''}}">
-                D.{{list.topicOptionD}}
-              </view>
-          </block>
-        </view>
-        <view class="right-cont" wx:if="{{list.showRight!='0'}}">
-          <view class="right">
-            <text class="r rightTip">正确答案:{{showRight[list.topicRightOption]}}</text>
-          </view>
-        </view>
-        <view class="closeWrong">
-          <button bindtap="closeWrong">关闭</button>
-        </view>
-      </swiper-item>
-    </block>
-  </swiper>
-
-  
 </view>
