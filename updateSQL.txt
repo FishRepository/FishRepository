@@ -1,0 +1,90 @@
+drop table if exists english_class;
+
+/*==============================================================*/
+/* Table: english_class                                         */
+/*==============================================================*/
+create table english_class
+(
+   ID                   int not null auto_increment comment '主键id',
+   CLASS_NAME           varchar(255) comment '课程名称',
+   IS_PAY               int comment '是否付费',
+   CLASS_PIC            varchar(255) comment '课程图片',
+   MEMO_1               varchar(5) comment '扩展1',
+   MEMO_2               varchar(5) comment '扩展2',
+   MEMO_3               varchar(5) comment '扩展3',
+   TEXT_4               varchar(100) comment '扩展4',
+   TEXT_5               varchar(100) comment '扩展5',
+   primary key (ID)
+);
+
+alter table english_class comment '英语课程表';
+
+
+drop table if exists english_chap;
+
+/*==============================================================*/
+/* Table: english_chap                                          */
+/*==============================================================*/
+create table english_chap
+(
+   ID                   int not null auto_increment comment '主键ID',
+   CLASS_ID             int comment '课程ID',
+   CHAP_NAME            varchar(255) comment '章节名称',
+   MEMO_1               varchar(5) comment '扩展1',
+   MEMO_2               varchar(5) comment '扩展2',
+   MEMO_3               varchar(5) comment '扩展3',
+   TEXT_4               varchar(100) comment '扩展4',
+   TEXT_5               varchar(100) comment '扩展5',
+   primary key (ID)
+);
+
+alter table english_chap comment '英语课程章节表';
+
+
+drop table if exists english_question;
+
+/*==============================================================*/
+/* Table: english_question                                      */
+/*==============================================================*/
+create table english_question
+(
+   ID                   int not null auto_increment comment '主键ID',
+   CHAP_ID              int comment '章节ID',
+   QT_TYPE              int comment '题目类型(1-听力;2-会话)',
+   QT_CONTENT           varchar(255) comment '题目内容',
+   VO_URL               varchar(255) comment '音频地址',
+   PIC_URL              varchar(255) comment '图片地址',
+   OPTION_A             varchar(255) comment '选项A',
+   OPTION_B             varchar(255) comment '选项B',
+   OPTION_C             varchar(255) comment '选项C',
+   OPTION_D             varchar(255) comment '选项D',
+   RIGHT_OPTION         int comment '正确选项',
+   EXPLAN_TXT           varchar(255) comment '答案分析',
+   QT_DIF               int comment '问题类型(1判断题2单选题3阅读题)',
+   MEMO_1               varchar(5) comment '扩展1',
+   MEMO_2               varchar(5) comment '扩展2',
+   MEMO_3               varchar(5) comment '扩展3',
+   TEXT_4               varchar(100) comment '扩展4',
+   TEXT_5               varchar(100) comment '扩展5',
+   primary key (ID)
+);
+
+alter table english_question comment '英语章节题目表';
+
+
+drop table if exists english_pay;
+
+/*==============================================================*/
+/* Table: english_pay                                           */
+/*==============================================================*/
+create table english_pay
+(
+   ID                   int not null auto_increment comment '主键ID',
+   WID                  varchar(255) comment '用户openId',
+   PAY_TIME             timestamp default CURRENT_TIMESTAMP comment '购买时间',
+   CLASS_ID             int comment '课程ID',
+   ORDER_ID             int comment '订单ID',
+   primary key (ID)
+);
+
+alter table english_pay comment '英语课程订单表';
