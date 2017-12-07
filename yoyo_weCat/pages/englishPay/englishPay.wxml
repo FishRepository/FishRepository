@@ -1,20 +1,32 @@
-<scroll-view style="height: 100%;background: #eee;" scroll-y="true" class="container film-list" bindscroll="scroll" bindscrolltolower="scrolltolower">
-  <block wx:for-items="{{LIST}}" wx:for-item="item">
-    <view class="film-item" bindtap="viewDetail" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
-      <view class="film-image">
-        <block wx:if="{{item.CLASS_PIC?true:false}}">
-          <image src="{{imgUrl}}{{item.CLASS_PIC}}"></image>
-        </block>
-        <block wx:else>
-        <view class="load-content">
-          <image style="background-color: #d9d9d9;" src="../../images/defaultBook.jpg"></image>
+<scroll-view style="height: 100%;background: #eee;" scroll-y="true">
+    <view class="news-item-container">
+      <block wx:for="{{LIST}}" wx:for-index="id">
+        <view class="news-item" >
+          <view class="news-item-left">
+            <view>
+              <text class="order-title">{{item.CLASS_NAME}}</text>
+              <text class="order-money">金额：{{item.PAY_MONEY}} 元</text>
+            </view>
+            <view>
+              <block wx:if="{{item.ORDER_STATE==1?true:false}}">
+                <text class="order-pay">{{orderState[item.ORDER_STATE]}}</text>
+              </block>
+              <block wx:else>
+                <text class="order-pay-fail">{{orderState[item.ORDER_STATE]}}</text>
+              </block>  
+              <text class="order-time">时间：{{item.PAY_TIME}}</text>
+            </view>
+          </view>
+          <view class="news-item-right">
+            <block wx:if="{{item.CLASS_PIC?true:false}}">
+              <image class="news-image" src="{{imgUrl}}{{item.CLASS_PIC}}"></image>
+            </block>
+            <block wx:else>
+              <image class="news-image" style="background-color: #d9d9d9;" src="../../images/book_english.jpg"></image>
+            </block>
+          </view>
         </view>
       </block>
-      </view>
-      <view class="film-info">
-          <text class="film-title">{{item.CLASS_NAME}}</text>
-          <text class="film-year">{{payType[item.IS_PAY]}}</text>
-      </view>
     </view>
-  </block>
 </scroll-view>
+

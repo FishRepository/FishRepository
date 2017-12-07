@@ -1,7 +1,9 @@
 var app = getApp();
 Page({
   data: {
-    LIST: []
+    LIST: [],
+    orderState:["未支付","支付成功"],
+    imgUrl: app.globalData.hostUrl
   },
   onLoad: function (options) {
     var that = this;

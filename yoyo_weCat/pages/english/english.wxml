@@ -7,7 +7,7 @@
         </block>
         <block wx:else>
         <view class="load-content">
-          <image style="background-color: #d9d9d9;" src="../../images/defaultBook.jpg"></image>
+          <image style="background-color: #d9d9d9;" src="../../images/book_english.jpg"></image>
         </view>
       </block>
       </view>

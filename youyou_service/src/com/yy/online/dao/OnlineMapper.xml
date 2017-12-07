@@ -1029,9 +1029,13 @@
 
     <select id="getEnglishPayRecord" parameterType="Map" resultType="java.util.HashMap">
         SELECT
-          c.*,
+          c.CLASS_ID,
+          date_format(c.PAY_TIME,'%Y-%c-%d %h:%i:%s') as PAY_TIME,
+          c.ORDER_STATE,
+          c.ORDER_MONEY,
           d.CLASS_NAME,
-          d.CLASS_PIC
+          d.CLASS_PIC,
+          d.PAY_MONEY
         FROM (
                SELECT
                  a.CLASS_ID,
