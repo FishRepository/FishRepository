@@ -30,13 +30,9 @@
 }
 
 .order-money{
-  background-color: #eaeaea;
   color:#00D96D;
-  font-size: 14px;
-  margin-left: 90px;
-  margin-right: 20px;
-  padding-left: 2px;
-  padding-right: 2px;
+  font-size: 12px;
+  padding-left: 50px;
 }
 
 .order-pay{
@@ -51,6 +47,5 @@
 
 .order-time{
   font-size: 12px;
-  margin-left: 60px;
-  margin-right: 20px;
+  padding-left: 30px;
 }

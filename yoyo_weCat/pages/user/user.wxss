@@ -6,7 +6,7 @@
 } 
 .container .user{
   background: #FFF;
-  padding-top: 40px;
+  padding-top: 10px;
   position: relative;
   text-align: center;
   border-bottom: 1px solid #DDDDDD;
@@ -65,7 +65,7 @@
   margin-top: 20px
 }
 .container .list .list-item{
-  padding: 15px 0;
+  padding: 10px 0;
   position: relative;
   overflow: hidden
 }

@@ -122,7 +122,7 @@
   display: inline-block;
   width: 33.33%;
   text-align: center;
-  padding: 20px 0 10px;
+  padding: 2px 0 2px;
   position: relative
 }
 .container .test-cont .test-list .flex-item:after{
