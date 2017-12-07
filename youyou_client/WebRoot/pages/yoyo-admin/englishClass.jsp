@@ -161,6 +161,8 @@
             }else if("1"==isPay&&!payMoney){
                 bootbox.alert({title: "提示", message: "收费课程请填写价格！"});
                 return false;
+            }else if(parseInt(payMoney)<1){
+                bootbox.alert({title: "提示", message: "价格必须大于等于1！"});
             }{
                 $.ajax({
                     type:"post",
@@ -262,6 +264,8 @@
         }else if("1"==c&&!d){
             bootbox.alert({title: "提示", message: "收费课程请填写价格！"});
             return false;
+        }else if(parseInt(d)<1){
+            bootbox.alert({title: "提示", message: "价格必须大于等于1！"});
         }else{
             $.ajax({
                 type:"post",
