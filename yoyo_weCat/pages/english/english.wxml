@@ -33,7 +33,8 @@
               <block wx:if="{{item.PAY_OVER?true:false}}">
               </block>
               <block wx:else>
-                <button class="pay-btn">购买</button>
+                <button class="pay-btn" bindtap="payForEnglishClass" data-money="{{item.PAY_MONEY}}"
+                data-classId="{{item.ID}}">购买</button>
               </block>  
             </view> 
           </block>

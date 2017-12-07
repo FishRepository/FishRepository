@@ -552,4 +552,19 @@ public interface OnlineService {
      * @return
      */
     public Map<String, Object> getEnglishPayRecord(Map<String, Object> parm);
+
+	/**
+	 * 查询用户是否购买了此课程
+	 * @param param wid  class_id
+	 * @return
+	 */
+	public Map<String, Object> getEnglishPayRecordCount(Map<String, Object> param);
+
+	/**
+	 * 英语课程订单记录
+	 * 反射pay值的同名方法
+	 * @param parm
+	 * @return
+	 */
+	public Map<String, Object> englishPay(Map<String, Object> parm);
 }

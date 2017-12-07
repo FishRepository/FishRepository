@@ -1,3 +1,4 @@
+var util = require('../../utils/util.js');
 var app = getApp();
 Page({
   data: {
@@ -53,6 +54,115 @@ Page({
       }
     }
   },
+  payForEnglishClass: function (e) {
+    var that = this;
+    var ds = e.currentTarget.dataset;
+    var openid = app.globalData.openid;
+    var classId = ds.classid;
+    wx.request({
+      url: app.globalData.hostUrl + '/admin.do?method=getEnglishPayRecordCount',//获取用户是否购买了此章节
+      method: 'get',
+      data: {
+        'WID': openid,
+        'CLASS_ID': classId
+      },
+      success: function (res) {
+        if (res.data.ret > 0) {
+          wx.showModal({
+            title: '提示',
+            content: '您已购买了此课程，点击确定进入试题练习！',
+            success: function (res) {
+              if(res.confirm){
+                wx.navigateTo({
+                  url: '../englishChap/englishChap?classId=' + ds.classId
+                })
+              }
+            }
+          })
+        } else {
+          var oType = 2;
+          wx.request({
+            url: app.globalData.hostUrl + '/admin.do?method=payMoney',
+            data: {
+              payMoney: ds.money,
+              payClass: app.globalData.orderType[oType],
+              openid: app.globalData.openid
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            method: "post",
+            success: function (d) {
+              if (d.data.result.prepay_id) {
+                that.requestPayment(d.data.result.prepay_id, d.data.orderNumber, oType, d.data.payMoney, d.data.orderTime, classId);
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  requestPayment: function (prepayId, orderNumber, orderType, payMoney, orderTime, examId) {
+    var that = this;
+    var timeStamp = new Date().getTime();
+    timeStamp = timeStamp.toString();
+    var nonceStr = util.getRandom25String();
+    var openid = app.globalData.openid;
+    var appid = app.globalData.appid;
+
+    var paySignStr = "appId=" + app.globalData.appid +
+      "&nonceStr=" + nonceStr +
+      "&package=prepay_id=" + prepayId +
+      "&signType=MD5" +
+      "&timeStamp=" + timeStamp +
+      "&key=" + app.globalData.key;
+    var paySign = util.hex_md5(paySignStr);
+    wx.requestPayment({
+      appId: appid,
+      timeStamp: timeStamp,
+      nonceStr: nonceStr,
+      package: "prepay_id=" + prepayId,
+      signType: 'MD5',
+      paySign: paySign,
+      success: function (res) {
+        console.log(res)
+        var orderState = "1";
+        that.recordOrder(orderState, orderType, payMoney, orderNumber, orderTime, examId);
+        wx.redirectTo({
+          url: '/pages/english/english',
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    })
+  },
+  recordOrder: function (orderState, orderType, orderMoney, orderNumber, orderTime, examId) {
+    var that = this;
+    wx.request({
+      url: app.globalData.hostUrl + '/admin.do?method=englishPay',
+      method: "post",
+      data: {
+        order_money: orderMoney,
+        order_type: orderType,
+        order_state: orderState,
+        order_number: orderNumber,
+        order_time: orderTime,
+        openid: app.globalData.openid,
+        CLASS_ID: examId,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (d) {
+
+      }
+    })
+  },
+
   scroll: function (e) {
     
   },

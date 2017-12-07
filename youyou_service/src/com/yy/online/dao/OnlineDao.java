@@ -341,4 +341,19 @@ public interface OnlineDao {
      * @return
      */
     public List<Map<String,Object>> getEnglishPayRecord(Map<String, Object> parm);
+
+	/**
+	 * 查询用户是否购买了此课程
+	 * @param param wid  class_id
+	 * @return
+	 */
+	public int getEnglishPayRecordCount(Map<String, Object> param);
+
+	/**
+	 * 购买英语课程
+	 * @param param
+	 * @return
+	 */
+	public int englishPay(Map<String, Object> param);
+
 }

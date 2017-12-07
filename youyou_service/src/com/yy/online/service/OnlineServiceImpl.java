@@ -738,4 +738,24 @@ public class OnlineServiceImpl implements OnlineService{
         return resultMap;
     }
 
+	@Override
+	public Map<String, Object> getEnglishPayRecordCount(Map<String, Object> param) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		int englishPayRecordCount = this.onlineDao.getEnglishPayRecordCount(param);
+		resultMap.put("ret",englishPayRecordCount);
+		resultMap.put(RESULT, SUCCESS);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> englishPay(Map<String, Object> parm) {
+		// TODO Auto-generated method stub
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		parm.put("ORDER_ID",0);
+		this.onlineDao.englishPay(parm);
+		this.onlineDao.addEnglishPayRecord(parm);
+		resultMap.put(RESULT, SUCCESS);
+		return resultMap;
+	}
+
 }

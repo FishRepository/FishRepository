@@ -321,6 +321,19 @@
 		]]>
     </update>
 
+    <!-- 英语课程购买 -->
+    <insert id="englishPay" parameterType="Map" useGeneratedKeys="true" keyProperty="ORDER_ID">
+        insert into order_table(WID, ORDER_NUMBER, ORDER_STATE, ORDER_TYPE, ORDER_MONEY, USER_ORDER_TIME)
+        values(
+        #{OPENID, jdbcType=VARCHAR},
+        #{ORDER_NUMBER, jdbcType=VARCHAR},
+        #{ORDER_STATE, jdbcType=VARCHAR},
+        #{ORDER_TYPE, jdbcType=VARCHAR},
+        #{ORDER_MONEY, jdbcType=VARCHAR},
+        #{USER_ORDER_TIME, jdbcType=VARCHAR}
+        )
+    </insert>
+
     <!-- 充值 -->
     <insert id="pay" parameterType="Map">
         insert into order_table(WID, ORDER_NUMBER, ORDER_STATE, ORDER_TYPE, ORDER_MONEY, USER_ORDER_TIME)
@@ -1045,5 +1058,15 @@
                FROM english_pay a LEFT JOIN order_table b ON a.ORDER_ID = b.ID
                WHERE a.WID = #{WID, jdbcType=VARCHAR}
                ORDER BY PAY_TIME DESC) c LEFT JOIN english_class d ON c.CLASS_ID = d.ID
+    </select>
+
+    <select id="getEnglishPayRecordCount" parameterType="Map" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM
+        english_pay a LEFT JOIN order_table b on a.ORDER_ID = b.ID
+        WHERE a.WID = #{WID, jdbcType=VARCHAR}
+        and a.WID = b.WID
+        and b.ORDER_STATE = '1'
+        and a.CLASS_ID = #{CLASS_ID, jdbcType=VARCHAR}
     </select>
 </mapper>

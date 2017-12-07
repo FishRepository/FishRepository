@@ -282,7 +282,7 @@ public class OnlineController {
 		String payMoney = request.getParameter("payMoney");
 		String openid = request.getParameter("openid");
 		String ipString = request.getRemoteAddr();
-
+//		ipString = "119.97.231.230";
 		YoyoUtil yoyoUtil = new YoyoUtil();
 		
 		String orderNumb = yoyoUtil.returnOrderNumb();
@@ -997,7 +997,9 @@ public class OnlineController {
     public Map<String, Object> addEnglishPayRecord (HttpServletRequest request, HttpServletResponse response) throws IOException{
         Map<String, Object> parmMap = new HashMap<String, Object>();
         Map<String, Object> resultMap = new HashMap<String, Object>();
-
+		parmMap.put("WID", request.getParameter("wid"));
+		parmMap.put("CLASS_ID", request.getParameter("CLASS_ID"));
+		parmMap.put("ORDER_ID", request.getParameter("ORDER_ID"));
         resultMap = onlineService.addEnglishPayRecord(parmMap);
         return resultMap;
     }
@@ -1012,4 +1014,44 @@ public class OnlineController {
         resultMap = onlineService.getEnglishPayRecord(parmMap);
         return resultMap;
     }
+
+
+	/*查询用户是否购买了盖英语课程*/
+	@RequestMapping(params="method=getEnglishPayRecordCount", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getEnglishPayRecordCount (HttpServletRequest request, HttpServletResponse response) throws IOException{
+		Map<String, Object> parmMap = new HashMap();
+		Map<String, Object> resultMap;
+		parmMap.put("WID", request.getParameter("WID"));
+		parmMap.put("CLASS_ID", request.getParameter("CLASS_ID"));
+		resultMap = onlineService.getEnglishPayRecordCount(parmMap);
+		return resultMap;
+	}
+
+	/*记录英语订单*/
+	@RequestMapping(params="method=englishPay", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> englishPay (HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+
+		GregorianCalendar worldTour = new GregorianCalendar();
+		worldTour.add(GregorianCalendar.DATE, 30);
+
+		Date date = worldTour.getTime();
+		SimpleDateFormat  df = new SimpleDateFormat("yyyyMMddHHmmss");
+		String time = df.format(date);
+
+		parmMap.put("OPENID", request.getParameter("openid"));
+		parmMap.put("WID", request.getParameter("openid"));
+		parmMap.put("ORDER_NUMBER", request.getParameter("order_number"));
+		parmMap.put("ORDER_STATE", request.getParameter("order_state"));
+		parmMap.put("ORDER_TYPE", request.getParameter("order_type"));
+		parmMap.put("ORDER_MONEY", request.getParameter("order_money"));
+		parmMap.put("CLASS_ID", request.getParameter("CLASS_ID"));
+		parmMap.put("TIME",time);
+		parmMap.put("USER_ORDER_TIME", request.getParameter("user_order_time"));
+		resultMap = onlineService.englishPay(parmMap);
+		return resultMap;
+	}
 }
