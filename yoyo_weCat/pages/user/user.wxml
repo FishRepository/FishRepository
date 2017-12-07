@@ -36,6 +36,13 @@
       </navigator>
     </view>
     <view class="list-item jilu">
+      <navigator url="/pages/englishPay/englishPay">
+        <image class="icon" src="../../images/user-icon-pay.png"></image>
+        <text>英语课程购买记录</text>
+        <image class="rightIcon" src="../../images/right-icon.jpg"></image>
+      </navigator>
+    </view>
+    <view class="list-item jilu">
       <navigator url="/pages/help/help">
         <image class="icon" src="../../images/help-icon.png"></image>
         <text>帮助中心</text>

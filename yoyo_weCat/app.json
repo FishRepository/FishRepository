@@ -19,7 +19,8 @@
     "pages/advInfo/advInfo",
     "pages/help/help",
     "pages/englishChap/englishChap",
-    "pages/englishQuestion/englishQuestion"
+    "pages/englishQuestion/englishQuestion",
+    "pages/englishPay/englishPay"
   ],
   "window":{
     "backgroundTextStyle":"dark",
