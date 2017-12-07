@@ -302,7 +302,7 @@ public interface OnlineDao {
      * 获取全量英语课程数据
      * @return
      */
-    public List<Map<String,Object>> getAllEnglishClassData();
+    public List<Map<String,Object>> getAllEnglishClassData(Map<String, Object> parm);
 
     /**
      * 获取全量英语章节数据

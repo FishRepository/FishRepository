@@ -678,9 +678,9 @@ public class OnlineServiceImpl implements OnlineService{
     }
 
     @Override
-    public Map<String, Object> getAllEnglishData() {
+    public Map<String, Object> getAllEnglishData(Map<String, Object> parm) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<Map<String,Object>> listClass=this.onlineDao.getAllEnglishClassData();
+        List<Map<String,Object>> listClass=this.onlineDao.getAllEnglishClassData(parm);
         resultMap.put("LIST",listClass);
         resultMap.put(RESULT, SUCCESS);
         return resultMap;

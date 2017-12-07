@@ -521,7 +521,7 @@ public interface OnlineService extends CoreService{
      * 获取英语全量数据(包括课程-章节-试题)
      * @return
      */
-    public Map<String, Object> getAllEnglishData();
+    public Map<String, Object> getAllEnglishData(Map<String, Object> parm);
 
     /**
      * 根据课程ID获取章节列表

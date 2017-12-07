@@ -940,8 +940,10 @@ public class OnlineController {
     @RequestMapping(params="method=getAllEnglishClassData", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getAllEnglishClassData (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap = onlineService.getAllEnglishData();
+        parmMap.put("WID",request.getParameter("WID"));
+        resultMap = onlineService.getAllEnglishData(parmMap);
         return resultMap;
     }
 

@@ -988,8 +988,17 @@
     </update>
 
     <!-- 英语微信接口增删改查 -->
-    <select id="getAllEnglishClassData" resultType="java.util.HashMap">
-        select * from english_class where MEMO_1='NOR'
+    <select id="getAllEnglishClassData" parameterType="Map" resultType="java.util.HashMap">
+        SELECT
+          c.*,
+          d.CLASS_ID AS PAY_OVER
+        FROM english_class c
+        LEFT JOIN (
+          SELECT a.CLASS_ID
+          FROM english_pay a LEFT JOIN order_table b ON a.ORDER_ID = b.ID
+          WHERE a.WID = #{WID, jdbcType=VARCHAR} AND b.ORDER_STATE = 1
+        ) d
+        ON c.ID = d.CLASS_ID WHERE c.MEMO_1='NOR'
     </select>
 
     <select id="getAllEnglishChapDataByClassId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
