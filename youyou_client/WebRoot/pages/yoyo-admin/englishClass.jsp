@@ -19,10 +19,14 @@
         </div>
         <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
             <label>是否付费</label>
-            <select id="isPay" class="form-control">
+            <select id="isPay" class="form-control" onchange="selectIsPay('#isPay')">
                 <option value="0">否</option>
                 <option value="1">是</option>
             </select>
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2" id="showMoneyDiv">
+            <label>价格(单位/元)</label>
+            <input type="text" id="payMoney" class="form-control" placeholder="填写价格"/>
         </div>
         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
             <label></label>
@@ -55,9 +59,10 @@
             <thead>
             <tr>
                 <th width="10%">序号</th>
-                <th width="30%">课程图片</th>
+                <th width="20%">课程图片</th>
                 <th width="30%">课程名称</th>
                 <th width="10%">是否付费</th>
+                <th width="10%">价格(单位/元)</th>
                 <th width="20%">操作</th>
             </tr>
             </thead>
@@ -85,10 +90,14 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                             <label>是否付费</label>
-                            <select id="mIsPay" class="form-control">
+                            <select id="mIsPay" class="form-control" onchange="upSelPay('#mIsPay')">
                                 <option value="0">否</option>
                                 <option value="1">是</option>
                             </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label>价格(单位/元)</label>
+                            <input type="text" id="mPayMoney" class="form-control" placeholder=""/>
                         </div>
                     </div>
                 </div>
@@ -145,17 +154,22 @@
         $("#btnAdd").click(function(){
             var className = $("#className").val();
             var isPay = $("#isPay").val();
+            var payMoney = $("#payMoney").val();
             if(!className){
                 bootbox.alert({title: "提示", message: "请输入课程名称！"});
                 return false;
-            }else{
+            }else if("1"==isPay&&!payMoney){
+                bootbox.alert({title: "提示", message: "收费课程请填写价格！"});
+                return false;
+            }{
                 $.ajax({
                     type:"post",
                     url:urlPath+"/admin.do?method=addEnglishClass",
                     async:true,
                     data:{
                         className:className,
-                        isPay:isPay
+                        isPay:isPay,
+                        payMoney:payMoney
                     },
                     success:function(d){
                         if(d.RESULT=="SUCCESS"){
@@ -166,13 +180,42 @@
                 });
             }
         });
+        selectIsPay('#isPay');
     });
 
-    function opModal(id,className,isPay){
+    function selectIsPay(p){
+        var selIsPay = $(p).val();
+        if("1"==selIsPay){
+            $("#showMoneyDiv").show();
+            $("#payMoney").val("");
+        }else{
+            $("#showMoneyDiv").hide();
+            $("#payMoney").val("");
+        }
+    }
+
+    function upSelPay(c){
+        var selIsPay = $(c).val();
+        if("1"==selIsPay){
+            $("#mPayMoney").removeAttr("readonly");
+            $("#mPayMoney").val("");
+        }else{
+            $("#mPayMoney").attr({ readonly: 'true' });
+            $("#mPayMoney").val("");
+        }
+    }
+
+    function opModal(id,className,isPay,payMoney){
         $("#mClassId").val(id);
         $("#mClassName").val(className);
         $("#mIsPay").val(isPay);
         $("#myModal").modal('show');
+        upSelPay("#mIsPay");
+        if(payMoney){
+            $("#mPayMoney").val(payMoney);
+        }else{
+            $("#mPayMoney").val("");
+        }
     }
 
     function del(id,t){
@@ -212,23 +255,33 @@
         var a=$('#mClassId').val();
         var b=$('#mClassName').val();
         var c=$('#mIsPay').val();
-        $.ajax({
-            type:"post",
-            data:{
-                id:a,
-                className:b,
-                isPay:c
-            },
-            url:urlPath+"/admin.do?method=updEnglishClass",
-            async:true,
-            success:function(d){
-                if(d.RESULT=="SUCCESS"){
-                    $("#myModal").modal('hide');
-                    refleshTable();
-                    bootbox.alert({title: '提示', message: '修改成功！'});
+        var d = $("#mPayMoney").val();
+        if(!b){
+            bootbox.alert({title: "提示", message: "请输入课程名称！"});
+            return false;
+        }else if("1"==c&&!d){
+            bootbox.alert({title: "提示", message: "收费课程请填写价格！"});
+            return false;
+        }else{
+            $.ajax({
+                type:"post",
+                data:{
+                    id:a,
+                    className:b,
+                    isPay:c,
+                    payMoney:d
+                },
+                url:urlPath+"/admin.do?method=updEnglishClass",
+                async:true,
+                success:function(d){
+                    if(d.RESULT=="SUCCESS"){
+                        $("#myModal").modal('hide');
+                        refleshTable();
+                        bootbox.alert({title: '提示', message: '修改成功！'});
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     function opPicModal(classId){
@@ -260,8 +313,9 @@
                         '<td>'+pic+'</td>' +
                         '<td>' + d.LIST[i].className + '</td>' +
                         '<td>' + x + '</td>' +
+                        '<td>' + d.LIST[i].payMoney + '</td>' +
                         '<td>'+
-                        '<a class="btn btn-primary" onclick="opModal(\''+d.LIST[i].id+'\',\''+d.LIST[i].className+'\',\''+d.LIST[i].isPay+'\')">修改</a>' +
+                        '<a class="btn btn-primary" onclick="opModal(\''+d.LIST[i].id+'\',\''+d.LIST[i].className+'\',\''+d.LIST[i].isPay+'\',\''+d.LIST[i].payMoney+'\')">修改</a>' +
                         '<a class="btn btn-info" onclick="opPicModal(\'' + d.LIST[i].id + '\')">上传图片</a>' +
                         '<a class="btn btn-danger" onclick="del(\'' + d.LIST[i].id + '\',this)">删除</a>' +
                         '</td>' +

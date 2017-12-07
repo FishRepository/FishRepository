@@ -735,6 +735,7 @@ public class OnlineController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         parmMap.put("className", request.getParameter("className"));
         parmMap.put("isPay", request.getParameter("isPay"));
+        parmMap.put("payMoney", request.getParameter("payMoney"));
         resultMap = onlineService.addEnglishClass(parmMap);
         return resultMap;
     }
@@ -748,6 +749,7 @@ public class OnlineController {
         parmMap.put("id", request.getParameter("id"));
         parmMap.put("className", request.getParameter("className"));
         parmMap.put("isPay", request.getParameter("isPay"));
+        parmMap.put("payMoney", request.getParameter("payMoney"));
         resultMap = onlineService.updateEnglishClass(parmMap);
         return resultMap;
     }
@@ -984,6 +986,28 @@ public class OnlineController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getAllEnglishQuestionTalkDataByChapId(parmMap);
+        return resultMap;
+    }
+
+    /*插入英语课程购买记录*/
+    @RequestMapping(params="method=addEnglishPayRecord", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> addEnglishPayRecord (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+        resultMap = onlineService.addEnglishPayRecord(parmMap);
+        return resultMap;
+    }
+
+    /*查询英语课程购买记录*/
+    @RequestMapping(params="method=getEnglishPayRecord", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getEnglishPayRecord (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Map<String, Object> parmMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        parmMap.put("WID", request.getParameter("wid"));
+        resultMap = onlineService.getEnglishPayRecord(parmMap);
         return resultMap;
     }
 }

@@ -796,6 +796,7 @@
         ID as id,
         CLASS_NAME as className,
         IS_PAY as isPay,
+        PAY_MONEY as payMoney,
         CLASS_PIC as classPic,
         MEMO_1 as memo1,
         MEMO_2 as memo2,
@@ -810,10 +811,11 @@
 
     <insert id="addEnglishClass" parameterType="Map">
         insert into english_class
-        (CLASS_NAME,IS_PAY,MEMO_1,MEMO_2,MEMO_3,TEXT_4,TEXT_5)
+        (CLASS_NAME,IS_PAY,PAY_MONEY,MEMO_1,MEMO_2,MEMO_3,TEXT_4,TEXT_5)
         values
         (#{className, jdbcType=VARCHAR},
         #{isPay, jdbcType=DECIMAL},
+        #{payMoney, jdbcType=VARCHAR},
         'NOR',
         #{memo2, jdbcType=VARCHAR},
         #{memo3, jdbcType=VARCHAR},
@@ -826,7 +828,7 @@
     </update>
 
     <update id="updateEnglishClass" parameterType="Map">
-        update english_class set CLASS_NAME = #{className, jdbcType=VARCHAR},IS_PAY=#{isPay, jdbcType=DECIMAL} where ID = #{id, jdbcType=DECIMAL}
+        update english_class set CLASS_NAME = #{className, jdbcType=VARCHAR},IS_PAY=#{isPay, jdbcType=DECIMAL},PAY_MONEY=#{payMoney, jdbcType=VARCHAR} where ID = #{id, jdbcType=DECIMAL}
     </update>
 
     <update id="updateEnglishClassPic" parameterType="Map">
@@ -1017,6 +1019,18 @@
     </insert>
 
     <select id="getEnglishPayRecord" parameterType="Map" resultType="java.util.HashMap">
-        select * from english_pay a left join order_table b on a.ORDER_ID=b.ID order by PAY_TIME DESC
+        SELECT
+          c.*,
+          d.CLASS_NAME,
+          d.CLASS_PIC
+        FROM (
+               SELECT
+                 a.CLASS_ID,
+                 a.PAY_TIME,
+                 b.ORDER_STATE,
+                 b.ORDER_MONEY
+               FROM english_pay a LEFT JOIN order_table b ON a.ORDER_ID = b.ID
+               WHERE a.WID = #{WID, jdbcType=VARCHAR}
+               ORDER BY PAY_TIME DESC) c LEFT JOIN english_class d ON c.CLASS_ID = d.ID
     </select>
 </mapper>
