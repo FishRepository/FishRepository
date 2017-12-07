@@ -3,6 +3,7 @@
   padding: 10px;
   display: flex;
   border:0;
+  border-radius: 5px;
   border-top:2px solid #fff;
   border-bottom:2px solid #fff;
   border-left:1px solid #fff;
@@ -19,12 +20,10 @@
 .film-info{
   padding-left: 10px;
   flex: 1;
-  position: relative
 }
 .film-title{
  font-size: 18px;
  color: #000000;
- position: absolute;
 }
 .film-year{
   font-size: 16px;
@@ -33,7 +32,52 @@
   border-radius: 2px;
   padding-left: 5px;
   padding-right: 5px;
-  position: absolute;
   bottom: 1px;
   margin-bottom: 5px;
+}
+.file-pay-info{
+  position: block;
+  margin-bottom: 5px;
+}
+.hhhh{
+  margin-top: 10%;
+  padding-bottom: 38%;
+}
+.film-year-pay{
+  font-size: 16px;
+  color: #fff;
+  background-color:#ffd966;
+  border-radius: 2px;
+  border:1px;
+  border-color: #ffd966;
+  padding-left: 5px;
+  padding-right: 5px;
+  bottom: 1px;
+  margin-bottom: 5px;
+}
+.file-money-icon{
+  width: 25px;
+  height: 25px;
+  float: left;
+}
+.film-year-money{
+  font-size: 18px;
+  float: left;
+  margin-top: 1px;
+}
+.pay-btn{
+  width: 60px;
+  font-size: 14px;
+  color: #00D96D;
+  background: #fff;
+  line-height: 25px;
+  border: 1px solid #00D96D;
+  border-radius: 5px;
+}
+.has-pay{
+  width: 80px;
+  height: 80px;
+  float: right;
+  margin-right:55px;
+  margin-top:18px;
 }

@@ -1,7 +1,7 @@
 <scroll-view style="height: 100%;background: #eee;" scroll-y="true" class="container film-list" bindscroll="scroll" bindscrolltolower="scrolltolower">
   <block wx:for-items="{{LIST}}" wx:for-item="item">
-    <view class="film-item" bindtap="viewDetail" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
-      <view class="film-image">
+    <view class="film-item">
+      <view class="film-image" bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
         <block wx:if="{{item.CLASS_PIC?true:false}}">
           <image src="{{imgUrl}}{{item.CLASS_PIC}}"></image>
         </block>
@@ -12,8 +12,33 @@
       </block>
       </view>
       <view class="film-info">
-          <text class="film-title">{{item.CLASS_NAME}}</text>
-          <text class="film-year">{{payType[item.IS_PAY]}}</text>
+          <view>
+            <text class="film-title">{{item.CLASS_NAME}}</text>
+          </view>
+          <block wx:if="{{item.IS_PAY===1?false:true}}">
+            <view class="hhhh">
+              <text class="film-year">{{payType[item.IS_PAY]}}</text>
+            </view>
+          </block>
+          <block wx:else>
+            <view class="hhhh">
+              <text class="film-year-pay">{{payType[item.IS_PAY]}}</text>
+              <block wx:if="{{item.PAY_OVER?true:false}}">
+                <image class="has-pay" src="../../images/hasBuy.png"></image>
+              </block>
+            </view>
+            <view>
+              <image class="file-money-icon" src="../../images/value.png"></image>
+              <text class="film-year-money">{{item.PAY_MONEY}}</text>
+            </view>
+            <view>
+              <block wx:if="{{item.PAY_OVER?true:false}}">
+              </block>
+              <block wx:else>
+                <button class="pay-btn">购买</button>
+              </block>  
+            </view> 
+          </block>
       </view>
     </view>
   </block>
