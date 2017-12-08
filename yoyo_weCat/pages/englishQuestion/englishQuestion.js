@@ -12,8 +12,7 @@ Page({
     qtType:["","听力测试","会话测试"],
     nowCurrent: 0,
     wrongNumb: 0, 
-    rightNumb: 0,
-    showExplain:false
+    rightNumb: 0
   },
   /**
    * 生命周期函数--监听页面加载
@@ -130,6 +129,7 @@ Page({
     }
     that.setData(param);
   },
+
   swiperChange: function (e) {
     var that = this;
     var param = {};
@@ -138,8 +138,15 @@ Page({
     that.setData(param);
     that.setData({
       nowCurrent: e.detail.current
-    })
+    });
+    wx.stopBackgroundAudio();
+    for (var t = 0; t < that.data.resData.LIST.length; t++) {
+      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      param[isPlayTTT] = false;
+      that.setData(param);
+    };
   },
+
   showRight: function () {
     var that = this;
     var index = that.data.nowCurrent;
@@ -183,8 +190,14 @@ Page({
       that.setData({
         nowCurrent: that.data.nowCurrent - 1
       })
-    }
-
+    };
+    wx.stopBackgroundAudio();
+    var param = {};
+    for (var t = 0; t < that.data.resData.LIST.length; t++) {
+      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      param[isPlayTTT] = false;
+      that.setData(param);
+    };
   },
   next: function () {
     var that = this;
@@ -193,101 +206,22 @@ Page({
       that.setData({
         nowCurrent: that.data.nowCurrent + 1
       })
-    }
+    };
+    wx.stopBackgroundAudio();
+    var param = {};
+    for (var t = 0; t < that.data.resData.LIST.length; t++) {
+      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      param[isPlayTTT] = false;
+      that.setData(param);
+    };
   },
-  showExplain: function () {
+  showQtExplain: function () {
     var that = this;
-    var index = that.data.nowCurrent;
-    var topicId = that.data.resData.LIST[index].topicId;
-    var payType = that.data.payType;
-    if (that.data.userInfo.coin != 0) {
-      if (that.data.resData.LIST[index].showExplain == '0') {
-        wx.showModal({
-          title: '提示',
-          content: '查看解析将花费1解析币',
-          success: function (res) {
-            if (res.confirm) {
-              wx.request({
-                url: app.globalData.hostUrl + '/admin.do?method=getTopicExplain',
-                data: {
-                  "topicId": topicId,
-                  "payType": payType
-                },
-                method: "post",
-                header: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-                },
-                success: function (res) {
-                  if (res.data.RESULT == "SUCCESS") {
-
-                    var param = {};
-                    var showExplain = "resData.LIST[" + that.data.nowCurrent + "].showExplain";
-                    param[showExplain] = '1';
-                    var explain = "resData.LIST[" + that.data.nowCurrent + "].explain";
-                    if (res.data.EXPLAIN.topicExplain == "") {
-                      param[explain] = "此题没有解析";
-                      that.setData(param);
-                    } else {
-                      param[explain] = res.data.EXPLAIN.topicExplain;
-                      that.setData(param);
-                      that.subCoin()
-                    }
-                  } else {
-                    wx.showToast({
-                      title: '获取解析失败，请稍后再尝试',
-                    })
-                  }
-                }
-              })
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
-          }
-        })
-      }
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '解析币不足，去充值？',
-        success: function (res) {
-          if (res.confirm) {
-            wx.navigateTo({
-              url: '/pages/pay/pay?back=1',
-            })
-          } else (
-            console.log('取消充值')
-          )
-        }
-      })
-    }
+    var param = {};
+    var showExplain = "resData.LIST[" + that.data.nowCurrent + "].showExplain";
+    param[showExplain] = '1';
+    that.setData(param);
   },
-  // submit: function () {
-  //   var that = this;
-  //   var pass = that.data.resData.poss_score;
-  //   var userScore = that.data.resData.userScore;
-  //   var totalScore = that.data.resData.total_score;
-  //   var totleNumb = that.data.resData.LIST.length;
-  //   var wrongNumb = that.data.wrongNumb + that.data.rightNumb;
-  //   var residueNumb = totleNumb - wrongNumb;
-  //   if (residueNumb > 0) {
-  //     wx.showModal({
-  //       title: '提示',
-  //       content: '您还有' + residueNumb + '未做，确定提交？',
-  //       success: function (res) {
-  //         if (res.confirm) {
-  //           wx.navigateTo({
-  //             url: '/pages/result/result?passScore=' + pass + '&userScore=' + userScore
-  //           })
-  //         } else {
-
-  //         }
-  //       }
-  //     })
-  //   }
-  // },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
 
   },
@@ -333,6 +267,65 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 播放音频
+   */
+  playVoice:function(){
+    var that = this;
+    var index = that.data.nowCurrent;
+    wx.playBackgroundAudio({
+      dataUrl: app.globalData.hostUrl+that.data.resData.LIST[index].VO_URL,
+    });
+    var param = {};
+    var isPlay = "resData.LIST[" + index + "].isPlay";
+    param[isPlay]=true;
+    that.setData(param);
+    for (var t=0; t < that.data.resData.LIST.length;t++) {
+      if(index==t){
+        continue;
+      }
+      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      param[isPlayTTT] = false;
+      that.setData(param);
+    }
+  },
+
+  /**
+   * 暂停播放
+   */
+  stopVoice:function(){
+    var that = this;
+    var index = that.data.nowCurrent;
+    wx.pauseBackgroundAudio();
+    var param = {};
+    var isPlay = "resData.LIST[" + index + "].isPlay";
+    param[isPlay] = false;
+    that.setData(param);
+  },
+
+  /**
+   * 重新播放
+   */
+  replayVoice:function(){
+    var that = this;
+    var index = that.data.nowCurrent;
+    wx.stopBackgroundAudio();
+    wx.playBackgroundAudio({
+      dataUrl: app.globalData.hostUrl + that.data.resData.LIST[index].VO_URL,
+    });
+    var param = {};
+    var isPlay = "resData.LIST[" + index + "].isPlay";
+    param[isPlay] = true;
+    that.setData(param);
+    for (var t=0; t < that.data.resData.LIST.length; t++) {
+      if (index == t) {
+        continue;
+      }
+      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      param[isPlayTTT] = false;
+      that.setData(param);
+    }
   }
-  
 })

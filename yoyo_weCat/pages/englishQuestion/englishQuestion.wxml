@@ -12,11 +12,30 @@
       <swiper-item>
         <view class="topic-cont">
           <view class="qtType">
-              <text>{{qtType[list.QT_TYPE]}}</text>
-            </view>
+            <text>{{qtType[list.QT_TYPE]}}</text>
+          </view>
+
           <block wx:if="{{list.QT_TYPE=='1'}}">
             <block wx:if="{{list.VO_URL?true:false}}">
-              <audio name="听力{{idx+1}}" author="海证" src="{{hostUrl}}{{list.VO_URL}}" controls></audio>
+              <view class="audiomain">
+                <!-- <image class="audiobg" src="../../images/audiobg.png" mode="aspectFit"/> -->
+                <block wx:if="{{list.isPlay}}">
+                  <view class="play-stop" bindtap="stopVoice">
+                    <image class="audiobg" src="../../images/stoplisten.png" mode="aspectFit"/>
+                    <text>暂停</text>
+                  </view>
+                </block>
+                <block wx:else>
+                  <view class="play-stop" bindtap="playVoice">
+                    <image class="audiobg" src="../../images/playlisten.png" mode="aspectFit"/>
+                    <text>播放</text>
+                  </view>
+                </block>
+                <view class="play-stop">
+                  <image bindtap="replayVoice" class="audiobg" src="../../images/replaylisten.png" mode="aspectFit"/>
+                  <text>重播</text>
+                </view>
+              </view>
             </block>
           </block>
           <block wx:else>
@@ -56,12 +75,16 @@
                 <text class="isRight">正确答案：{{showRight[list.RIGHT_OPTION]}}</text>
               </block>
               
-              <button bindtap="showExplain">查看解析</button>
-              <image src="../../images/star-icon.png"></image>
-                <text class="numb">x<text>{{userInfo.coin}}</text></text>
+              <button bindtap="showQtExplain">查看解析</button>
+
+              <!-- 英语课程解析暂时放开不做限制 -->
+              <!-- <image src="../../images/star-icon.png"></image>
+              <text class="numb">x<text>{{userInfo.coin}}</text></text> -->
+
+
             </view>
-            <view class="jiexi" wx:if="{{showExplain}}">
-              <text>{{list.EXPLAN_TXT}}</text>
+            <view class="jiexi" wx:if="{{list.showExplain==1?true:false}}">
+              <text>{{list.EXPLAN_TXT?list.EXPLAN_TXT:'此题无解析'}}</text>
             </view>
           </view>
 

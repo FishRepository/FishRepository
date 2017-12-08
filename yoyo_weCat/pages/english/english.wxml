@@ -6,7 +6,7 @@
           <image src="{{imgUrl}}{{item.CLASS_PIC}}"></image>
         </block>
         <block wx:else>
-          <image style="background-color: #d9d9d9;" src="../../images/book_english.jpg"></image>
+          <image mode="aspectFit" style="background-color: #d9d9d9;" src="../../images/book_english.jpg"></image>
       </block>
       </view>
       <view class="film-info">
