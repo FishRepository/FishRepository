@@ -10,22 +10,22 @@
       </block>
       </view>
       <view class="film-info">
-          <view>
+          <view bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
             <text class="film-title">{{item.CLASS_NAME}}</text>
           </view>
           <block wx:if="{{item.IS_PAY===1?false:true}}">
-            <view class="hhhh">
+            <view class="hhhh" bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
               <text class="film-year">{{payType[item.IS_PAY]}}</text>
             </view>
           </block>
           <block wx:else>
-            <view class="hhhh">
+            <view class="hhhh" bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
               <text class="film-year-pay">{{payType[item.IS_PAY]}}</text>
               <block wx:if="{{item.PAY_OVER?true:false}}">
                 <image class="has-pay" src="../../images/has_buy1.png"></image>
               </block>
             </view>
-            <view>
+            <view bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
               <image class="file-money-icon" src="../../images/value.png"></image>
               <text class="film-year-money">{{item.PAY_MONEY}}元</text>
             </view>
