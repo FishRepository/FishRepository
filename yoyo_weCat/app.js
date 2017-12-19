@@ -41,7 +41,7 @@ App({
     session_key:"",
     appid:"wx3f315fb4a4971eb9",
     key:"7f86b2d529779abf05543da15be00eb5",
-    hostUrl: "http://localhost:8080/youyou_client",
+    hostUrl: "https://www.yoyotec.com/youyou_client",
     //"http://111.111.125.234:8080/youyou_client", // http://111.111.125.238:8080/youyou_client  https://www.yoyotec.com/youyou_client
     openid:"",
     payMoney:1,

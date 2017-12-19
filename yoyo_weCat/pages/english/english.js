@@ -81,10 +81,11 @@ Page({
           })
         } else {
           var oType = 2;
+          var payMoney = ds.money * 100;
           wx.request({
             url: app.globalData.hostUrl + '/admin.do?method=payMoney',
             data: {
-              payMoney: ds.money,
+              payMoney: payMoney,
               payClass: app.globalData.orderType[oType],
               openid: app.globalData.openid
             },
@@ -94,7 +95,7 @@ Page({
             method: "post",
             success: function (d) {
               if (d.data.result.prepay_id) {
-                that.requestPayment(d.data.result.prepay_id, d.data.orderNumber, oType, d.data.payMoney, d.data.orderTime, classId);
+                that.requestPayment(d.data.result.prepay_id, d.data.orderNumber, oType, payMoney, d.data.orderTime, classId);
               }
             }
           })

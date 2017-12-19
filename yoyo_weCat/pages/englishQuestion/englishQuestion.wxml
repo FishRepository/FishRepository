@@ -1,16 +1,19 @@
 <!--exam.wxml-->
+
 <view class="exam">
+  
   <view class="top">
     <text wx:if="{{resData.rightNumb>0}}" class="wrongBtn">正确：<text>{{resData.rightNumb}}</text></text>
     <text><text>{{nowCurrent+1}}</text>/<text>{{resData.LIST.length}}</text></text>
     <text wx:if="{{resData.wrongNumb>0}}" class="wrong">错误：<text>{{resData.wrongNumb}}</text></text>
   </view>
 
+  
   <swiper class="swiper-cont" bindchange="swiperChange" current="{{nowCurrent}}">
     <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:for-index="idx">
-      
       <swiper-item>
-        <view class="topic-cont">
+          
+         <scroll-view scroll-y="true" class="topic-cont"> 
           <view class="qtType">
             <text>{{qtType[list.QT_TYPE]}}</text>
           </view>
@@ -45,8 +48,13 @@
           <view class="topic">
             <text class="type">{{topicType[list.QT_DIF]}}</text><text>{{list.QT_CONTENT}}</text>
           </view>
-
-          <!-- <image class="topic-img" src="{{hostUrl}}{{list.PIC_URL}}" mode="widthFix"></image> -->
+          <block wx:if="{{list.PIC_URL}}">
+              <image class="topic-img" src="{{hostUrl}}{{list.PIC_URL}}" mode="aspectFit" bindtap='showModal' data-cur="{{hostUrl}}{{list.PIC_URL}}" data-preview="{{hostUrl}}{{list.PIC_URL}}"></image> 
+              <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+              <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+              <image class="topic-img" src="{{hostUrl}}{{list.PIC_URL}}" mode="aspectFit" bindtouchmove="imgtouch" style="width:{{scaleWidth}}px; height:{{scaleHeight}}px"></image>
+              </view>
+          </block>
           <radio-group bindchange="selectOption">
               <label class="radio" wx:if="{{list.OPTION_A?true:false}}">
                 <radio value="1" checked="{{list.choose1}}" disabled="{{list.radioDisabled}}"/>A.{{list.OPTION_A}}
@@ -87,8 +95,7 @@
               <text>{{list.EXPLAN_TXT?list.EXPLAN_TXT:'此题无解析'}}</text>
             </view>
           </view>
-
-        </view>
+        </scroll-view>
       </swiper-item>
     </block>
   </swiper>
@@ -98,5 +105,7 @@
     <!-- <button class="submit" bindtap="submit">交 卷</button> -->
     <button wx:if="{{nowCurrent<(resData.LIST.length-1)?true:false}}" class="next" bindtap="next">下一题</button>
   </view>
+
+
 
 </view>

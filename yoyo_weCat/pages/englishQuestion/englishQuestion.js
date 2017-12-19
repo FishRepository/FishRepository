@@ -12,7 +12,13 @@ Page({
     qtType:["","听力测试","会话测试"],
     nowCurrent: 0,
     wrongNumb: 0, 
-    rightNumb: 0
+    rightNumb: 0,
+    animation: {},
+    showModalStatus: false,
+    scaleWidth: 300,
+    scaleHeight: 200,
+    distance: {},
+    scale: 1
   },
   /**
    * 生命周期函数--监听页面加载
@@ -24,6 +30,13 @@ Page({
       userInfo: app.globalData.userInfo,
       key: options.chapId + "-ZJ-" + "key"
     })
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          clientHeight: res.windowHeight
+        });
+      }
+    });
     wx.showLoading({
       title: '正在加载试题...'
     }),
@@ -221,6 +234,69 @@ Page({
     var showExplain = "resData.LIST[" + that.data.nowCurrent + "].showExplain";
     param[showExplain] = '1';
     that.setData(param);
+  },
+  imgPre(event){
+    var preview = event.currentTarget.dataset.preview;
+    var urls = [];
+    urls[0] = preview;
+    var cur = event.currentTarget.dataset.cur;
+    wx.previewImage({
+      current : cur,
+      urls: urls
+    })
+  },
+  showModal: function () {
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  hideModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showModalStatus: false
+      })
+    }.bind(this), 200)
+  },
+  imgtouch: function (e) {
+    var xMove = e.touches[1].clientX - e.touches[0].clientX; 
+    var yMove = e.touches[1].clientY - e.touches[0].clientY; 
+    var distance = Math.sqrt(xMove * xMove + yMove * yMove);
+    var distanceDiff = (distance - this.data.distance);
+    var newScale = this.data.scale + 0.005 * distanceDiff;
+    this.setData({
+      distance: distance,
+      scale: newScale,
+      scaleWidth: 300 * newScale,
+      scaleHeight: 200 * newScale
+    })
   },
   onReady: function () {
 
