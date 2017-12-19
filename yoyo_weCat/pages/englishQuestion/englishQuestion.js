@@ -245,59 +245,68 @@ Page({
       urls: urls
     })
   },
-  showModal: function () {
-    // 显示遮罩层
-    var animation = wx.createAnimation({
-      duration: 200,
-      timingFunction: "linear",
-      delay: 0
+  // showModal: function () {
+  //   // 显示遮罩层
+  //   var animation = wx.createAnimation({
+  //     duration: 200,
+  //     timingFunction: "linear",
+  //     delay: 0
+  //   })
+  //   this.animation = animation
+  //   animation.translateY(300).step()
+  //   this.setData({
+  //     animationData: animation.export(),
+  //     showModalStatus: true
+  //   })
+  //   setTimeout(function () {
+  //     animation.translateY(0).step()
+  //     this.setData({
+  //       animationData: animation.export()
+  //     })
+  //   }.bind(this), 200)
+  // },
+  // hideModal: function () {
+  //   // 隐藏遮罩层
+  //   var animation = wx.createAnimation({
+  //     duration: 200,
+  //     timingFunction: "linear",
+  //     delay: 0
+  //   })
+  //   this.animation = animation
+  //   animation.translateY(300).step()
+  //   this.setData({
+  //     animationData: animation.export(),
+  //   })
+  //   setTimeout(function () {
+  //     animation.translateY(0).step()
+  //     this.setData({
+  //       animationData: animation.export(),
+  //       showModalStatus: false
+  //     })
+  //   }.bind(this), 200)
+  // },
+  // imgtouch: function (e) {
+  //   var xMove = e.touches[1].clientX - e.touches[0].clientX; 
+  //   var yMove = e.touches[1].clientY - e.touches[0].clientY; 
+  //   var distance = Math.sqrt(xMove * xMove + yMove * yMove);
+  //   var distanceDiff = (distance - this.data.distance);
+  //   var newScale = this.data.scale + 0.005 * distanceDiff;
+  //   this.setData({
+  //     distance: distance,
+  //     scale: newScale,
+  //     scaleWidth: 300 * newScale,
+  //     scaleHeight: 200 * newScale
+  //   })
+  // },
+  previewImage: function (e) {
+    var current = e.target.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接  
+      urls: [current] 
     })
-    this.animation = animation
-    animation.translateY(300).step()
-    this.setData({
-      animationData: animation.export(),
-      showModalStatus: true
-    })
-    setTimeout(function () {
-      animation.translateY(0).step()
-      this.setData({
-        animationData: animation.export()
-      })
-    }.bind(this), 200)
   },
-  hideModal: function () {
-    // 隐藏遮罩层
-    var animation = wx.createAnimation({
-      duration: 200,
-      timingFunction: "linear",
-      delay: 0
-    })
-    this.animation = animation
-    animation.translateY(300).step()
-    this.setData({
-      animationData: animation.export(),
-    })
-    setTimeout(function () {
-      animation.translateY(0).step()
-      this.setData({
-        animationData: animation.export(),
-        showModalStatus: false
-      })
-    }.bind(this), 200)
-  },
-  imgtouch: function (e) {
-    var xMove = e.touches[1].clientX - e.touches[0].clientX; 
-    var yMove = e.touches[1].clientY - e.touches[0].clientY; 
-    var distance = Math.sqrt(xMove * xMove + yMove * yMove);
-    var distanceDiff = (distance - this.data.distance);
-    var newScale = this.data.scale + 0.005 * distanceDiff;
-    this.setData({
-      distance: distance,
-      scale: newScale,
-      scaleWidth: 300 * newScale,
-      scaleHeight: 200 * newScale
-    })
-  },
+
+
   onReady: function () {
 
   },
