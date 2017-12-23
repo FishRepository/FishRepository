@@ -1,10 +1,11 @@
 package com.yy.util;
 
 import com.iflytek.cloud.speech.*;
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.log4j.Logger;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class VoiceUtil {
     private static SpeechRecognizer getInstance(){
         if(speechRecognizer==null){
             speechRecognizer = SpeechRecognizer.createRecognizer();
+            SpeechUtility.createUtility("appid=5a3ca8c7");
 //            speechRecognizer.setParameter(SpeechConstant.ENGINE_TYPE, "cloud");
 //            speechRecognizer.setParameter(SpeechConstant.TEXT_ENCODING, "utf-8");
             speechRecognizer.setParameter(SpeechConstant.RESULT_TYPE, "json");
@@ -71,45 +73,44 @@ public class VoiceUtil {
     private RecognizerListener recListener = new RecognizerListener() {
 
         public void onBeginOfSpeech() {
-            log.info( "onBeginOfSpeech enter" );
-            log.info("*************开始录音*************");
+            System.out.printf("onBeginOfSpeech enter");
+            System.out.printf("*************开始录音*************");
             mResult = new StringBuffer("");
         }
 
         public void onEndOfSpeech() {
-            log.info( "onEndOfSpeech enter" );
+            System.out.printf("onEndOfSpeech enter");
             mIsEndOfSpeech = true;
         }
 
         public void onVolumeChanged(int volume) {
-            log.info( "onVolumeChanged enter" );
+            System.out.printf("onVolumeChanged enter");
             if (volume > 0)
-                log.info("*************音量值:" + volume + "*************");
+                System.out.printf("*************音量值:" + volume + "*************");
 
         }
 
         public void onResult(RecognizerResult result, boolean islast) {
-            log.info( "onResult enter" );
-            mResult.append(result.getResultString());
+            System.out.printf("onResult enter");
+            mResult.append(JSONUtil.toJsonString(result.getResultString()));
 
             if( islast ){
-                log.info("识别结果为:" + mResult.toString());
-
+                System.out.printf("识别结果为######:" + mResult.toString());
                 mIsEndOfSpeech = true;
-                mResult.delete(0, mResult.length());
+//                mResult.delete(0, mResult.length());
                 waitupLoop();
             }
         }
 
         public void onError(SpeechError error) {
             mIsEndOfSpeech = true;
-            log.info("*************" + error.getErrorCode()
+            System.out.printf("错误*************" + error.getErrorCode()
                     + "*************");
             waitupLoop();
         }
 
         public void onEvent(int eventType, int arg1, int agr2, String msg) {
-            log.info( "onEvent enter" );
+            System.out.printf("onEvent enter");
         }
 
     };
