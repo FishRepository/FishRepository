@@ -40,7 +40,7 @@
       },
       {
         "pagePath": "pages/newChoose/newChoose",
-        "text": "测试",
+        "text": "在线练习",
         "iconPath": "images/exam-icon-off.png",
         "selectedIconPath": "images/exam-icon-on.png"
       },
