@@ -567,4 +567,10 @@ public interface OnlineService {
 	 * @return
 	 */
 	public Map<String, Object> englishPay(Map<String, Object> parm);
+
+	/**
+	 * 用户总数count
+	 * @return
+	 */
+	public int countUsers(Map<String, Object> parm);
 }

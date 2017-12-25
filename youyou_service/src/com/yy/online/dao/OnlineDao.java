@@ -356,4 +356,10 @@ public interface OnlineDao {
 	 */
 	public int englishPay(Map<String, Object> param);
 
+	/**
+	 * 用户总数count
+	 * @return
+	 */
+	public int countUsers(Map<String, Object> param);
+
 }

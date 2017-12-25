@@ -448,11 +448,19 @@
         SEX as user_sex,
         PHONE as user_phone,
         EMAIL as user_email
-        from users_table limit
-        <![CDATA[
-			#{begin,jdbcType=VARCHAR},
-			#{end,jdbcType=VARCHAR}
-		]]>
+        from users_table
+        <if test="userName != null and userName != '' ">
+          WHERE NAME LIKE "%"#{userName,jdbcType=VARCHAR}"%"
+        </if>
+        limit #{begin,jdbcType=VARCHAR},#{end,jdbcType=VARCHAR}
+    </select>
+
+    <!--用户总数count-->
+    <select id="countUsers" resultType="java.lang.Integer" parameterType="Map">
+        SELECT COUNT(1) FROM users_table
+        <if test="userName != null and userName != '' ">
+          WHERE NAME LIKE "%"#{userName,jdbcType=VARCHAR}"%"
+        </if>
     </select>
 
     <!-- 添加试卷 -->

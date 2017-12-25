@@ -256,8 +256,8 @@ public class OnlineServiceImpl implements OnlineService{
 	public Map<String, Object> getUserByPage(Map<String, Object> parm) {
 		// TODO Auto-generated method stub
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("LIST", this.onlineDao.getUserByPage(parm));
-		resultMap.put(RESULT, SUCCESS);
+		resultMap.put("data", this.onlineDao.getUserByPage(parm));
+//		resultMap.put(RESULT, SUCCESS);
 		return resultMap;
 	}
 	
@@ -756,6 +756,11 @@ public class OnlineServiceImpl implements OnlineService{
 		this.onlineDao.addEnglishPayRecord(parm);
 		resultMap.put(RESULT, SUCCESS);
 		return resultMap;
+	}
+
+	@Override
+	public int countUsers(Map<String, Object> parm) {
+		return this.onlineDao.countUsers(parm);
 	}
 
 }

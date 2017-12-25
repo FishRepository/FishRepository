@@ -381,12 +381,18 @@ public class OnlineController {
 	/*获取用户列表by区间*/
 	@RequestMapping(params="method=getUserByPage", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getUserByPage (HttpServletRequest request, HttpServletResponse response){
+	public Map<String, Object> getUserByPage (@RequestParam(value = "start", defaultValue = "0") int start,
+											  @RequestParam(value = "length", defaultValue = "10") int length,
+											  @RequestParam(value = "userName") String userName){
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		parmMap.put("begin", Integer.parseInt(request.getParameter("begin")));
-		parmMap.put("end", Integer.parseInt(request.getParameter("end")));
+		parmMap.put("begin", start);
+		parmMap.put("end", length);
+		parmMap.put("userName", userName);
 		resultMap = onlineService.getUserByPage(parmMap);
+		int total = onlineService.countUsers(parmMap);
+		resultMap.put("recordsTotal",total);
+		resultMap.put("recordsFiltered",total);
 		return resultMap;
 	}
 	
