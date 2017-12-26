@@ -5,20 +5,23 @@ Page({
    */
   data: {
     resData: {},
+    listeningList: {},
+    conversationList: {},
     userInfo: {},
     hostUrl: app.globalData.hostUrl,
     topicType: ["", "判断题", "单选题", "阅读理解"],
     showRight: ["", "A", "B", "C", "D"],
     qtType:["","听力测试","会话测试"],
-    nowCurrent: 0,
-    wrongNumb: 0, 
-    rightNumb: 0,
-    animation: {},
-    showModalStatus: false,
-    scaleWidth: 300,
-    scaleHeight: 200,
-    distance: {},
-    scale: 1
+    // nowCurrent: 0,
+    // wrongNumb: 0,
+    // rightNumb: 0,
+    listeningNowCurrent: 0,
+    listeningWrongNumb: 0,
+    listeningRightNumb: 0,
+    convNowCurrent: 0,
+    convWrongNumb: 0,
+    convRightNumb: 0,
+    qtTypeSwitch: 1//1，听力，会话
   },
   /**
    * 生命周期函数--监听页面加载
@@ -49,7 +52,8 @@ Page({
             resData: res.data
           });
           that.setData({
-            nowCurrent: that.data.nowCurrent
+            listeningNowCurrent: that.data.listeningNowCurrent,
+            convNowCurrent: that.data.convNowCurrent
           })
         },
         fail: function () {
@@ -60,7 +64,7 @@ Page({
             },
             success: function (res) {
               wx.hideLoading();
-              if (res.data.LIST.length == 0) {
+              if (res.data.listeningList.length == 0) {
                 wx.showToast({
                   title: '该章节暂无试题',
                 })
@@ -146,18 +150,49 @@ Page({
   swiperChange: function (e) {
     var that = this;
     var param = {};
-    var nowCurrent = "resData.nowCurrent";
-    param[nowCurrent] = e.detail.current;
-    that.setData(param);
-    that.setData({
-      nowCurrent: e.detail.current
-    });
-    wx.stopBackgroundAudio();
-    for (var t = 0; t < that.data.resData.LIST.length; t++) {
-      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
-      param[isPlayTTT] = false;
-      that.setData(param);
-    };
+    var qtTypeSwitch = that.data.qtTypeSwitch;
+    switch (qtTypeSwitch){
+      case 1:
+        var listeningNowCurrent = "resData.listeningNowCurrent";
+        param[listeningNowCurrent] = e.detail.current;
+        that.setData(param);
+        that.setData({
+          listeningNowCurrent: e.detail.current
+        });
+        wx.stopBackgroundAudio();
+        for (var t = 0; t < that.data.resData.listeningList.length; t++) {
+          var isPlayTTT = "resData.listeningList[" + t + "].isPlay";
+          param[isPlayTTT] = false;
+          that.setData(param);
+        };
+        break;
+      case 2:
+        var convNowCurrent = "resData.convNowCurrent";
+        param[convNowCurrent] = e.detail.current;
+        that.setData(param);
+        that.setData({
+          convNowCurrent: e.detail.current
+        });
+        wx.stopBackgroundAudio();
+        for (var t = 0; t < that.data.resData.conversationList.length; t++) {
+          var isPlayTTT = "resData.conversationList[" + t + "].isPlay";
+          param[isPlayTTT] = false;
+          that.setData(param);
+        };
+        break;
+    }
+    // var nowCurrent = "resData.nowCurrent";
+    // param[nowCurrent] = e.detail.current;
+    // that.setData(param);
+    // that.setData({
+    //   nowCurrent: e.detail.current
+    // });
+    // wx.stopBackgroundAudio();
+    // for (var t = 0; t < that.data.resData.LIST.length; t++) {
+    //   var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+    //   param[isPlayTTT] = false;
+    //   that.setData(param);
+    // };
   },
 
   showRight: function () {
@@ -245,59 +280,6 @@ Page({
       urls: urls
     })
   },
-  // showModal: function () {
-  //   // 显示遮罩层
-  //   var animation = wx.createAnimation({
-  //     duration: 200,
-  //     timingFunction: "linear",
-  //     delay: 0
-  //   })
-  //   this.animation = animation
-  //   animation.translateY(300).step()
-  //   this.setData({
-  //     animationData: animation.export(),
-  //     showModalStatus: true
-  //   })
-  //   setTimeout(function () {
-  //     animation.translateY(0).step()
-  //     this.setData({
-  //       animationData: animation.export()
-  //     })
-  //   }.bind(this), 200)
-  // },
-  // hideModal: function () {
-  //   // 隐藏遮罩层
-  //   var animation = wx.createAnimation({
-  //     duration: 200,
-  //     timingFunction: "linear",
-  //     delay: 0
-  //   })
-  //   this.animation = animation
-  //   animation.translateY(300).step()
-  //   this.setData({
-  //     animationData: animation.export(),
-  //   })
-  //   setTimeout(function () {
-  //     animation.translateY(0).step()
-  //     this.setData({
-  //       animationData: animation.export(),
-  //       showModalStatus: false
-  //     })
-  //   }.bind(this), 200)
-  // },
-  // imgtouch: function (e) {
-  //   var xMove = e.touches[1].clientX - e.touches[0].clientX; 
-  //   var yMove = e.touches[1].clientY - e.touches[0].clientY; 
-  //   var distance = Math.sqrt(xMove * xMove + yMove * yMove);
-  //   var distanceDiff = (distance - this.data.distance);
-  //   var newScale = this.data.scale + 0.005 * distanceDiff;
-  //   this.setData({
-  //     distance: distance,
-  //     scale: newScale,
-  //     scaleWidth: 300 * newScale,
-  //     scaleHeight: 200 * newScale
-  //   })
-  // },
   previewImage: function (e) {
     var current = e.target.dataset.src;
     wx.previewImage({
@@ -305,8 +287,6 @@ Page({
       urls: [current] 
     })
   },
-
-
   onReady: function () {
 
   },
@@ -412,5 +392,19 @@ Page({
       param[isPlayTTT] = false;
       that.setData(param);
     }
+  },
+  /**
+   * 切换题目类型
+   */
+  qtTypeSwitch:function(e){
+    var that = this;
+    var clicktype = e.target.dataset.clicktype*1;
+    if (that.data.qtTypeSwitch === clicktype){
+      console.log("点击灰色");
+      return;
+    }
+    that.setData({
+      qtTypeSwitch: clicktype
+    })
   }
 })

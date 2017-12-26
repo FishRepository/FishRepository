@@ -4,18 +4,20 @@
   
   <view class="top">
     <text wx:if="{{resData.rightNumb>0}}" class="wrongBtn">正确：<text>{{resData.rightNumb}}</text></text>
-    <text><text>{{nowCurrent+1}}</text>/<text>{{resData.LIST.length}}</text></text>
+    <text><text>{{qtTypeSwitch==1?listeningNowCurrent+1:convNowCurrent+1}}</text>/<text>{{qtTypeSwitch==1?resData.listeningList.length:resData.conversationList.length}}</text></text>
     <text wx:if="{{resData.wrongNumb>0}}" class="wrong">错误：<text>{{resData.wrongNumb}}</text></text>
   </view>
-
-  
-  <swiper class="swiper-cont" bindchange="swiperChange" current="{{nowCurrent}}">
-    <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:for-index="idx">
+  <swiper class="swiper-cont" bindchange="swiperChange" current="{{qtTypeSwitch==1?listeningNowCurrent:convNowCurrent}}">
+    <block wx:if="{{qtTypeSwitch==1}}">
+    <!--听力-->
+    <block wx:for="{{resData.listeningList}}" wx:for-item="list" wx:for-index="idx" >
       <swiper-item>
           
          <scroll-view scroll-y="true" class="topic-cont"> 
           <view class="qtType">
-            <text>{{qtType[list.QT_TYPE]}}</text>
+            <!-- <text>{{qtType[list.QT_TYPE]}}</text> -->
+            <view class="{{qtTypeSwitch==1?'curTab':'tab'}}" bindtap="qtTypeSwitch" data-clicktype="1">听力</view>
+            <view class="{{qtTypeSwitch==2?'curTab':'tab'}}" bindtap="qtTypeSwitch"  data-clicktype="2">会话</view>
           </view>
 
           <block wx:if="{{list.QT_TYPE=='1'}}">
@@ -43,6 +45,8 @@
           </block>
           <block wx:else>
             <!-- 会话功能暂时不做 -->
+
+
           </block>
 
           <view class="topic">
@@ -50,12 +54,6 @@
           </view>
 
           <block wx:if="{{list.PIC_URL}}">
-              <!-- <image class="topic-img" src="{{hostUrl}}{{list.PIC_URL}}" mode="aspectFit" bindtap='showModal' data-cur="{{hostUrl}}{{list.PIC_URL}}" data-preview="{{hostUrl}}{{list.PIC_URL}}"></image> 
-              <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
-              <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
-              <image class="topic-img" src="{{hostUrl}}{{list.PIC_URL}}" mode="aspectFit" bindtouchmove="imgtouch" style="width:{{scaleWidth}}px; height:{{scaleHeight}}px"></image>
-              </view> -->
-
               <image class="view-img" src='{{hostUrl}}{{list.PIC_URL}}' data-src="{{hostUrl}}{{list.PIC_URL}}" bindtap="previewImage"></image>
           </block>
 
@@ -102,6 +100,100 @@
         </scroll-view>
       </swiper-item>
     </block>
+    </block>
+    <block wx:else>
+      <!--会话-->
+      <block wx:for="{{resData.conversationList}}" wx:for-item="list" wx:for-index="idx" >
+          <swiper-item>
+         <scroll-view scroll-y="true" class="topic-cont">
+          <view class="qtType">
+            <!-- <text>{{qtType[list.QT_TYPE]}}</text> -->
+            <view class="{{qtTypeSwitch==1?'curTab':'tab'}}" bindtap="qtTypeSwitch" data-clicktype="1">听力</view>
+            <view class="{{qtTypeSwitch==2?'curTab':'tab'}}" bindtap="qtTypeSwitch"  data-clicktype="2">会话</view>
+          </view>
+
+          <block wx:if="{{list.QT_TYPE=='1'}}">
+            <block wx:if="{{list.VO_URL?true:false}}">
+              <view class="audiomain">
+                <!-- <image class="audiobg" src="../../images/audiobg.png" mode="aspectFit"/> -->
+                <block wx:if="{{list.isPlay}}">
+                  <view class="play-stop" bindtap="stopVoice">
+                    <image class="audiobg" src="../../images/stoplisten.png" mode="aspectFit"/>
+                    <text>暂停</text>
+                  </view>
+                </block>
+                <block wx:else>
+                  <view class="play-stop" bindtap="playVoice">
+                    <image class="audiobg" src="../../images/playlisten.png" mode="aspectFit"/>
+                    <text>播放</text>
+                  </view>
+                </block>
+                <view class="play-stop">
+                  <image bindtap="replayVoice" class="audiobg" src="../../images/replaylisten.png" mode="aspectFit"/>
+                  <text>重播</text>
+                </view>
+              </view>
+            </block>
+          </block>
+          <block wx:else>
+            <!-- 会话功能暂时不做 -->
+
+
+          </block>
+
+          <view class="topic">
+            <text class="type">{{topicType[list.QT_DIF]}}</text><text>{{list.QT_CONTENT}}</text>
+          </view>
+
+          <block wx:if="{{list.PIC_URL}}">
+              <image class="view-img" src='{{hostUrl}}{{list.PIC_URL}}' data-src="{{hostUrl}}{{list.PIC_URL}}" bindtap="previewImage"></image>
+          </block>
+
+          <radio-group bindchange="selectOption">
+              <label class="radio" wx:if="{{list.OPTION_A?true:false}}">
+                <radio value="1" checked="{{list.choose1}}" disabled="{{list.radioDisabled}}"/>A.{{list.OPTION_A}}
+              </label>
+              <label class="radio" wx:if="{{list.OPTION_B?true:false}}">
+                <radio value="2" checked="{{list.choose2}}" disabled="{{list.radioDisabled}}"/>B.{{list.OPTION_B}}
+              </label>
+              <label class="radio" wx:if="{{list.OPTION_C?true:false}}">
+                <radio value="3" checked="{{list.choose3}}" disabled="{{list.radioDisabled}}"/>C.{{list.OPTION_C}}
+              </label>
+              <label class="radio" wx:if="{{list.OPTION_D?true:false}}">
+                <radio value="4" checked="{{list.choose4}}" disabled="{{list.radioDisabled}}"/>D.{{list.OPTION_D}}
+              </label>
+          </radio-group>
+
+          <view class="sbtn">
+            <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
+          </view>
+
+          <view class="right-cont" wx:if="{{list.showRight=='1'}}">
+            <view class="right">
+              <block wx:if="{{list.isWrong}}">
+                <text class="isWrong">正确答案：{{showRight[list.RIGHT_OPTION]}}</text>
+              </block>
+              <block wx:else>
+                <text class="isRight">正确答案：{{showRight[list.RIGHT_OPTION]}}</text>
+              </block>
+              
+              <button bindtap="showQtExplain">查看解析</button>
+
+              <!-- 英语课程解析暂时放开不做限制 -->
+              <!-- <image src="../../images/star-icon.png"></image>
+              <text class="numb">x<text>{{userInfo.coin}}</text></text> -->
+
+
+            </view>
+            <view class="jiexi" wx:if="{{list.showExplain==1?true:false}}">
+              <text>{{list.EXPLAN_TXT?list.EXPLAN_TXT:'此题无解析'}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+      </block>
+    </block>
+    
   </swiper>
 
   <view class="btns">
