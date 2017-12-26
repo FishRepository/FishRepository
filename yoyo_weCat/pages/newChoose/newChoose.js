@@ -52,8 +52,11 @@ Page({
       wx.removeStorageSync('certVal');
       wx.removeStorageSync('certText');
       wx.removeStorageSync('postText');
-      wx.navigateBack({
-        delta: 1
+      // wx.navigateBack({
+      //   delta: 1
+      // })
+      wx.switchTab({
+        url: '/pages/index/index'
       })
     }catch(e){
 
