@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js');
 var app = getApp();
 Page({
   /**
@@ -339,19 +340,20 @@ Page({
    */
   playVoice:function(){
     var that = this;
-    var index = that.data.nowCurrent;
+    var index = this.constantDataIndex();
+    var list = this.constantDataList();
     wx.playBackgroundAudio({
-      dataUrl: app.globalData.hostUrl+that.data.resData.LIST[index].VO_URL,
+      dataUrl: app.globalData.hostUrl + list[index].VO_URL,
     });
     var param = {};
-    var isPlay = "resData.LIST[" + index + "].isPlay";
+    var isPlay = this.constantDataIsPlay(index);
     param[isPlay]=true;
     that.setData(param);
-    for (var t=0; t < that.data.resData.LIST.length;t++) {
+    for (var t = 0; t < list.length;t++) {
       if(index==t){
         continue;
       }
-      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      var isPlayTTT = this.constantDataIsPlay(t);
       param[isPlayTTT] = false;
       that.setData(param);
     }
@@ -362,10 +364,10 @@ Page({
    */
   stopVoice:function(){
     var that = this;
-    var index = that.data.nowCurrent;
+    var index = this.constantDataIndex();
     wx.pauseBackgroundAudio();
     var param = {};
-    var isPlay = "resData.LIST[" + index + "].isPlay";
+    var isPlay = this.constantDataIsPlay(index);
     param[isPlay] = false;
     that.setData(param);
   },
@@ -375,20 +377,21 @@ Page({
    */
   replayVoice:function(){
     var that = this;
-    var index = that.data.nowCurrent;
+    var index = this.constantDataIndex();
+    var list = this.constantDataList();
     wx.stopBackgroundAudio();
     wx.playBackgroundAudio({
-      dataUrl: app.globalData.hostUrl + that.data.resData.LIST[index].VO_URL,
+      dataUrl: app.globalData.hostUrl + list[index].VO_URL,
     });
     var param = {};
-    var isPlay = "resData.LIST[" + index + "].isPlay";
+    var isPlay = this.constantDataIsPlay(index);
     param[isPlay] = true;
     that.setData(param);
-    for (var t=0; t < that.data.resData.LIST.length; t++) {
+    for (var t = 0; t < list.length; t++) {
       if (index == t) {
         continue;
       }
-      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+      var isPlayTTT = this.constantDataIsPlay(t);
       param[isPlayTTT] = false;
       that.setData(param);
     }
@@ -400,11 +403,22 @@ Page({
     var that = this;
     var clicktype = e.target.dataset.clicktype*1;
     if (that.data.qtTypeSwitch === clicktype){
-      console.log("点击灰色");
       return;
     }
     that.setData({
       qtTypeSwitch: clicktype
     })
+  },
+  constantDataIndex: function () {
+    var that = this;
+    return that.qtTypeSwitch == 1 ? that.data.listeningNowCurrent : that.data.convNowCurrent;
+  },
+  constantDataList: function() {
+    var that = this;
+    return that.data.qtTypeSwitch == 1 ? that.data.resData.listeningList : that.data.resData.conversationList;
+  },
+  constantDataIsPlay: function(t) {
+    var that = this;
+    return that.data.qtTypeSwitch == 1 ? "resData.listeningList[" + t + "].isPlay" : "resData.conversationList[" + t + "].isPlay";
   }
 })
