@@ -106,16 +106,16 @@ Page({
   },
   selectOption: function (e) {
     var that = this;
-    var index = that.data.nowCurrent;
+    var index = this.constantDataIndex();
     that.setData({
       topicResult: e.detail.value
     })
     var param = {};
-    var chooseItem = "resData.LIST[" + index + "].chooseItem";
-    var choose1 = "resData.LIST[" + index + "].choose1";
-    var choose2 = "resData.LIST[" + index + "].choose2";
-    var choose3 = "resData.LIST[" + index + "].choose3";
-    var choose4 = "resData.LIST[" + index + "].choose4";
+    var chooseItem = this.constantDataChoose("chooseItem",index);
+    var choose1 = this.constantDataChoose("choose1", index);
+    var choose2 = this.constantDataChoose("choose2", index);
+    var choose3 = this.constantDataChoose("choose3", index);
+    var choose4 = this.constantDataChoose("choose4", index);
     param[chooseItem] = that.data.topicResult;
     switch (that.data.topicResult) {
       case "1":
@@ -198,35 +198,36 @@ Page({
 
   showRight: function () {
     var that = this;
-    var index = that.data.nowCurrent;
-    if (that.data.resData.LIST[index].chooseItem == "" || !that.data.resData.LIST[index].chooseItem) {
+    var index = this.constantDataIndex();
+    var list = this.constantDataList();
+    if (list[index].chooseItem == "" || !list[index].chooseItem) {
       wx.showToast({
         title: '请选择一个选项!'
       })
       return;
     }
     var param = {};
-    var showRight = "resData.LIST[" + that.data.nowCurrent + "].showRight";
-    var btnDisabled = "resData.LIST[" + that.data.nowCurrent + "].btnDisabled";
-    var radioDisabled = "resData.LIST[" + that.data.nowCurrent + "].radioDisabled";
+    var showRight = this.constantDataChoose("showRight", index);
+    var btnDisabled = this.constantDataChoose("btnDisabled", index);
+    var radioDisabled = this.constantDataChoose("radioDisabled", index);
     param[showRight] = '1';
     param[btnDisabled] = true;
     param[radioDisabled] = true;
     that.setData(param);
-    var rn = that.data.resData.rightNumb > 0 ? that.data.resData.rightNumb:0;
-    var wn = that.data.resData.wrongNumb > 0 ? that.data.resData.wrongNumb : 0;
-    if (that.data.resData.LIST[index].RIGHT_OPTION == that.data.topicResult) {
+    var rn = this.constantDataRight() > 0 ? this.constantDataRight() : 0;
+    var wn = this.constantDataWrong() > 0 ? this.constantDataWrong() : 0;
+    if (list[index].RIGHT_OPTION == that.data.topicResult) {
       var param = {};
-      var rightNumb = "resData.rightNumb";
+      var rightNumb = that.data.qtTypeSwitch == 1 ? "resData.listeningRightNumb" : "resData.convRightNumb";
       param[rightNumb] = rn + 1;
-      var isWrong = "resData.LIST[" + index + "].isWrong";
+      var isWrong = this.constantDataChoose("isWrong", index);
       param[isWrong] = false;
       that.setData(param);
     } else {
       var param = {};
-      var wrongNumb = "resData.wrongNumb";
+      var wrongNumb = that.data.qtTypeSwitch == 1 ? "resData.listeningWrongNumb" : "resData.convWrongNumb";
       param[wrongNumb] = wn + 1;
-      var isWrong = "resData.LIST[" + index + "].isWrong";
+      var isWrong = this.constantDataChoose("isWrong", index);
       param[isWrong] = true;
       that.setData(param);
     }
@@ -234,32 +235,54 @@ Page({
   },
   prev: function () {
     var that = this;
-    var index = that.data.nowCurrent;
+    var index = this.constantDataIndex();
     if (index > 0) {
-      that.setData({
-        nowCurrent: that.data.nowCurrent - 1
-      })
+      var qtTypeSwitch = that.data.qtTypeSwitch;
+      switch (qtTypeSwitch){
+        case 1:
+          that.setData({
+            listeningNowCurrent: this.constantDataIndex - 1
+          });
+          break;
+        case 2:
+          that.setData({
+            convNowCurrent: this.constantDataIndex - 1
+          });
+          break;
+      }
     };
     wx.stopBackgroundAudio();
     var param = {};
-    for (var t = 0; t < that.data.resData.LIST.length; t++) {
-      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+    var list = this.constantDataList();
+    for (var t = 0; t < list.length; t++) {
+      var isPlayTTT = this.constantDataIsPlay(t);
       param[isPlayTTT] = false;
       that.setData(param);
     };
   },
   next: function () {
     var that = this;
-    var index = that.data.nowCurrent;
-    if (index < that.data.resData.LIST.length - 1) {
-      that.setData({
-        nowCurrent: that.data.nowCurrent + 1
-      })
+    var index = this.constantDataIndex();
+    var list = this.constantDataList();
+    if (index < list.length - 1) {
+      var qtTypeSwitch = that.data.qtTypeSwitch;
+      switch (qtTypeSwitch) {
+        case 1:
+          that.setData({
+            listeningNowCurrent: this.constantDataIndex + 1
+          });
+          break;
+        case 2:
+          that.setData({
+            convNowCurrent: this.constantDataIndex + 1
+          });
+          break;
+      }
     };
     wx.stopBackgroundAudio();
     var param = {};
-    for (var t = 0; t < that.data.resData.LIST.length; t++) {
-      var isPlayTTT = "resData.LIST[" + t + "].isPlay";
+    for (var t = 0; t < list.length; t++) {
+      var isPlayTTT = this.constantDataIsPlay(t);
       param[isPlayTTT] = false;
       that.setData(param);
     };
@@ -267,7 +290,9 @@ Page({
   showQtExplain: function () {
     var that = this;
     var param = {};
-    var showExplain = "resData.LIST[" + that.data.nowCurrent + "].showExplain";
+    var index = this.constantDataIndex();
+    var showExplain = this.constantDataChoose("showExplain", index);
+    // "resData.LIST[" + that.data.nowCurrent + "].showExplain";
     param[showExplain] = '1';
     that.setData(param);
   },
@@ -419,6 +444,19 @@ Page({
   },
   constantDataIsPlay: function(t) {
     var that = this;
-    return that.data.qtTypeSwitch == 1 ? "resData.listeningList[" + t + "].isPlay" : "resData.conversationList[" + t + "].isPlay";
-  }
+    return that.data.qtTypeSwitch == 1 ? "resData.listeningList[" + t + "].isPlay" :  "resData.conversationList[" + t + "].isPlay";
+  },
+  constantDataChoose: function(choose,index){
+    var that = this;
+    return that.data.qtTypeSwitch == 1 ? "resData.listeningList[" + index + "]." + choose :
+    "resData.conversationList[" + index + "]." + choose;
+  },
+  constantDataRight: function(){
+    var that = this;
+    return that.data.qtTypeSwitch == 1 ? that.data.resData.listeningRightNumb : that.data.resData.convRightNumb;
+  },
+  constantDataWrong: function () {
+    var that = this;
+    return that.data.qtTypeSwitch == 1 ? that.data.resData.listeningWrongNumb : that.data.resData.convWrongNumb;
+  },
 })
