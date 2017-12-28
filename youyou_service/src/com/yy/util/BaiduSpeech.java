@@ -24,7 +24,7 @@ public class BaiduSpeech {
 //        client.setHttpProxy("proxy_host", proxy_port);  // 设置http代理
 //        client.setSocketProxy("proxy_host", proxy_port);  // 设置socket代理
         // 调用接口
-        HashMap<String, Object> options = new HashMap();
+        HashMap<String, Object> options = new HashMap<>();
         options.put("lan",lan);
         JSONObject res = client.asr(sourcePath, "wav", 8000, options);
         String result = "";

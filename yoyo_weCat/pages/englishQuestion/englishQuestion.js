@@ -1,5 +1,13 @@
 const util = require('../../utils/util.js');
 var app = getApp();
+const options = {
+  duration: 60000,
+  sampleRate: 16000,
+  numberOfChannels: 1,
+  encodeBitRate: 48000,
+  format: 'mp3',
+  frameSize: 50
+};
 Page({
   /**
    * 页面的初始数据
@@ -446,26 +454,13 @@ Page({
     var that = this;
     this.stopVoice();
     var index = this.constantDataIndex();
-    wx.startRecord({
-      success: function (res) {
-        var tempFilePath = res.tempFilePath;
-      },
-      fail: function (res) {
-        //录音失败
-      }
-    })
-    setTimeout(function () {
-      //结束录音  
-      this.stopRecord();
-    }, 10000)
-
     var param = {};
     var isRecord = this.constantDataChoose("isRecord",index);
     param[isRecord] = true;
     that.setData(param);
+    this.constantRecorderStart();
   },
   stopRecord: function (){
-    wx.stopRecord();
     var that = this;
     this.stopVoice();
     var index = this.constantDataIndex();
@@ -473,6 +468,7 @@ Page({
     var isRecord = this.constantDataChoose("isRecord", index);
     param[isRecord] = false;
     that.setData(param);
+    this.constantRecorderStop();
   },
   constantDataIndex: function () {
     var that = this;
@@ -499,4 +495,97 @@ Page({
     var that = this;
     return that.data.qtTypeSwitch == 1 ? that.data.resData.listeningWrongNumb : that.data.resData.convWrongNumb;
   },
+  constantRecorderStart: function () {
+    var that = this;
+    const recorderManager = this.constantRecorderManager();
+    recorderManager.start(options);
+  },
+  constantRecorderStop: function () {
+    var that = this;
+    const recorderManager = wx.getRecorderManager();
+    recorderManager.stop();
+  },
+  constantRecorderManager: function () {
+    const recorderManager = wx.getRecorderManager();
+    recorderManager.onStart(() => {
+      console.log('recorder start');
+    });
+    recorderManager.onResume(() => {
+      console.log('recorder resume');
+    });
+    recorderManager.onPause(() => {
+      console.log('recorder pause');
+    });
+    recorderManager.onStop((res) => {
+      console.log('recorder stop', res);
+      const { tempFilePath } = res;
+      const that = this;
+      that.setData({
+        recordFile: tempFilePath
+      });
+      this.uploadFileToServer();
+      // wx.showToast({
+      //   title: that.data.recordFile,
+      //   icon: 'success',
+      //   duration: 2000
+      // })
+    });
+    recorderManager.onFrameRecorded((res) => {
+      const { frameBuffer } = res
+      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
+    });
+    return recorderManager;
+  },
+  uploadFileToServer: function () {
+    const that = this;
+    wx.showToast();
+    setTimeout(function () {
+      var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";
+      console.log(that.data.recordFile);
+      wx.uploadFile({
+        url: urls,
+        filePath: that.data.recordFile,
+        name: 'file' + app.globalData.openid,
+        formData:{
+          fileName: 'file' + app.globalData.openid+".mp3"
+        },
+        header: {
+          'content-type': 'multipart/form-data'
+        },
+        success: function (res) {
+          wx.showToast();
+          // var str = res.data;
+          // var data = JSON.parse(str);
+          // if (data.states == 1) {
+          //   var cEditData = s.data.editData;
+          //   cEditData.recodeIdentity = data.identitys;
+          //   s.setData({ editData: cEditData });
+          // }
+          // else {
+          //   wx.showModal({
+          //     title: '提示',
+          //     content: data.message,
+          //     showCancel: false,
+          //     success: function (res) {
+
+          //     }
+          //   });
+          // }
+          // wx.hideToast();
+        },
+        fail: function (res) {
+          console.log(res);
+          wx.showModal({
+            title: '提示',
+            content: "网络请求失败，请确保网络是否正常",
+            showCancel: false,
+            success: function (res) {
+
+            }
+          });
+          wx.hideToast();
+        }
+      });
+    }, 1000);
+  }
 })

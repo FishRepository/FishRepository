@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yy.util.AudioUploadUtil;
+import com.yy.util.SaveFileFromWX;
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1058,6 +1059,21 @@ public class OnlineController {
 		parmMap.put("TIME",time);
 		parmMap.put("USER_ORDER_TIME", request.getParameter("user_order_time"));
 		resultMap = onlineService.englishPay(parmMap);
+		return resultMap;
+	}
+
+	/*记录英语订单*/
+	@RequestMapping(params="method=englishASR", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object>  englishASR(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String fileName = request.getParameter("fileName");
+		String filePath = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\"+fileName;
+		SaveFileFromWX save = new SaveFileFromWX();
+		save.saveFile(request);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("filePath", filePath);
+		resultMap = onlineService.englishRSA(parmMap);
 		return resultMap;
 	}
 }

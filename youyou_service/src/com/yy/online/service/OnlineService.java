@@ -581,4 +581,11 @@ public interface OnlineService extends CoreService{
 	 * @return
 	 */
 	public int countUsers(Map<String, Object> parm);
+
+	/**
+	 * 英语会话语音识别
+	 * @param parm
+	 * @return
+	 */
+	public Map<String, Object> englishRSA(Map<String, Object> parm);
 }

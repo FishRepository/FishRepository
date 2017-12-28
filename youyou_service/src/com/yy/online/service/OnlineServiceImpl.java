@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yy.jave.ConvertAudio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -699,7 +700,11 @@ public class OnlineServiceImpl implements OnlineService{
     public Map<String, Object> getAllEnglishQuestionDataByChapId(Map<String, Object> parm) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         int chapId= Integer.parseInt(String.valueOf(parm.get("chapId")));
-        resultMap.put("LIST", this.onlineDao.getAllEnglishQuestionDataByChapId(chapId));
+		List<Map<String, Object>> listeningList = this.onlineDao.getAllEnglishQuestionDataByChapId(chapId, 1);
+		List<Map<String, Object>> conversationList = this.onlineDao.getAllEnglishQuestionDataByChapId(chapId, 2);
+//        resultMap.put("LIST", this.onlineDao.getAllEnglishQuestionDataByChapId(chapId));
+		resultMap.put("listeningList", listeningList);
+		resultMap.put("conversationList", conversationList);
         resultMap.put(RESULT, SUCCESS);
         return resultMap;
     }
@@ -763,4 +768,16 @@ public class OnlineServiceImpl implements OnlineService{
 		return this.onlineDao.countUsers(parm);
 	}
 
+	@Override
+	public Map<String, Object> englishRSA(Map<String, Object> parm){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String filePath = parm.get("filePath").toString();
+		ConvertAudio.changeToWav(filePath,new StringBuffer(filePath.substring(0,filePath.indexOf('.')+1)).append("wav").toString());
+		return resultMap;
+	}
+
+	public static void main(String[] args) {
+		String filePath = "D:\\gitSpace\\Seework\\youyou_service\\WebRoot\\images\\pingshu.mp3";
+		System.out.printf(new StringBuffer(filePath.substring(0,filePath.indexOf('.')+1)).append("wav").toString());
+	}
 }

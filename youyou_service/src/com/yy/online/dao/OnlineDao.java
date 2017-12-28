@@ -1,5 +1,7 @@
 package com.yy.online.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -314,7 +316,7 @@ public interface OnlineDao {
      * 获取全量英语试题数据
      * @return
      */
-    public List<Map<String,Object>> getAllEnglishQuestionDataByChapId(int classId);
+    public List<Map<String,Object>> getAllEnglishQuestionDataByChapId(@Param(value = "chapId") int chapId, @Param(value = "qtType") int qtType);
 
     /**
      * 获取全量英语听力试题数据

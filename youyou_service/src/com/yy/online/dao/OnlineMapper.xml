@@ -1027,7 +1027,7 @@
     </select>
 
     <select id="getAllEnglishQuestionDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
-        select * from english_question where MEMO_1='NOR' and CHAP_ID=#{chapId} order by QT_TYPE,ID
+        select * from english_question where MEMO_1='NOR' and CHAP_ID=#{chapId} and QT_TYPE=#{qtType} order by QT_TYPE,ID
     </select>
 
     <select id="getAllEnglishQuestionListenDataByChapId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
