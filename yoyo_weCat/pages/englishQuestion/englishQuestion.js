@@ -426,13 +426,53 @@ Page({
    */
   qtTypeSwitch:function(e){
     var that = this;
+    var list = this.constantDataList();
     var clicktype = e.target.dataset.clicktype*1;
     if (that.data.qtTypeSwitch === clicktype){
       return;
     }
+    wx.stopBackgroundAudio();
+    var param = {};
+    for (var t = 0; t < list.length; t++) {
+      var isPlayTTT = this.constantDataIsPlay(t);
+      param[isPlayTTT] = false;
+      that.setData(param);
+    };
     that.setData({
       qtTypeSwitch: clicktype
     })
+  },
+  record: function (){
+    var that = this;
+    this.stopVoice();
+    var index = this.constantDataIndex();
+    wx.startRecord({
+      success: function (res) {
+        var tempFilePath = res.tempFilePath;
+      },
+      fail: function (res) {
+        //录音失败
+      }
+    })
+    setTimeout(function () {
+      //结束录音  
+      this.stopRecord();
+    }, 10000)
+
+    var param = {};
+    var isRecord = this.constantDataChoose("isRecord",index);
+    param[isRecord] = true;
+    that.setData(param);
+  },
+  stopRecord: function (){
+    wx.stopRecord();
+    var that = this;
+    this.stopVoice();
+    var index = this.constantDataIndex();
+    var param = {};
+    var isRecord = this.constantDataChoose("isRecord", index);
+    param[isRecord] = false;
+    that.setData(param);
   },
   constantDataIndex: function () {
     var that = this;

@@ -112,7 +112,6 @@
             <view class="{{qtTypeSwitch==2?'curTab':'tab'}}" bindtap="qtTypeSwitch"  data-clicktype="2">会话</view>
           </view>
 
-          <block wx:if="{{list.QT_TYPE=='1'}}">
             <block wx:if="{{list.VO_URL?true:false}}">
               <view class="audiomain">
                 <!-- <image class="audiobg" src="../../images/audiobg.png" mode="aspectFit"/> -->
@@ -132,14 +131,20 @@
                   <image bindtap="replayVoice" class="audiobg" src="../../images/replaylisten.png" mode="aspectFit"/>
                   <text>重播</text>
                 </view>
+                <block wx:if="{{list.isRecord}}">
+                  <view class="play-stop" bindtap="stopRecord">
+                    <image class="audiobg" src="../../images/stopRecord.png" mode="aspectFit"/>
+                    <text>结束</text>
+                  </view>
+                </block>
+                <block wx:else>
+                  <view class="play-stop" bindtap="record">
+                    <image class="audiobg" src="../../images/record.png" mode="aspectFit"/>
+                    <text>录音</text>
+                  </view>
+                </block>
               </view>
             </block>
-          </block>
-          <block wx:else>
-            <!-- 会话功能暂时不做 -->
-
-
-          </block>
 
           <view class="topic">
             <text class="type">{{topicType[list.QT_DIF]}}</text><text>{{list.QT_CONTENT}}</text>
