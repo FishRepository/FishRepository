@@ -42,7 +42,7 @@ Page({
     })
   },
   goUser:function(){
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/user/user'
     })
   },
