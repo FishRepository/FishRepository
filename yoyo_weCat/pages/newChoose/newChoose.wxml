@@ -56,6 +56,22 @@
           <text>英语测试</text>
         </navigator>
       </view>
+      <!-- <block wx:if="{{isRecord}}">
+        <view class="flex-item" bindtap="stopRecord">
+          <navigator>
+            <image src="../../images/stopRecord.png"/>
+            <text>结束</text>
+          </navigator>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="flex-item" bindtap="record">
+          <navigator>
+            <image src="../../images/record.png"/>
+            <text>录音</text>
+          </navigator> 
+        </view>
+      </block> -->
     </view>
   </view>
   <view class="model" wx:if="{{showModel}}">

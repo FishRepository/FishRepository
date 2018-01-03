@@ -2,6 +2,14 @@
 //获取应用实例
 var app = getApp();
 app.getUserInfo();
+const options = {
+  duration: 60000,
+  sampleRate: 16000,
+  numberOfChannels: 1,
+  encodeBitRate: 48000,
+  format: 'mp3',
+  frameSize: 50
+};
 var phoneReg = /^1[34578]\d{9}$/;
 Page({
   data: {
@@ -13,7 +21,8 @@ Page({
     showAdv: true,
     adv: "0",
     advUrl: "../../images/initAdvImg.gif",
-    showModel: false
+    showModel: false,
+    isRecord: false
   },
   onLoad: function (options) {
     var that = this
@@ -109,5 +118,114 @@ Page({
   },
   onReady: function () {
 
+  },
+  record: function () {
+    var that = this;
+    var param = {};
+    var isRecord = "isRecord";
+    param[isRecord] = true;
+    that.setData(param);
+    this.constantRecorderStart();
+  },
+  stopRecord: function () {
+    var that = this;
+    var param = {};
+    var isRecord = "isRecord";
+    param[isRecord] = false;
+    that.setData(param);
+    this.constantRecorderStop();
+  },
+  constantRecorderStart: function () {
+    var that = this;
+    const recorderManager = this.constantRecorderManager();
+    recorderManager.start(options);
+  },
+  constantRecorderStop: function () {
+    var that = this;
+    const recorderManager = wx.getRecorderManager();
+    recorderManager.stop();
+  },
+  constantRecorderManager: function () {
+    const recorderManager = wx.getRecorderManager();
+    recorderManager.onStart(() => {
+      console.log('recorder start');
+    });
+    recorderManager.onResume(() => {
+      console.log('recorder resume');
+    });
+    recorderManager.onPause(() => {
+      console.log('recorder pause');
+    });
+    recorderManager.onStop((res) => {
+      console.log('recorder stop', res);
+      const { tempFilePath } = res;
+      const that = this;
+      that.setData({
+        recordFile: tempFilePath
+      });
+      this.uploadFileToServer();
+      // wx.showToast({
+      //   title: that.data.recordFile,
+      //   icon: 'success',
+      //   duration: 2000
+      // })
+    });
+    recorderManager.onFrameRecorded((res) => {
+      const { frameBuffer } = res
+      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
+    });
+    return recorderManager;
+  },
+  uploadFileToServer: function () {
+    const that = this;
+    wx.showToast();
+    setTimeout(function () {
+      var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";
+      console.log(that.data.recordFile);
+      wx.uploadFile({
+        url: urls,
+        filePath: that.data.recordFile,
+        name: 'file',
+        formData: {
+          fileName: 'file' + app.globalData.openid + ".mp3"
+        },
+        header: {
+          'content-type': 'multipart/form-data'
+        },
+        success: function (res) {
+          wx.showToast();
+          // var str = res.data;
+          // var data = JSON.parse(str);
+          // if (data.states == 1) {
+          //   var cEditData = s.data.editData;
+          //   cEditData.recodeIdentity = data.identitys;
+          //   s.setData({ editData: cEditData });
+          // }
+          // else {
+          //   wx.showModal({
+          //     title: '提示',
+          //     content: data.message,
+          //     showCancel: false,
+          //     success: function (res) {
+
+          //     }
+          //   });
+          // }
+          // wx.hideToast();
+        },
+        fail: function (res) {
+          console.log(res);
+          wx.showModal({
+            title: '提示',
+            content: "网络请求失败，请确保网络是否正常",
+            showCancel: false,
+            success: function (res) {
+
+            }
+          });
+          wx.hideToast();
+        }
+      });
+    }, 1000);
   }
 })

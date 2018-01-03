@@ -1,28 +1,22 @@
 package com.yy.online.controller;
 
+import com.yy.online.service.OnlineService;
+import com.yy.util.*;
+import net.sf.json.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.yy.util.AudioUploadUtil;
-import com.yy.util.SaveFileFromWX;
-import net.sf.json.JSONArray;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-
-import com.yy.online.service.OnlineService;
-import com.yy.util.Img64Util;
-import com.yy.util.YoyoUtil;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller("admin.do")
 public class OnlineController {
@@ -1062,18 +1056,22 @@ public class OnlineController {
 		return resultMap;
 	}
 
-	/*记录英语订单*/
+	/*英语语音识别*/
 	@RequestMapping(params="method=englishASR", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object>  englishASR(HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object>  englishASR(@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<>();
 		String fileName = request.getParameter("fileName");
 		String filePath = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\"+fileName;
 		SaveFileFromWX save = new SaveFileFromWX();
-		save.saveFile(request);
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("filePath", filePath);
-		resultMap = onlineService.englishRSA(parmMap);
+		boolean b = save.saveFile(request, file);
+		if(b){
+			Map<String, Object> parmMap = new HashMap<>();
+			parmMap.put("filePath", filePath);
+			resultMap = RASUtil.englishRSA(parmMap);
+		}else{
+			resultMap.put("ret","0");
+		}
 		return resultMap;
 	}
 }

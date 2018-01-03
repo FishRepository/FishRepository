@@ -545,7 +545,7 @@ Page({
       wx.uploadFile({
         url: urls,
         filePath: that.data.recordFile,
-        name: 'file' + app.globalData.openid,
+        name: 'file',
         formData:{
           fileName: 'file' + app.globalData.openid+".mp3"
         },
