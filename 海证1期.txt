@@ -1,0 +1,58 @@
+=================================>12.23
+1,章节缓存清除
+2,退出试题，停止播放音频
+3,英语试题图片(所有试题图片展示固定长宽,点击可弹出缩放效果(400%))
+4,英语课程列表，点击空白处可以进入课程，购买按钮放大至(80*30)
+
+=================================>
+1,英语听力题阅读题，一个音频对应多个题目(5)，试题列表可上下滑动
+
+
+https://www.yoyotec.com/youyou_client/admin.do?method=index
+
+======================项目部署需update================================
+tomcat
+
+<Connector URIEncoding="UTF-8" port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"/>
+URIEncoding="UTF-8"
+
+mp3转wav jar   jave-1.0.2.jar
+百度jar   aip-java-sdk-3.4.0    json-20160810
+======================项目部署需update================================
+
+
+======================开发笔记========================================
+1,englishQuestion.js 后台返回listeningList  conversationList
+
+listeningNowCurrent: 0,
+listeningWrongNumb: 0,
+listeningRightNumb: 0,
+convNowCurrent: 0,
+convWrongNumb: 0,
+convRightNumb: 0,
+qtTypeSwitch: 1//1，听力，会话
+
+this.constantDataIndex();
+this.constantDataList();
+this.constantDataIsPlay(t);
+
+
+
+======================开发笔记========================================
+api.weixin.qq.com
+
+
+<block wx:if="{{isRecord}}">
+  <view class="flex-item" bindtap="stopRecord">
+	<image src="../../images/stopRecord.png"/>
+	<text>结束</text>
+  </view>
+</block>
+<block wx:else>
+  <view class="flex-item" bindtap="record">
+	<image src="../../images/record.png"/>
+	<text>录音</text>
+  </view>
+</block>
