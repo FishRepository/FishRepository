@@ -1,14 +1,51 @@
 package com.yy.util;
 
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RASUtil {
 
+    public static final String PERFECT = "perfect";
+
+    public static final String GREAT = "great";
+
+    public static final String GOOD = "good";
+
+    public static final String NORMAL = "normal";
+
+    public static final String BAD = "bad";
+
+    private static Logger logger = Logger.getLogger(RASUtil.class);
+
     public static Map<String, Object> englishRSA(Map<String, Object> parm){
         Map<String, Object> resultMap = new HashMap<>();
-        String filePath = parm.get("filePath").toString();
-        ConvertAudio.changeToWav(filePath,new StringBuffer(filePath.substring(0,filePath.indexOf('.')+1)).append("wav").toString());
+        String RSAResult = null;
+        try {
+            String filePath = parm.get("filePath").toString();
+            String perContext = parm.get("perContext").toString();
+            String preRSAPath = filePath.substring(0, filePath.indexOf('.') + 1) + "wav";
+            ConvertAudio.changeToWav(filePath,preRSAPath);
+            String RSAStr = BaiduSpeech.voice2word(preRSAPath, "en");
+            double sim = sim(perContext, RSAStr);
+            RSAResult = BAD;
+            if(sim >= 0.9){
+                RSAResult = PERFECT;
+            }else if(sim >= 0.8){
+                RSAResult = GREAT;
+            }else if(sim >= 0.7){
+                RSAResult = GOOD;
+            }else if(sim >= 0.6){
+                RSAResult = NORMAL;
+            }else if(sim < 0.6){
+                RSAResult = BAD;
+            }
+        } catch (Exception e) {
+            logger.error("语音识别错误: "+ e.getMessage());
+        } finally {
+            resultMap.put("RSAResult",RSAResult);
+        }
         return resultMap;
     }
 

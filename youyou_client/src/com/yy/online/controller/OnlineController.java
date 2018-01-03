@@ -1062,12 +1062,14 @@ public class OnlineController {
 	public Map<String, Object>  englishASR(@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> resultMap = new HashMap<>();
 		String fileName = request.getParameter("fileName");
+		String perContext = request.getParameter("perContext");
 		String filePath = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\"+fileName;
 		SaveFileFromWX save = new SaveFileFromWX();
 		boolean b = save.saveFile(request, file);
 		if(b){
 			Map<String, Object> parmMap = new HashMap<>();
 			parmMap.put("filePath", filePath);
+			parmMap.put("perContext", perContext);
 			resultMap = RASUtil.englishRSA(parmMap);
 		}else{
 			resultMap.put("ret","0");
