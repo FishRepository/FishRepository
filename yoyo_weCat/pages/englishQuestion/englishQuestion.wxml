@@ -27,18 +27,15 @@
                 <block wx:if="{{list.isPlay}}">
                   <view class="play-stop" bindtap="stopVoice">
                     <image class="audiobg" src="../../images/stoplisten.png" mode="aspectFit"/>
-                    <text>暂停</text>
                   </view>
                 </block>
                 <block wx:else>
                   <view class="play-stop" bindtap="playVoice">
                     <image class="audiobg" src="../../images/playlisten.png" mode="aspectFit"/>
-                    <text>播放</text>
                   </view>
                 </block>
                 <view class="play-stop">
                   <image bindtap="replayVoice" class="audiobg" src="../../images/replaylisten.png" mode="aspectFit"/>
-                  <text>重播</text>
                 </view>
               </view>
             </block>
@@ -118,31 +115,27 @@
                 <block wx:if="{{list.isPlay}}">
                   <view class="play-stop" bindtap="stopVoice">
                     <image class="audiobg" src="../../images/stoplisten.png" mode="aspectFit"/>
-                    <text>暂停</text>
                   </view>
                 </block>
                 <block wx:else>
                   <view class="play-stop" bindtap="playVoice">
                     <image class="audiobg" src="../../images/playlisten.png" mode="aspectFit"/>
-                    <text>播放</text>
                   </view>
                 </block>
-                <view class="play-stop">
-                  <image bindtap="replayVoice" class="audiobg" src="../../images/replaylisten.png" mode="aspectFit"/>
-                  <text>重播</text>
-                </view>
                 <block wx:if="{{list.isRecord}}">
                   <view class="play-stop" bindtap="stopRecord">
-                    <image class="audiobg" src="../../images/stopRecord.png" mode="aspectFit"/>
-                    <text>结束</text>
+                    <image class="recordbg" src="../../images/stopRecord.png" mode="aspectFit"/>
                   </view>
                 </block>
                 <block wx:else>
                   <view class="play-stop" bindtap="record">
-                    <image class="audiobg" src="../../images/record.png" mode="aspectFit"/>
-                    <text>录音</text>
+                    <image class="recordbg" src="../../images/record.png" mode="aspectFit"/>
                   </view>
                 </block>
+                <!--打分按钮  点击播放录音  -->
+                <view class="play-stop" bindtap="playRecord">
+                    <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
+                </view>
               </view>
             </block>
 

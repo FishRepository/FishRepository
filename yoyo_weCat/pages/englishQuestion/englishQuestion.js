@@ -2,9 +2,9 @@ const util = require('../../utils/util.js');
 var app = getApp();
 const options = {
   duration: 60000,
-  sampleRate: 16000,
+  sampleRate: 8000,
   numberOfChannels: 1,
-  encodeBitRate: 48000,
+  encodeBitRate: 24000,
   format: 'mp3',
   frameSize: 50
 };
@@ -30,7 +30,8 @@ Page({
     convNowCurrent: 0,
     convWrongNumb: 0,
     convRightNumb: 0,
-    qtTypeSwitch: 1//1，听力，会话
+    qtTypeSwitch: 1,//1，听力，会话
+    playRecordPng: "../../images/smile-face.png"
   },
   /**
    * 生命周期函数--监听页面加载
@@ -524,11 +525,6 @@ Page({
         recordFile: tempFilePath
       });
       this.uploadFileToServer();
-      // wx.showToast({
-      //   title: that.data.recordFile,
-      //   icon: 'success',
-      //   duration: 2000
-      // })
     });
     recorderManager.onFrameRecorded((res) => {
       const { frameBuffer } = res
@@ -538,7 +534,9 @@ Page({
   },
   uploadFileToServer: function () {
     const that = this;
-    wx.showToast();
+    wx.showLoading({
+      title: '音频对比中',
+    })
     setTimeout(function () {
       var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";
       console.log(that.data.recordFile);
@@ -547,13 +545,15 @@ Page({
         filePath: that.data.recordFile,
         name: 'file',
         formData:{
-          fileName: 'file' + app.globalData.openid+".mp3"
+          fileName: 'file' + app.globalData.openid+".mp3",
+          preContext: 'I come from China'
         },
         header: {
           'content-type': 'multipart/form-data'
         },
         success: function (res) {
-          wx.showToast();
+          wx.hideLoading();
+          console.log("识别结果: "+res.data);
           // var str = res.data;
           // var data = JSON.parse(str);
           // if (data.states == 1) {
@@ -574,6 +574,7 @@ Page({
           // wx.hideToast();
         },
         fail: function (res) {
+          wx.hideLoading();
           console.log(res);
           wx.showModal({
             title: '提示',
