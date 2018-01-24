@@ -133,21 +133,27 @@
                   </view>
                 </block>
                 <!--打分按钮  点击播放录音  -->
-                <view class="play-stop" bindtap="playRecord">
+                <!-- <view class="play-stop" bindtap="playRecord">
                     <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
+                </view> -->
+                <view class="circle-view" >
+                  <view class=".green-circle" bindtap="playRecord">
+                    <text class='.circle-text'>77</text>
+                  </view>
                 </view>
+    
               </view>
             </block>
 
           <view class="topic">
-            <text class="type">{{topicType[list.QT_DIF]}}</text><text>{{list.QT_CONTENT}}</text>
+            <text class="type">原文</text><text>{{list.QT_CONTENT}}</text>
           </view>
 
           <block wx:if="{{list.PIC_URL}}">
               <image class="view-img" src='{{hostUrl}}{{list.PIC_URL}}' data-src="{{hostUrl}}{{list.PIC_URL}}" bindtap="previewImage"></image>
           </block>
 
-          <radio-group bindchange="selectOption">
+          <!-- <radio-group bindchange="selectOption">
               <label class="radio" wx:if="{{list.OPTION_A?true:false}}">
                 <radio value="1" checked="{{list.choose1}}" disabled="{{list.radioDisabled}}"/>A.{{list.OPTION_A}}
               </label>
@@ -160,11 +166,11 @@
               <label class="radio" wx:if="{{list.OPTION_D?true:false}}">
                 <radio value="4" checked="{{list.choose4}}" disabled="{{list.radioDisabled}}"/>D.{{list.OPTION_D}}
               </label>
-          </radio-group>
+          </radio-group> -->
 
-          <view class="sbtn">
+          <!-- <view class="sbtn">
             <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
-          </view>
+          </view> -->
 
           <view class="right-cont" wx:if="{{list.showRight=='1'}}">
             <view class="right">

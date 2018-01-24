@@ -339,3 +339,41 @@
   float:initial;
   padding-left: 9px;
 }
+
+ .red-circle{
+   width: 35px;      
+   height: 35px;      
+   background-color:#FF0000;      
+   border-radius: 50%;
+   -moz-border-radius: 50%;      
+   -webkit-border-radius: 50%;    
+   }
+
+.circle-view{
+  display: inline-block;
+  width: 15%;
+  margin-left: 20px;
+}
+
+.yellow-circle{
+   width: 35px;      
+   height: 35px;      
+   background-color:#EEEE00;      
+   border-radius: 50%;
+   -moz-border-radius: 50%;      
+   -webkit-border-radius: 50%;    
+   }
+
+.green-circle{
+   display: inline-block;
+   width: 35px;      
+   background-color:#00D96D;      
+   border-radius: 50%;
+   -webkit-border-radius: 50%;
+   }  
+
+.circle-text{
+  display: block;
+  color: #F8F8FF;
+  font-size: 18px;
+}
