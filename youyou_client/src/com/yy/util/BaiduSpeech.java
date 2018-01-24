@@ -50,7 +50,7 @@ public class BaiduSpeech {
     }
 
     public static void main(String[] args) {
-        String filePath = "D:\\gitSpace\\Seework\\youyou_service\\WebRoot\\images\\file.wav";
-        System.out.println(voice2word(filePath,"zh"));
+        String filePath = "D:\\gitSpace\\Seework\\youyou_client\\WebRoot\\preASRVoice\\fileoF5Qa0bk5EjjNVFwLAf3ggTtT8mM.wav";
+        System.out.println(voice2word(filePath,"en"));
     }
 }

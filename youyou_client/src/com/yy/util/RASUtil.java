@@ -7,28 +7,29 @@ import java.util.Map;
 
 public class RASUtil {
 
-    public static final String PERFECT = "perfect";
+    private static final String PERFECT = "perfect";
 
-    public static final String GREAT = "great";
+    private static final String GREAT = "great";
 
-    public static final String GOOD = "good";
+    private static final String GOOD = "good";
 
-    public static final String NORMAL = "normal";
+    private static final String NORMAL = "normal";
 
-    public static final String BAD = "bad";
+    private static final String BAD = "bad";
 
     private static Logger logger = Logger.getLogger(RASUtil.class);
 
     public static Map<String, Object> englishRSA(Map<String, Object> parm){
         Map<String, Object> resultMap = new HashMap<>();
-        String RSAResult = null;
+        String RSAResult = "";
+        String RSAStr = "";
         try {
             String filePath = parm.get("filePath").toString();
-            String perContext = parm.get("perContext").toString();
+            String preContext = parm.get("preContext").toString();
             String preRSAPath = filePath.substring(0, filePath.indexOf('.') + 1) + "wav";
             ConvertAudio.changeToWav(filePath,preRSAPath);
-            String RSAStr = BaiduSpeech.voice2word(preRSAPath, "en");
-            double sim = sim(perContext, RSAStr);
+            RSAStr = BaiduSpeech.voice2word(preRSAPath, "en");
+            double sim = sim(preContext, RSAStr);
             RSAResult = BAD;
             if(sim >= 0.9){
                 RSAResult = PERFECT;
@@ -45,6 +46,7 @@ public class RASUtil {
             logger.error("语音识别错误: "+ e.getMessage());
         } finally {
             resultMap.put("RSAResult",RSAResult);
+            resultMap.put("RSAStr",RSAStr);
         }
         return resultMap;
     }
@@ -60,7 +62,7 @@ public class RASUtil {
         return min;
     }
 
-    public static int ld(String str1, String str2) {
+    private static int ld(String str1, String str2) {
         int d[][]; // 矩阵
         int n = str1.length();
         int m = str2.length();
@@ -98,7 +100,7 @@ public class RASUtil {
         }
         return d[n][m];
     }
-    public static double sim(String str1, String str2) {
+    private static double sim(String str1, String str2) {
         try {
             double ld = (double)ld(str1, str2);
             return (1-ld/(double)Math.max(str1.length(), str2.length()));

@@ -12,14 +12,15 @@ public class ConvertAudio {
     public static void changeToWav(String sourcePath, String targetPath) {
         File source = new File(sourcePath);
         File target = new File(targetPath);
-        AudioAttributes audio = new AudioAttributes();
         Encoder encoder = new Encoder();
-
-        audio.setCodec("libmp3lame");
+        AudioAttributes audio = new AudioAttributes();
+        audio.setCodec("pcm_s16le");
+        audio.setBitRate(96000);
+        audio.setChannels(1);
+        audio.setSamplingRate(16000);
         EncodingAttributes attrs = new EncodingAttributes();
         attrs.setFormat("wav");
         attrs.setAudioAttributes(audio);
-
         try {
             encoder.encode(source, target, attrs);
         } catch (IllegalArgumentException | EncoderException e) {
@@ -28,8 +29,8 @@ public class ConvertAudio {
     }
 
     public static void main(String[] args) {
-        String sourcePath = "D:\\gitSpace\\Seework\\youyou_service\\WebRoot\\images\\file.mp3";
-        String targetPath = "D:\\gitSpace\\Seework\\youyou_service\\WebRoot\\images\\file.wav";
+        String sourcePath = "D:\\gitSpace\\Seework\\youyou_client\\WebRoot\\preASRVoice\\fileoF5Qa0bk5EjjNVFwLAf3ggTtT8mM.mp3";
+        String targetPath = "D:\\gitSpace\\Seework\\youyou_client\\WebRoot\\preASRVoice\\fileoF5Qa0bk5EjjNVFwLAf3ggTtT8mM.wav";
         changeToWav(sourcePath,targetPath);
     }
 }
