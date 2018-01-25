@@ -109,7 +109,8 @@
 }
 .exam .swiper-cont .topic-cont view{
   font-size: 14px;
-  padding: 5px 0
+  padding: 5px 0;
+  vertical-align:middle;
 }
 .exam .swiper-cont .topic-cont .radio radio{
   position: relative;
@@ -302,8 +303,17 @@
   width: 15%;
   border-radius: 50px;
   text-align: center;
-  margin-left: 20px;
 }
+
+.play-middle{
+  display: inline-block;
+  width: 15%;
+  border-radius: 50px;
+  text-align: center;
+  margin-left: 35px;
+  margin-right: 35px; 
+}
+
 .play-stop text{
   display: block;
   color: #274e13;
@@ -341,26 +351,23 @@
 }
 
  .red-circle{
+   display: inline-block;
    width: 35px;      
-   height: 35px;      
    background-color:#FF0000;      
    border-radius: 50%;
-   -moz-border-radius: 50%;      
-   -webkit-border-radius: 50%;    
+   -webkit-border-radius: 50%;     
    }
 
 .circle-view{
   display: inline-block;
   width: 15%;
-  margin-left: 20px;
 }
 
 .yellow-circle{
+   display: inline-block;
    width: 35px;      
-   height: 35px;      
    background-color:#EEEE00;      
    border-radius: 50%;
-   -moz-border-radius: 50%;      
    -webkit-border-radius: 50%;    
    }
 

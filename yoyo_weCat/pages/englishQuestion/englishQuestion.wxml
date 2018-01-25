@@ -123,12 +123,12 @@
                   </view>
                 </block>
                 <block wx:if="{{list.isRecord}}">
-                  <view class="play-stop" bindtap="stopRecord">
+                  <view class="play-middle" bindtap="stopRecord">
                     <image class="recordbg" src="../../images/stopRecord.png" mode="aspectFit"/>
                   </view>
                 </block>
                 <block wx:else>
-                  <view class="play-stop" bindtap="record">
+                  <view class="play-middle" bindtap="record">
                     <image class="recordbg" src="../../images/record.png" mode="aspectFit"/>
                   </view>
                 </block>
