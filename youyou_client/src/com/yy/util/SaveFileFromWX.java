@@ -14,7 +14,7 @@ public class SaveFileFromWX {
     public boolean saveFile(HttpServletRequest request,CommonsMultipartFile mFile){
         String fileNameFromWX = request.getParameter("fileName");
         //获取文件需要上传到的路径
-        String path = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\";
+        String path = request.getSession().getServletContext().getRealPath("")+"/preASRVoice/";
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdir();

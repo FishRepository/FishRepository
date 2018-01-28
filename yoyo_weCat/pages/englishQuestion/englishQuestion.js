@@ -30,8 +30,7 @@ Page({
     convNowCurrent: 0,
     convWrongNumb: 0,
     convRightNumb: 0,
-    qtTypeSwitch: 1,//1，听力，会话
-    playRecordPng: "../../images/smile-face.png"
+    qtTypeSwitch: 1//1，听力，会话
   },
   /**
    * 生命周期函数--监听页面加载
@@ -535,7 +534,7 @@ Page({
   uploadFileToServer: function () {
     const that = this;
     wx.showLoading({
-      title: '音频对比中',
+      title: '正在评分',
     })
     setTimeout(function () {
       var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";

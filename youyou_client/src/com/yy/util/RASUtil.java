@@ -27,6 +27,7 @@ public class RASUtil {
             String filePath = parm.get("filePath").toString();
             String preContext = parm.get("preContext").toString();
             String preRSAPath = filePath.substring(0, filePath.indexOf('.') + 1) + "wav";
+            System.out.println("##############preRSAPath="+preRSAPath);
             ConvertAudio.changeToWav(filePath,preRSAPath);
             RSAStr = BaiduSpeech.voice2word(preRSAPath, "en");
             double sim = sim(preContext, RSAStr);
@@ -48,6 +49,8 @@ public class RASUtil {
             resultMap.put("RSAResult",RSAResult);
             resultMap.put("RSAStr",RSAStr);
         }
+        System.out.println("############## RSAStr="+RSAStr);
+        System.out.println("############## RSAResult="+RSAResult);
         return resultMap;
     }
 
