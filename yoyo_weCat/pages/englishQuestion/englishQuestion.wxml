@@ -109,6 +109,10 @@
             <view class="{{qtTypeSwitch==2?'curTab':'tab'}}" bindtap="qtTypeSwitch"  data-clicktype="2">会话</view>
           </view>
 
+            <view class="topic">
+              <text class="type">原文</text><text>{{list.QT_CONTENT}}</text>
+            </view>
+
             <block wx:if="{{list.VO_URL?true:false}}">
               <view class="audiomain">
                 <!-- <image class="audiobg" src="../../images/audiobg.png" mode="aspectFit"/> -->
@@ -136,7 +140,7 @@
                 <block wx:if="{{list.isRecord}}">
                    <view class="play-stop" bindtap="playRecord">
                       <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
-                   </view> 
+                   </view>
                 </block>
                 <block wx:else>
                    <view class="circle-view" >
@@ -149,9 +153,7 @@
               </view>
             </block>
 
-          <view class="topic">
-            <text class="type">原文</text><text class="conversation-text">{{list.QT_CONTENT}}</text>
-          </view>
+
 
           <block wx:if="{{list.PIC_URL}}">
               <image class="view-img" src='{{hostUrl}}{{list.PIC_URL}}' data-src="{{hostUrl}}{{list.PIC_URL}}" bindtap="previewImage"></image>
@@ -204,11 +206,11 @@
     
   </swiper>
 
-  <view class="btns">
-    <button wx:if="{{nowCurrent>0?true:false}}" class="prev" bindtap="prev">上一题</button>
+  <!-- <view class="btns">
+    <button wx:if="{{qtTypeSwitch==1?listeningNowCurrent>0?true:false:convNowCurrent>0?true:false}}" class="prev" bindtap="prev">上一题</button>
     <!-- <button class="submit" bindtap="submit">交 卷</button> -->
-    <button wx:if="{{nowCurrent<(resData.LIST.length-1)?true:false}}" class="next" bindtap="next">下一题</button>
-  </view>
+    <!-- <button wx:if="{{qtTypeSwitch==1?listeningNowCurrent<(listeningList.length-1)?true:false :convNowCurrent<(conversationList.length-1)?true:false }}" class="next" bindtap="next">下一题</button>
+  </view>  -->
 
 
 

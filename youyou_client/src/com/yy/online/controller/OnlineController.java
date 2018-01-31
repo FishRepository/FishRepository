@@ -1063,7 +1063,8 @@ public class OnlineController {
 		Map<String, Object> resultMap = new HashMap<>();
 		String fileName = request.getParameter("fileName");
 		String preContext = request.getParameter("preContext");
-		String filePath = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\"+fileName;
+		String filePath = request.getSession().getServletContext().getRealPath("")+"/preASRVoice/"+fileName;
+		System.out.println("####################fileName="+fileName+", preContext="+preContext+", filePath="+filePath);
 		SaveFileFromWX save = new SaveFileFromWX();
 		boolean b = save.saveFile(request, file);
 		if(b){
