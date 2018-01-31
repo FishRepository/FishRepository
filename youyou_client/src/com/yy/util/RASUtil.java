@@ -1,5 +1,6 @@
 package com.yy.util;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
@@ -21,26 +22,31 @@ public class RASUtil {
 
     public static Map<String, Object> englishRSA(Map<String, Object> parm){
         Map<String, Object> resultMap = new HashMap<>();
-        String RSAResult = "";
+        String RSAResult = BAD;
         String RSAStr = "";
         try {
             String filePath = parm.get("filePath").toString();
             String preContext = parm.get("preContext").toString();
             String preRSAPath = filePath.substring(0, filePath.indexOf('.') + 1) + "wav";
             ConvertAudio.changeToWav(filePath,preRSAPath);
-            RSAStr = BaiduSpeech.voice2word(preRSAPath, "en");
-            double sim = sim(preContext, RSAStr);
-            RSAResult = BAD;
-            if(sim >= 0.9){
-                RSAResult = PERFECT;
-            }else if(sim >= 0.8){
-                RSAResult = GREAT;
-            }else if(sim >= 0.7){
-                RSAResult = GOOD;
-            }else if(sim >= 0.6){
-                RSAResult = NORMAL;
-            }else if(sim < 0.6){
-                RSAResult = BAD;
+            //================================测试S
+            preRSAPath = "D:\\test.wav";
+            //================================测试E
+            SRTool sr = new SRTool();
+            RSAStr = sr.voice2words(preRSAPath);
+            if(StringUtils.isNotBlank(RSAStr)){
+                double sim = sim(preContext, RSAStr);
+                if(sim >= 0.9){
+                    RSAResult = PERFECT;
+                }else if(sim >= 0.8){
+                    RSAResult = GREAT;
+                }else if(sim >= 0.7){
+                    RSAResult = GOOD;
+                }else if(sim >= 0.6){
+                    RSAResult = NORMAL;
+                }else if(sim < 0.6){
+                    RSAResult = BAD;
+                }
             }
         } catch (Exception e) {
             logger.error("语音识别错误: "+ e.getMessage());

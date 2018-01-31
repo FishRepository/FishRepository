@@ -74,7 +74,7 @@ Page({
             },
             success: function (res) {
               wx.hideLoading();
-              if (res.data.listeningList.length == 0) {
+              if (res.data.listeningList.length == 0 && res.data.conversationList.length == 0) {
                 wx.showToast({
                   title: '该章节暂无试题',
                 })
@@ -537,56 +537,36 @@ Page({
     wx.showLoading({
       title: '音频对比中',
     })
-    setTimeout(function () {
-      var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";
-      console.log(that.data.recordFile);
-      wx.uploadFile({
-        url: urls,
-        filePath: that.data.recordFile,
-        name: 'file',
-        formData:{
-          fileName: 'file' + app.globalData.openid+".mp3",
-          preContext: 'I come from China'
-        },
-        header: {
-          'content-type': 'multipart/form-data'
-        },
-        success: function (res) {
-          wx.hideLoading();
-          console.log("识别结果: "+res.data);
-          // var str = res.data;
-          // var data = JSON.parse(str);
-          // if (data.states == 1) {
-          //   var cEditData = s.data.editData;
-          //   cEditData.recodeIdentity = data.identitys;
-          //   s.setData({ editData: cEditData });
-          // }
-          // else {
-          //   wx.showModal({
-          //     title: '提示',
-          //     content: data.message,
-          //     showCancel: false,
-          //     success: function (res) {
+    var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";
+    console.log(that.data.recordFile);
+    wx.uploadFile({
+      url: urls,
+      filePath: that.data.recordFile,
+      name: 'file',
+      formData:{
+        fileName: 'file' + app.globalData.openid+".mp3",
+        preContext: 'I come from China'
+      },
+      header: {
+        'content-type': 'multipart/form-data'
+      },
+      success: function (res) {
+        wx.hideLoading();
+        console.log("识别结果: "+res.data);
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        console.log(res);
+        wx.showModal({
+          title: '提示',
+          content: "网络请求失败，请确保网络是否正常",
+          showCancel: false,
+          success: function (res) {
 
-          //     }
-          //   });
-          // }
-          // wx.hideToast();
-        },
-        fail: function (res) {
-          wx.hideLoading();
-          console.log(res);
-          wx.showModal({
-            title: '提示',
-            content: "网络请求失败，请确保网络是否正常",
-            showCancel: false,
-            success: function (res) {
-
-            }
-          });
-          wx.hideToast();
-        }
-      });
-    }, 1000);
+          }
+        });
+        wx.hideToast();
+      }
+    });
   }
 })

@@ -132,21 +132,25 @@
                     <image class="recordbg" src="../../images/record.png" mode="aspectFit"/>
                   </view>
                 </block>
-                <!--打分按钮  点击播放录音  -->
-                <!-- <view class="play-stop" bindtap="playRecord">
-                    <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
-                </view> -->
-                <view class="circle-view" >
-                  <view class=".green-circle" bindtap="playRecord">
-                    <text class='.circle-text'>77</text>
-                  </view>
-                </view>
+                <!--打分按钮-->
+                <block wx:if="{{list.isRecord}}">
+                   <view class="play-stop" bindtap="playRecord">
+                      <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
+                   </view> 
+                </block>
+                <block wx:else>
+                   <view class="circle-view" >
+                      <view class=".green-circle" bindtap="playRecord">
+                        <text class='.circle-text'>77</text>
+                      </view>
+                   </view>
+                </block>
     
               </view>
             </block>
 
           <view class="topic">
-            <text class="type">原文</text><text>{{list.QT_CONTENT}}</text>
+            <text class="type">原文</text><text class="conversation-text">{{list.QT_CONTENT}}</text>
           </view>
 
           <block wx:if="{{list.PIC_URL}}">
