@@ -137,16 +137,16 @@
                   </view>
                 </block>
                 <!--打分按钮-->
-                <block wx:if="{{list.isRecord}}">
-                   <view class="play-stop" bindtap="playRecord">
-                      <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
+                <block wx:if="{{list.RASstatus}}">
+                   <view class="circle-view" >
+                      <view class=".green-circle" bindtap="playRecord">
+                        <text class='.circle-text'>{{list.itemScore}}</text>
+                      </view>
                    </view>
                 </block>
                 <block wx:else>
-                   <view class="circle-view" >
-                      <view class=".green-circle" bindtap="playRecord">
-                        <text class='.circle-text'>77</text>
-                      </view>
+                   <view class="play-stop" bindtap="playRecord">
+                      <image class="audiobg" src="{{playRecordPng}}" mode="aspectFit"/>
                    </view>
                 </block>
     

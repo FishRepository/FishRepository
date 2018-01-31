@@ -1072,8 +1072,9 @@ public class OnlineController {
 			parmMap.put("filePath", filePath);
 			parmMap.put("preContext", preContext);
 			resultMap = RASUtil.englishRSA(parmMap);
+			resultMap.put("ret",1);
 		}else{
-			resultMap.put("ret","0");
+			resultMap.put("ret",0);
 		}
 		return resultMap;
 	}

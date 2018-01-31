@@ -776,8 +776,4 @@ public class OnlineServiceImpl implements OnlineService{
 		return resultMap;
 	}
 
-	public static void main(String[] args) {
-		String filePath = "D:\\gitSpace\\Seework\\youyou_service\\WebRoot\\images\\pingshu.mp3";
-		System.out.printf(new StringBuffer(filePath.substring(0,filePath.indexOf('.')+1)).append("wav").toString());
-	}
 }

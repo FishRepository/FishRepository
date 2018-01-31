@@ -30,7 +30,9 @@ Page({
     convNowCurrent: 0,
     convWrongNumb: 0,
     convRightNumb: 0,
-    qtTypeSwitch: 1//1，听力，会话
+    qtTypeSwitch: 1,//1，听力，会话
+    playRecordPng: "../../images/smile-face.png",
+    RASstatus: false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -538,20 +540,32 @@ Page({
     })
     var urls = app.globalData.hostUrl + "/admin.do?method=englishASR";
     console.log(that.data.recordFile);
+    var preContext = this.constantDataList()[this.constantDataIndex()].QT_CONTENT;
+    //预设param
+    var index = this.constantDataIndex();
+    var param = {};
+    var RASstatus = this.constantDataChoose("RASstatus", index);
+    var itemScore = this.constantDataChoose("itemScore", index);
     wx.uploadFile({
       url: urls,
       filePath: that.data.recordFile,
       name: 'file',
       formData:{
         fileName: 'file' + app.globalData.openid+".mp3",
-        preContext: 'I come from China'
+        preContext: preContext
       },
       header: {
         'content-type': 'multipart/form-data'
       },
       success: function (res) {
-        wx.hideLoading();
         console.log("识别结果: "+res.data);
+        var result = JSON.parse(res.data);
+        if (result.ret==1){
+          param[RASstatus] = true;
+          param[itemScore] = result.sim;
+          that.setData(param);
+        }
+        wx.hideLoading();
       },
       fail: function (res) {
         wx.hideLoading();

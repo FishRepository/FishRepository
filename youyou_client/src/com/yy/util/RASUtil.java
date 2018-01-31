@@ -3,6 +3,7 @@ package com.yy.util;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class RASUtil {
         Map<String, Object> resultMap = new HashMap<>();
         String RSAResult = BAD;
         String RSAStr = "";
+        double sim = 0;
         try {
             String filePath = parm.get("filePath").toString();
             String preContext = parm.get("preContext").toString();
@@ -36,7 +38,10 @@ public class RASUtil {
             SRTool sr = new SRTool();
             RSAStr = sr.voice2words(preRSAPath);
             if(StringUtils.isNotBlank(RSAStr)){
-                double sim = sim(preContext, RSAStr);
+                RSAStr = sr.sr2words(RSAStr);
+                sim = sim(preContext, RSAStr);
+                DecimalFormat df = new DecimalFormat("#.00");
+                sim = Double.parseDouble(df.format(sim));
                 if(sim >= 0.9){
                     RSAResult = PERFECT;
                 }else if(sim >= 0.8){
@@ -48,12 +53,14 @@ public class RASUtil {
                 }else if(sim < 0.6){
                     RSAResult = BAD;
                 }
+                sim = sim*100;
             }
         } catch (Exception e) {
             logger.error("语音识别错误: "+ e.getMessage());
         } finally {
             resultMap.put("RSAResult",RSAResult);
             resultMap.put("RSAStr",RSAStr);
+            resultMap.put("sim",(int)sim);
         }
         System.out.println("############## RSAStr="+RSAStr);
         System.out.println("############## RSAResult="+RSAResult);
