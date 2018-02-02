@@ -431,6 +431,37 @@ Page({
       that.setData(param);
     }
   },
+
+  /**
+   * 播放用户录音
+   */
+  playRecord:function(){
+    this.stopVoice();
+    var index = this.constantDataIndex();
+    var param = {};
+    var that = this;
+    var list = this.constantDataList();
+    wx.playBackgroundAudio({
+      dataUrl: list[index].recordUrl,
+    });
+    var recordIsPlay = this.constantDataChoose("recordIsPlay", index);
+    param[recordIsPlay] = true;
+    that.setData(param);
+    for (var t = 0; t < list.length; t++) {
+      if (index == t) {
+        continue;
+      }
+      var recordIsPlayTTT = this.constantDataChoose("recordIsPlay", index);
+      param[recordIsPlayTTT] = false;
+      that.setData(param);
+    }
+  },
+  /**
+   * 暂停用户录音
+   */
+  stopPlayRecord: function () {
+
+  },
   /**
    * 切换题目类型
    */
@@ -521,10 +552,14 @@ Page({
     recorderManager.onStop((res) => {
       console.log('recorder stop', res);
       const { tempFilePath } = res;
-      const that = this;
-      that.setData({
-        recordFile: tempFilePath
-      });
+      if (tempFilePath){
+        const that = this;
+        var index = this.constantDataIndex();
+        var param = {};
+        var recordUrl = this.constantDataChoose("recordUrl", index);
+        param[recordUrl] = tempFilePath;
+        that.setData(param);
+      }
       this.uploadFileToServer();
     });
     recorderManager.onFrameRecorded((res) => {

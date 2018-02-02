@@ -91,11 +91,35 @@
   line-height: normal
 }
 
-.conversation-text{
-  font-size: 18px;
-  font-weight: bold;
-  color: #00D96D;
+.tips-text{
+  font-size: 14px;
+  color: #808080;
+  display: inline-block;
 }
+
+.conversation-text{
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.conversation-green-text{
+  font-size: 20px;
+  color: #00D96D;
+  line-height: 1.2;
+}
+
+.conversation-yellow-text{
+  font-size: 20px;
+  color: #EEEE00;
+  line-height: 1.2;
+}
+
+.conversation-red-text{
+  font-size: 20px;
+  color: #FF0000;
+  line-height: 1.2;
+}
+
 .exam .swiper-cont .topic-cont .topic .type{
   background: #00D96D;
   color: #FFF;
