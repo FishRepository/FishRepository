@@ -25,16 +25,16 @@ Page({
     isRecord: false
   },
   onLoad: function (options) {
-    var that = this
+    var that = this;
     that.setData({
       userInfo: app.globalData.userInfo,
-      postType: options.postType || wx.getStorageSync("postVal"),
-      certType: options.certType || wx.getStorageSync("certVal"),
-      postText: options.postText || wx.getStorageSync("postText"),
-      certText: options.certText || wx.getStorageSync("certText")
-    })
+      postType: wx.getStorageSync("postVal"),
+      certType: wx.getStorageSync("certVal"),
+      postText: wx.getStorageSync("postText"),
+      certText: wx.getStorageSync("certText")
+    });
     console.log(wx.getStorageSync("postText"));
-    var openid = app.globalData.openid
+    var openid = app.globalData.openid;
     that.getOurUserInfo(openid);
     that.getAdv();
   },

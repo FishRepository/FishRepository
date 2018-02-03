@@ -2,11 +2,16 @@
 
 <view class="exam">
   
-  <view class="top">
-    <text wx:if="{{resData.rightNumb>0}}" class="wrongBtn">正确：<text>{{resData.rightNumb}}</text></text>
-    <text><text>{{qtTypeSwitch==1?listeningNowCurrent+1:convNowCurrent+1}}</text>/<text>{{qtTypeSwitch==1?resData.listeningList.length:resData.conversationList.length}}</text></text>
-    <text wx:if="{{resData.wrongNumb>0}}" class="wrong">错误：<text>{{resData.wrongNumb}}</text></text>
-  </view>
+    <view class="top">
+      <block wx:if="{{qtTypeSwitch==1}}">
+        <text wx:if="{{resData.listeningRightNumb>0}}" class="wrongBtn">正确：<text>{{resData.listeningRightNumb}}</text></text>
+      </block>
+      <text><text>{{qtTypeSwitch==1?listeningNowCurrent+1:convNowCurrent+1}}</text>/<text>{{qtTypeSwitch==1?resData.listeningList.length:resData.conversationList.length}}</text></text>
+      <block wx:if="{{qtTypeSwitch==1}}">
+        <text wx:if="{{resData.listeningWrongNumb>0}}" class="wrong">错误：<text>{{resData.listeningWrongNumb}}</text></text>
+      </block>
+    </view>
+  
   <swiper class="swiper-cont" bindchange="swiperChange" current="{{qtTypeSwitch==1?listeningNowCurrent:convNowCurrent}}">
     <block wx:if="{{qtTypeSwitch==1}}">
     <!--听力-->
@@ -144,7 +149,7 @@
                 <block wx:if="{{list.RASstatus}}" >
                   <block wx:if="{{!list.recordIsPlay}}" bindtap="playRecord">
                     <view class="circle-view" >
-                        <view class="list.itemScore?list.itemScore>=80?'green-circle':list.itemScore>=60?'yellow-circle':'red-circle':'green-circle'" bindtap="playRecord">
+                        <view class="{{list.itemScore?list.itemScore>=80?'green-circle':list.itemScore>=60?'yellow-circle':'red-circle':'green-circle'}}" bindtap="playRecord">
                           <text class="circle-text">{{list.itemScore}}</text>
                         </view>
                     </view>

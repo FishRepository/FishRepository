@@ -139,11 +139,13 @@ Page({
     }
     try {
       wx.switchTab({
-      url: '/pages/newChoose/newChoose?postType=' + that.data.postVal + 
-      '&certType=' + that.data.certVal +
-      '&certText=' + that.data.certText +
-      '&postText=' + that.data.postText
-    })
+      url: '/pages/newChoose/newChoose',
+      success: function (e) {
+        var page = getCurrentPages().pop();
+        if (page == undefined || page == null) return;
+        page.onLoad();
+        }
+      }) 
     } catch (e) {
       console.log(e);
     }

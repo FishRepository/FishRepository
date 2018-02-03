@@ -185,6 +185,7 @@ Page({
           convNowCurrent: e.detail.current
         });
         wx.stopBackgroundAudio();
+        this.stopPlayRecord();
         for (var t = 0; t < that.data.resData.conversationList.length; t++) {
           var isPlayTTT = "resData.conversationList[" + t + "].isPlay";
           param[isPlayTTT] = false;
@@ -241,7 +242,7 @@ Page({
       param[isWrong] = true;
       that.setData(param);
     }
-    wx.setStorageSync(that.data.key, that.data.resData)
+    wx.setStorageSync(that.data.key, that.data.resData);
   },
   prev: function () {
     var that = this;
@@ -451,16 +452,30 @@ Page({
       if (index == t) {
         continue;
       }
-      var recordIsPlayTTT = this.constantDataChoose("recordIsPlay", index);
+      var recordIsPlayTTT = this.constantDataChoose("recordIsPlay", t);
       param[recordIsPlayTTT] = false;
       that.setData(param);
     }
   },
   /**
-   * 暂停用户录音
+   * 停止播放用户录音
    */
   stopPlayRecord: function () {
-
+    var that = this;
+    var index = this.constantDataIndex();
+    wx.stopBackgroundAudio();
+    var param = {};
+    var recordIsPlay = this.constantDataChoose("recordIsPlay", index);
+    param[recordIsPlay] = false;
+    var list = this.constantDataList();
+    for (var t = 0; t < list.length; t++) {
+      if (index == t) {
+        continue;
+      }
+      var recordIsPlayTTT = this.constantDataChoose("recordIsPlay", t);
+      param[recordIsPlayTTT] = false;
+    }
+    that.setData(param);
   },
   /**
    * 切换题目类型
@@ -479,6 +494,7 @@ Page({
       param[isPlayTTT] = false;
       that.setData(param);
     };
+    this.stopPlayRecord();
     that.setData({
       qtTypeSwitch: clicktype
     })
@@ -505,7 +521,7 @@ Page({
   },
   constantDataIndex: function () {
     var that = this;
-    return that.qtTypeSwitch == 1 ? that.data.listeningNowCurrent : that.data.convNowCurrent;
+    return that.data.qtTypeSwitch == 1 ? that.data.listeningNowCurrent : that.data.convNowCurrent;
   },
   constantDataList: function() {
     var that = this;
@@ -556,8 +572,10 @@ Page({
         const that = this;
         var index = this.constantDataIndex();
         var param = {};
+        var recordFile = "recordFile";
         var recordUrl = this.constantDataChoose("recordUrl", index);
         param[recordUrl] = tempFilePath;
+        param[recordFile] = tempFilePath;
         that.setData(param);
       }
       this.uploadFileToServer();
@@ -601,6 +619,7 @@ Page({
           that.setData(param);
         }
         wx.hideLoading();
+        wx.setStorageSync(that.data.key, that.data.resData);
       },
       fail: function (res) {
         wx.hideLoading();

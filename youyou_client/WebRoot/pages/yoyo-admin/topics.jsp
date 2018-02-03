@@ -181,7 +181,7 @@
 				url:urlPath+"/admin.do?method=getCert",
 				async:true,
 				success:function(d){
-					conslole.log(d)
+					console.log(d)
 					data=d;
 					var op="",childOp="";
 					for (var i=0;i<d.LIST.length;i++) {
