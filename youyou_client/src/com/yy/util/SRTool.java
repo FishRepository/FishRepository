@@ -20,6 +20,8 @@ public class SRTool {
     private StringBuffer mResult = new StringBuffer();
 
     static {
+        //qizhihang  5a6eb986
+        //海证  5a76b90a
         SpeechUtility.createUtility("appid=5a6eb986");//申请的appid
     }
 
@@ -150,7 +152,7 @@ public class SRTool {
     }
 
     public static void main(String[] args) {
-        String WavFilePath = "D:\\test.wav";
+        String WavFilePath = "D:\\321321.wav";
         HashMap<String, Object> map = new HashMap<>();
         SRTool sr = new SRTool();
         String words = null;

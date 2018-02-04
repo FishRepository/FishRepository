@@ -33,7 +33,7 @@ public class RASUtil {
             System.out.println("##############preRSAPath="+preRSAPath);
             ConvertAudio.changeToWav(filePath,preRSAPath);
             //================================测试S
-            preRSAPath = "D:\\test.wav";
+//            preRSAPath = "D:\\test.wav";
             //================================测试E
             SRTool sr = new SRTool();
             RSAStr = sr.voice2words(preRSAPath);

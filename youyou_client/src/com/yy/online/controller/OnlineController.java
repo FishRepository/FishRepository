@@ -860,9 +860,9 @@ public class OnlineController {
         parmMap.put("optionB", request.getParameter("option_b") != null?request.getParameter("option_b"):"");
         parmMap.put("optionC", request.getParameter("option_c") != null?request.getParameter("option_c"):"");
         parmMap.put("optionD", request.getParameter("option_d") != null?request.getParameter("option_d"):"");
-        parmMap.put("rightOption", request.getParameter("right_option") != null?request.getParameter("right_option"):"");
+        parmMap.put("rightOption", request.getParameter("right_option") != null?request.getParameter("right_option"):1);
         parmMap.put("explanTxt", request.getParameter("explain") != null?request.getParameter("explain"):"");
-        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("qt_dif"):"");
+        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("qt_dif"):2);
         resultMap = onlineService.addEnglishQuestion(parmMap);
         return resultMap;
     }
@@ -1063,7 +1063,7 @@ public class OnlineController {
 		Map<String, Object> resultMap = new HashMap<>();
 		String fileName = request.getParameter("fileName");
 		String preContext = request.getParameter("preContext");
-		String filePath = request.getSession().getServletContext().getRealPath("")+"/preASRVoice/"+fileName;
+		String filePath = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\"+fileName;
 		System.out.println("####################fileName="+fileName+", preContext="+preContext+", filePath="+filePath);
 		SaveFileFromWX save = new SaveFileFromWX();
 		boolean b = save.saveFile(request, file);

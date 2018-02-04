@@ -73,6 +73,6 @@ var page_table={
         }
     }
 };
-//var urlPath = "http://127.0.0.1:8080/youyou_client";
+var urlPath = "http://127.0.0.1:8080/youyou_client";
 // var urlPath = "http://111.111.125.238:8080/youyou_client";
-var urlPath = "https://www.yoyotec.com/youyou_client";
+// var urlPath = "https://www.yoyotec.com/youyou_client";

@@ -58,6 +58,37 @@ Page({
       wx.getStorage({
         key: that.data.key,
         success: function (res) {
+          if (res.data.listeningList.length == 0){
+            wx.removeStorageSync(that.data.key);
+            wx.removeStorage({
+              key: that.data.key
+            });
+            wx.request({
+              url: app.globalData.hostUrl + '/admin.do?method=getAllEnglishQuestionDataByChapId',
+              data: {
+                "chapId": options.chapId
+              },
+              success: function (res) {
+                wx.hideLoading();
+                if (res.data.listeningList.length == 0 && res.data.conversationList.length == 0) {
+                  wx.showToast({
+                    title: '该章节暂无试题',
+                  })
+                } else {
+                  wx.setStorage({
+                    key: that.data.key,
+                    data: res.data,
+                    success: function () {
+                      console.log("添加缓存成功");
+                    }
+                  })
+                }
+                that.setData({
+                  resData: res.data
+                });
+              }
+            })
+          }
           wx.hideLoading();
           that.setData({
             resData: res.data
@@ -442,9 +473,17 @@ Page({
     var param = {};
     var that = this;
     var list = this.constantDataList();
-    wx.playBackgroundAudio({
-      dataUrl: list[index].recordUrl,
-    });
+    console.log("filePath: " + list[index].recordUrl);
+    if (list[index].recordUrl){
+      const innerAudioContext = this.getInnerAudioContext();
+      innerAudioContext.src = list[index].recordUrl;
+      innerAudioContext.play();
+    } else{
+      return;
+    }
+    // wx.playBackgroundAudio({
+    //   dataUrl: list[index].recordUrl,
+    // });
     var recordIsPlay = this.constantDataChoose("recordIsPlay", index);
     param[recordIsPlay] = true;
     that.setData(param);
@@ -463,7 +502,9 @@ Page({
   stopPlayRecord: function () {
     var that = this;
     var index = this.constantDataIndex();
-    wx.stopBackgroundAudio();
+    // wx.stopBackgroundAudio();
+    const innerAudioContext = this.getInnerAudioContext();
+    innerAudioContext.stop();
     var param = {};
     var recordIsPlay = this.constantDataChoose("recordIsPlay", index);
     param[recordIsPlay] = false;
@@ -485,6 +526,12 @@ Page({
     var list = this.constantDataList();
     var clicktype = e.target.dataset.clicktype*1;
     if (that.data.qtTypeSwitch === clicktype){
+      return;
+    }
+    if (clicktype == 2 && that.data.conversationList.length==0){
+      wx.showToast({
+        title: '该章节暂无会话题!'
+      })
       return;
     }
     wx.stopBackgroundAudio();
@@ -635,5 +682,11 @@ Page({
         wx.hideToast();
       }
     });
+  },
+  getInnerAudioContext: function(){
+    if (this.innerAudioContext){
+      return this.innerAudioContext;
+    } 
+    return wx.createInnerAudioContext();
   }
 })

@@ -20,7 +20,6 @@ public class SaveFileFromWX {
             dir.mkdir();
         }
         logger.debug("path=" + path);
-
         try {
             request.setCharacterEncoding("utf-8");  //设置编码
         } catch (UnsupportedEncodingException e) {
