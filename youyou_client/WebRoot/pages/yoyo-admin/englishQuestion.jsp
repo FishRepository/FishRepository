@@ -230,13 +230,19 @@
                 bootbox.alert({title: "提示", message: "请选择类型为.xls的Excel文件！"});
                 return false;
             }
-            for(var i in XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])){
-                var parm = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])[i];
-                parm.classId = classId;
-                parm.chapId = chapId;
+            // for(var i in XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])){
+                // var parm = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])[i];
+                var parm = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                var xlsData = JSON.stringify(parm);
+                // parm.classId = classId;
+                // parm.chapId = chapId;
                 $.ajax({
                     type:"post",
-                    data:parm,
+                    data:{
+                        'xls':xlsData,
+                        'classId':classId,
+                        'chapId':chapId
+                    },
                     url:urlPath+"/admin.do?method=addEnglishQuestion",
                     async:true,
                     success:function(d){
@@ -245,7 +251,7 @@
                         }
                     }
                 });
-            }
+            // }
             refleshTable();
             bootbox.alert({title: "提示", message: "导入成功！"});
         });

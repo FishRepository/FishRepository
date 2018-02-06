@@ -3,6 +3,7 @@ package com.yy.util;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +27,11 @@ public class RASUtil {
         String RSAResult = BAD;
         String RSAStr = "";
         double sim = 0;
+        String filePath = parm.get("filePath").toString();
+        String preContext = parm.get("preContext").toString();
+        String preRSAPath = filePath.substring(0, filePath.indexOf('.') + 1) + "wav";
+        System.out.println("##############preRSAPath="+preRSAPath);
         try {
-            String filePath = parm.get("filePath").toString();
-            String preContext = parm.get("preContext").toString();
-            String preRSAPath = filePath.substring(0, filePath.indexOf('.') + 1) + "wav";
-            System.out.println("##############preRSAPath="+preRSAPath);
             ConvertAudio.changeToWav(filePath,preRSAPath);
             //================================测试S
 //            preRSAPath = "D:\\test.wav";
@@ -58,6 +59,14 @@ public class RASUtil {
         } catch (Exception e) {
             logger.error("语音识别错误: "+ e.getMessage());
         } finally {
+            File mp3File = new File(filePath);
+            File wavFile = new File(preRSAPath);
+            if(mp3File.exists()){
+                mp3File.delete();
+            }
+            if(wavFile.exists()){
+                wavFile.delete();
+            }
             resultMap.put("RSAResult",RSAResult);
             resultMap.put("RSAStr",RSAStr);
             resultMap.put("sim",(int)sim);
