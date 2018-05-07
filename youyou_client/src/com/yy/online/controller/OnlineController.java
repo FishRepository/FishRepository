@@ -3,6 +3,7 @@ package com.yy.online.controller;
 import com.yy.online.service.OnlineService;
 import com.yy.util.*;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -850,21 +851,41 @@ public class OnlineController {
     /*导入英语试题*/
     @RequestMapping(params="method=addEnglishQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        parmMap.put("chapId", request.getParameter("chapId"));
-        parmMap.put("qtType", request.getParameter("type"));
-        parmMap.put("qtContent", request.getParameter("title"));
-        parmMap.put("optionA", request.getParameter("option_a") != null?request.getParameter("option_a"):"");
-        parmMap.put("optionB", request.getParameter("option_b") != null?request.getParameter("option_b"):"");
-        parmMap.put("optionC", request.getParameter("option_c") != null?request.getParameter("option_c"):"");
-        parmMap.put("optionD", request.getParameter("option_d") != null?request.getParameter("option_d"):"");
-        parmMap.put("rightOption", request.getParameter("right_option") != null?request.getParameter("right_option"):1);
-        parmMap.put("explanTxt", request.getParameter("explain") != null?request.getParameter("explain"):"");
-        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("qt_dif"):2);
-        resultMap = onlineService.addEnglishQuestion(parmMap);
-        return resultMap;
+    public Map<String, Object> addEnglishQuestion(@RequestParam("xls") String xls, @RequestParam("classId") String classId, @RequestParam("chapId") String chapId){
+        Map<String, Object> parmMap;
+		Map<String, Object> resultMap = new HashMap<>();
+		JSONArray xlsArr = JSONArray.fromObject(xls);
+		JSONObject object;
+		for (int i = 0; i <xlsArr.size() ; i++) {
+			object = xlsArr.getJSONObject(i);
+			parmMap = new HashMap<>();
+			parmMap.put("chapId", chapId);
+			parmMap.put("qtType", object.optInt("type",1));
+			parmMap.put("qtContent", object.optString("title",""));
+			parmMap.put("optionA", object.optString("option_a",""));
+			parmMap.put("optionB", object.optString("option_b",""));
+			parmMap.put("optionC", object.optString("option_c",""));
+			parmMap.put("optionD", object.optString("option_d",""));
+			parmMap.put("rightOption", object.optInt("right_option",1));
+			parmMap.put("explanTxt", object.optString("explain",""));
+			parmMap.put("qtDif", object.optInt("qt_dif",2));
+			onlineService.addEnglishQuestion(parmMap);
+			parmMap.clear();
+		}
+		resultMap.put("RESULT","SUCCESS");
+		return resultMap;
+//        parmMap.put("chapId", request.getParameter("chapId"));
+//        parmMap.put("qtType", request.getParameter("type"));
+//        parmMap.put("qtContent", request.getParameter("title"));
+//        parmMap.put("optionA", request.getParameter("option_a") != null?request.getParameter("option_a"):"");
+//        parmMap.put("optionB", request.getParameter("option_b") != null?request.getParameter("option_b"):"");
+//        parmMap.put("optionC", request.getParameter("option_c") != null?request.getParameter("option_c"):"");
+//        parmMap.put("optionD", request.getParameter("option_d") != null?request.getParameter("option_d"):"");
+//        parmMap.put("rightOption", request.getParameter("right_option") != null?request.getParameter("right_option"):1);
+//        parmMap.put("explanTxt", request.getParameter("explain") != null?request.getParameter("explain"):"");
+//        parmMap.put("qtDif", request.getParameter("qt_dif") != null?request.getParameter("qt_dif"):2);
+//        resultMap = onlineService.addEnglishQuestion(parmMap);
+
     }
 
     /*getEnglishQuestion 根据英语课程、章节获取试题*/
