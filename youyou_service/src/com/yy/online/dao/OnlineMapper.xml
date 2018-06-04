@@ -1077,4 +1077,72 @@
         and b.ORDER_STATE = '1'
         and a.CLASS_ID = #{CLASS_ID, jdbcType=VARCHAR}
     </select>
+
+    <select id="getTopicById" parameterType="Map" resultType="java.util.HashMap">
+		select
+		ID as topicId,
+		ARTICLE as topicArticle,
+		TITLE as topicTitle,
+		IMAGE as topicImage,
+		OPTION_A as topicOptionA,
+		OPTION_B as topicOptionB,
+		OPTION_C as topicOptionC,
+		OPTION_D as topicOptionD,
+		RIGHT_OPTION as topicRightOption,
+        EXPLAIN_TEXT as explainText,
+		TYPE as topicType,
+		TOPIC_DISABLE as topicDisable,
+		SHOW_RIGHT as showRight,
+		SHOW_EXPLAIN as showExplain
+        from
+        <choose>
+            <when test="payType==0">
+                topic_free_table
+            </when>
+            <otherwise>
+                topic_pay_table
+            </otherwise>
+        </choose>
+        where
+        id = #{topicId, jdbcType=INTEGER}
+    </select>
+
+    <update id="editeTopicById" parameterType="Map">
+        update
+        <choose>
+            <when test="payType==0">
+                topic_free_table
+            </when>
+            <otherwise>
+                topic_pay_table
+            </otherwise>
+        </choose>
+        <trim prefix="set" suffixOverrides=",">
+            <if test="TITLE !=null and TITLE != '' ">
+                TITLE = #{TITLE, jdbcType=VARCHAR},
+            </if>
+            <if test="OPTION_A !=null and OPTION_A != '' ">
+                OPTION_A = #{OPTION_A, jdbcType=VARCHAR},
+            </if>
+            <if test="OPTION_B !=null and OPTION_B != '' ">
+                OPTION_B = #{OPTION_B, jdbcType=VARCHAR},
+            </if>
+            <if test="OPTION_C !=null and OPTION_C != '' ">
+                OPTION_C = #{OPTION_C, jdbcType=VARCHAR},
+            </if>
+            <if test="OPTION_D !=null and OPTION_D != '' ">
+                OPTION_D = #{OPTION_D, jdbcType=VARCHAR},
+            </if>
+            <if test="RIGHT_OPTION !=null and RIGHT_OPTION != '' ">
+                RIGHT_OPTION = #{RIGHT_OPTION, jdbcType=VARCHAR},
+            </if>
+            <if test="EXPLAIN_TEXT !=null and EXPLAIN_TEXT != '' ">
+                EXPLAIN_TEXT = #{EXPLAIN_TEXT, jdbcType=VARCHAR},
+            </if>
+            <if test="TYPE !=null and TYPE != '' ">
+                TYPE = #{TYPE, jdbcType=VARCHAR}
+            </if>
+        </trim>
+        where ID = #{TOPIC_ID, jdbcType=INTEGER}
+    </update>
 </mapper>

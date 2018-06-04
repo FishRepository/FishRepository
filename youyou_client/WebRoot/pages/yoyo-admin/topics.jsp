@@ -128,6 +128,68 @@
 					<button type="button" id="search" class="btn btn-block btn-primary">搜 索</button>
 				</div>
 			</div>
+
+			<!-- 修改模态框（Modal） -->
+			<div id="qtUpdModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+				<div class="modal-dialog" style="width:1000px;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">修改试题</h4>
+							<input type="hidden" id="topicid"/>
+						</div>
+						<div class="modal-body">
+							<div class="form-group row">
+								<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+									<label>问题类型</label>
+									<select id="qtType" class="form-control">
+										<option value="1">判断题</option>
+										<option value="2">单选题</option>
+										<option value="3">阅读题</option>
+									</select>
+								</div>
+								<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+									<label>题目内容</label>
+									<textarea id="qtTITLE" class="form-control" rows="5"></textarea>
+								</div>
+								<div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+									<label>A</label>
+									<input type="text" id="optionA" class="form-control" placeholder=""/>
+								</div>
+								<div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+									<label>B</label>
+									<input type="text" id="optionB" class="form-control" placeholder=""/>
+								</div>
+								<div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+									<label>C</label>
+									<input type="text" id="optionC" class="form-control" placeholder=""/>
+								</div>
+								<div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+									<label>D</label>
+									<input type="text" id="optionD" class="form-control" placeholder=""/>
+								</div>
+								<div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+									<label>正确选项</label>
+									<select id="rightOption" class="form-control">
+										<option value="1">A</option>
+										<option value="2">B</option>
+										<option value="3">C</option>
+										<option value="4">D</option>
+									</select>
+								</div>
+								<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+									<label>题目解释说明</label>
+									<textarea id="explanTxt" class="form-control" rows="5"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							<button type="button" class="btn btn-primary" id="btnUpd" onclick="editeTopicById();">提交修改</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			
 			
 			
@@ -245,7 +307,10 @@
 					success:function(d){
 						var tr = '';
 						for(var i=0;i<d.LIST.length;i++){
-							tr+='<tr><td>'+d.LIST[i].topicTitle+'</td><td><a href="'+urlPath+d.LIST[i].topicImage+'">'+d.LIST[i].topicImage+'</a></td><td>'+shareType[d.LIST[i].topicShareType]+'</td><td><a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" onclick="setId(\''+d.LIST[i].topicId+'\',\''+pay+'\')">添加图片</a><a class="btn btn-sm btn-danger" onclick="delTopic(\''+d.LIST[i].topicId+'\',this,\''+pay+'\')">删除</a></td></tr>';
+							tr+='<tr><td>'+d.LIST[i].topicTitle+'</td><td><a href="'+urlPath+d.LIST[i].topicImage+'">'+d.LIST[i].topicImage+'</a></td><td>'+shareType[d.LIST[i].topicShareType]+'</td>' +
+								'<td><a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" onclick="setId(\''+d.LIST[i].topicId+'\',\''+pay+'\')">添加图片</a>' +
+                                '<a class="btn btn-sm btn-success" onclick="editeTopic(\''+d.LIST[i].topicId+'\',this,\''+pay+'\')">编辑</a>'+
+								'<a class="btn btn-sm btn-danger" onclick="delTopic(\''+d.LIST[i].topicId+'\',this,\''+pay+'\')">删除</a></td></tr>';
 						}
 						$(".search-list").html(tr)
 					}
@@ -264,6 +329,67 @@
 			$("#addImage").attr("data-id",id);
 			$("#addImage").attr("data-pay",pay);
 		}
+		function editeTopic(id){
+            var pay = $("#pays1").val();
+		    console.log(id+" ,"+pay);
+		    $.ajax({
+				type: 'post',
+				data: {
+                    "topicId":id,
+                    "payType":pay
+				},
+				url: urlPath+"/admin.do?method=getTopicById",
+				success: function (d) {
+				    if(d.RESULT === 'SUCCESS'){
+                        $("#qtUpdModal").modal('show');
+                        $("#topicid").val(d.topicId);
+                        $("#qtType").val(d.topicType);
+                        $("#qtTITLE").val(d.topicTitle);
+                        $("#optionA").val(d.topicOptionA);
+                        $("#optionB").val(d.topicOptionB);
+                        $("#optionC").val(d.topicOptionC);
+                        $("#optionD").val(d.topicOptionD);
+                        $("#rightOption").val(d.topicRightOption);
+                        $("#explanTxt").val(d.explainText);
+					}
+                }
+			});
+
+		}
+        function editeTopicById(){
+            $.ajax({
+                type:"post",
+                data:{
+                    payType:$("#pays1").val(),
+                    topicId:$("#topicid").val(),
+                    TYPE:$("#qtType").val(),
+                    TITLE:$("#qtTITLE").val(),
+                    OPTION_A:$("#optionA").val(),
+                    OPTION_B:$("#optionB").val(),
+                    OPTION_C:$("#optionC").val(),
+                    OPTION_D:$("#optionD").val(),
+                    RIGHT_OPTION:$("#rightOption").val(),
+                    EXPLAIN_TEXT:$("#explanTxt").val()
+                },
+                url:urlPath+"/admin.do?method=editeTopicById",
+                async:true,
+                success:function(d){
+                    if(d.RESULT==="SUCCESS"){
+                        $("#qtUpdModal").modal('hide');
+                        $("#searchBtn").click();
+                        bootbox.alert({title: '提示', message: '修改成功！'});
+                    }else{
+                        $("#qtUpdModal").modal('hide');
+                        bootbox.alert({title: '提示', message: '修改失败！'});
+					}
+                }
+            });
+        }
+
+        $('#qtUpdModal').on('hide.bs.modal', function () {
+            $(this).removeData("bs.modal");
+        });
+
 		function delTopic(id,t,payType){
 			$.ajax({
 				type:"post",

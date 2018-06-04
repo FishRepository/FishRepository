@@ -588,4 +588,18 @@ public interface OnlineService extends CoreService{
 	 * @return
 	 */
 	public Map<String, Object> englishRSA(Map<String, Object> parm);
+
+	/**
+	 * 获取题目详情
+	 * @param parm
+	 * @return
+	 */
+	public Map<String, Object> getTopicById(Map<String, Object> parm);
+
+	/**
+	 * 修改题目
+	 * @param parm
+	 * @return
+	 */
+	public Map<String, Object> editeTopicById(Map<String, Object> parm);
 }

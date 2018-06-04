@@ -1,5 +1,6 @@
 package com.yy.online.controller;
 
+import com.alibaba.citrus.util.StringUtil;
 import com.yy.online.service.OnlineService;
 import com.yy.util.*;
 import net.sf.json.JSONArray;
@@ -1099,4 +1100,37 @@ public class OnlineController {
 		}
 		return resultMap;
 	}
+
+	/*根据topicId查询题目详情*/
+	@RequestMapping(params="method=getTopicById", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getTopicById(HttpServletRequest request) {
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
+		parmMap.put("payType", request.getParameter("payType"));
+		parmMap.put("topicId", request.getParameter("topicId"));
+		resultMap = onlineService.getTopicById(parmMap);
+		return resultMap;
+	}
+
+	/*根据topicId修改题目详情*/
+	@RequestMapping(params="method=editeTopicById", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> editeTopicById(HttpServletRequest request) {
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
+		parmMap.put("payType", Integer.parseInt(request.getParameter("payType")));
+		parmMap.put("TITLE", StringUtil.isBlank(request.getParameter("TITLE"))?"":request.getParameter("TITLE"));
+		parmMap.put("OPTION_A", StringUtil.isBlank(request.getParameter("OPTION_A"))?"":request.getParameter("OPTION_A"));
+		parmMap.put("OPTION_B", StringUtil.isBlank(request.getParameter("OPTION_B"))?"":request.getParameter("OPTION_B"));
+		parmMap.put("OPTION_C", StringUtil.isBlank(request.getParameter("OPTION_C"))?"":request.getParameter("OPTION_C"));
+		parmMap.put("OPTION_D", StringUtil.isBlank(request.getParameter("OPTION_D"))?"":request.getParameter("OPTION_D"));
+		parmMap.put("RIGHT_OPTION", StringUtil.isBlank(request.getParameter("RIGHT_OPTION"))?"":request.getParameter("RIGHT_OPTION"));
+		parmMap.put("EXPLAIN_TEXT", StringUtil.isBlank(request.getParameter("EXPLAIN_TEXT"))?"":request.getParameter("EXPLAIN_TEXT"));
+		parmMap.put("TOPIC_ID", Integer.parseInt(request.getParameter("topicId")));
+		parmMap.put("TYPE", Integer.parseInt(request.getParameter("TYPE")));
+		resultMap = onlineService.editeTopicById(parmMap);
+		return resultMap;
+	}
+
 }
