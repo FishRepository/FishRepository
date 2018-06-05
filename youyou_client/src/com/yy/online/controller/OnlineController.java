@@ -5,11 +5,13 @@ import com.yy.online.service.OnlineService;
 import com.yy.util.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.portlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +42,17 @@ public class OnlineController {
 		parmMap.put("COIN", coin);
 		resultMap = onlineService.regUser(parmMap);
 		return resultMap;
+	}
+	@RequestMapping(params="method=wxPay", method = RequestMethod.GET)
+	public String wxPay(HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("title");
+		String pay = request.getParameter("pay");
+		if(StringUtils.isBlank(title) || StringUtil.isBlank(pay)){
+			request.setAttribute("msg","网络异常，请返回重试");
+		}else{
+			request.setAttribute("msg","您购买的《"+title+"》, 需要支付"+pay+"元!");
+		}
+		return "yoyo-admin/wxPay.jsp";
 	}
 	
 	/*index*/
