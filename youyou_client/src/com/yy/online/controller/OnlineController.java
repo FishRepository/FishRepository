@@ -1146,4 +1146,28 @@ public class OnlineController {
 		return resultMap;
 	}
 
+	/*支付*/
+	@RequestMapping(params="method=payH5Money", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> payH5Money (HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String payClass = request.getParameter("payClass");
+		String payMoney = request.getParameter("payMoney");
+		String openid = request.getParameter("openid");
+		String ipString = request.getRemoteAddr();
+//		ipString = "119.97.231.230";
+		YoyoH5Util yoyoH5Util = new YoyoH5Util();
+
+		String orderNumb = yoyoH5Util.returnOrderNumb();
+		String orderTime = yoyoH5Util.returnOrderTime();
+
+		resultMap.put("result", yoyoH5Util.returnPackage(payClass, payMoney , orderNumb, orderTime, openid, ipString));
+		resultMap.put("orderNumber", orderNumb);
+		resultMap.put("payMoney", payMoney);
+		resultMap.put("orderType", payClass);
+		resultMap.put("orderTime", orderTime);
+
+		return resultMap;
+	}
 }
