@@ -9,7 +9,14 @@
 <%
     String path = request.getContextPath();
     String msg = request.getAttribute("msg").toString();
-
+    String title = "";
+    String pay = "";
+    String openid = "";
+    if(!msg.contains("网络异常")){
+        title = request.getAttribute("title").toString();
+        pay = request.getAttribute("pay").toString();
+        openid = request.getAttribute("openid").toString();
+    }
 %>
 <html>
 <head>
@@ -29,17 +36,28 @@
             background: #eee;
         }
         .msg{
-            margin-top: 10rem;
             text-align: center;
+            margin: 10rem 0;
+            position: fixed;
+            top: 0;
+            z-index: 2000;
         }
         .button{
-            margin-top: 5rem;
             text-align: center;
+            vertical-align: middle;
+            height: 100%;
+            margin: 30rem 0;
         }
         .bigbtn{
-            width: 20rem;
             height: 4rem;
             font-size: 2.5rem;
+            align-items: center;
+            text-align: center;
+            display: flex;
+            justify-items: center;
+            margin: auto;
+            padding-left: 2em;
+            padding-right: 2em;
         }
         .foot{
             color: #9d9d9d;
@@ -48,7 +66,9 @@
 </head>
 
 <body>
-
+    <input type="hidden" id="title" value="<%=title%>"/>
+    <input type="hidden" id="pay" value="<%=pay%>"/>
+    <input type="hidden" id="openid" value="<%=openid%>"/>
     <div class="container-fluid main">
         <div class="row msg">
             <h4><%=msg%></h4>
@@ -64,10 +84,30 @@
 
 
     <script type="text/javascript">
-        console.log(123123);
-        //用户点击跳转地址（非静默授权） 参数appid为公众号的id redirect_uri为微信回调接口 state为可携带的参数
-        // window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=http://你的域名/weChatpay/mainServlet&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+        $(function(){
+          var title = $('.msg').find('h4').text();
+          console.log(title);
+          if(title.indexOf('网络异常')>-1){
+              $('.button').hide();
+          }
+        });
 
+        //请求后台生成预支付链接
+        $('.bigbtn').click(function (){
+            $.ajax({
+                type:"POST",
+                data:{
+                    payClass: $('#title').val(),
+                    payMoney: $('#pay').val(),
+                    openid: $('#openid').val()
+                },
+                url:"/youyou_client/admin.do?method=payH5Money",
+                async:true,
+                success:function(d){
+                    console.log(d);
+                }
+            })
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+<view class='container'>
+  <web-view src="{{paySrc}}">
+  
+  </web-view>
+</view>

@@ -50,6 +50,8 @@ Page({
   },
   paySub: function (e) {
     var that = this;
+    var title = e.currentTarget.dataset.title;
+    var pay = e.currentTarget.dataset.pay;
     wx.request({
       url: app.globalData.hostUrl + '/admin.do?method=getUserExam',
       data: {
@@ -72,24 +74,28 @@ Page({
             }
           })
         }else{
-          var oType = 2;
-          wx.request({
-            url: app.globalData.hostUrl + '/admin.do?method=payMoney',
-            data: {
-              payMoney: e.currentTarget.dataset.pay,
-              payClass: app.globalData.orderType[oType],
-              openid: app.globalData.openid
-            },
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            method: "post",
-            success: function (d) {
-              if (d.data.result.prepay_id) {
-                that.requestPayment(d.data.result.prepay_id, d.data.orderNumber, oType, d.data.payMoney, d.data.orderTime, e.currentTarget.dataset.id);
-              }
-            }
+          // 新版h5 支付
+          wx.redirectTo({
+            url: '/pages/h5WxPay/h5WxPay?title=' + title + '&pay=' + pay + '&openid=' + app.globalData.openid
           })
+          // var oType = 2;
+          // wx.request({
+          //   url: app.globalData.hostUrl + '/admin.do?method=payMoney',
+          //   data: {
+          //     payMoney: e.currentTarget.dataset.pay,
+          //     payClass: app.globalData.orderType[oType],
+          //     openid: app.globalData.openid
+          //   },
+          //   header: {
+          //     'content-type': 'application/x-www-form-urlencoded'
+          //   },
+          //   method: "post",
+          //   success: function (d) {
+          //     if (d.data.result.prepay_id) {
+          //       that.requestPayment(d.data.result.prepay_id, d.data.orderNumber, oType, d.data.payMoney, d.data.orderTime, e.currentTarget.dataset.id);
+          //     }
+          //   }
+          // })
         }
       }
     })

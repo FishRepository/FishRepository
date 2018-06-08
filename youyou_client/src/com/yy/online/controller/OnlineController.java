@@ -47,9 +47,13 @@ public class OnlineController {
 	public String wxPay(HttpServletRequest request, HttpServletResponse response){
 		String title = request.getParameter("title");
 		String pay = request.getParameter("pay");
+		String openid = request.getParameter("openid");
 		if(StringUtils.isBlank(title) || StringUtil.isBlank(pay)){
 			request.setAttribute("msg","网络异常，请返回重试");
 		}else{
+			request.setAttribute("title",title);
+			request.setAttribute("pay",pay);
+			request.setAttribute("openid",openid);
 			request.setAttribute("msg","您购买的《"+title+"》, 需要支付"+pay+"元!");
 		}
 		return "yoyo-admin/wxPay.jsp";
