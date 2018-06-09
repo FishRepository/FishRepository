@@ -1,14 +1,17 @@
 package com.yy.online.controller;
 
+import com.alibaba.citrus.util.StringUtil;
 import com.yy.online.service.OnlineService;
 import com.yy.util.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.portlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +42,21 @@ public class OnlineController {
 		parmMap.put("COIN", coin);
 		resultMap = onlineService.regUser(parmMap);
 		return resultMap;
+	}
+	@RequestMapping(params="method=wxPay", method = RequestMethod.GET)
+	public String wxPay(HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("title");
+		String pay = request.getParameter("pay");
+		String openid = request.getParameter("openid");
+		if(StringUtils.isBlank(title) || StringUtil.isBlank(pay)){
+			request.setAttribute("msg","网络异常，请返回重试");
+		}else{
+			request.setAttribute("title",title);
+			request.setAttribute("pay",pay);
+			request.setAttribute("openid",openid);
+			request.setAttribute("msg","您购买的《"+title+"》, 需要支付"+pay+"元!");
+		}
+		return "yoyo-admin/wxPay.jsp";
 	}
 	
 	/*index*/
@@ -1097,6 +1115,63 @@ public class OnlineController {
 		}else{
 			resultMap.put("ret",0);
 		}
+		return resultMap;
+	}
+
+	/*根据topicId查询题目详情*/
+	@RequestMapping(params="method=getTopicById", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getTopicById(HttpServletRequest request) {
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
+		parmMap.put("payType", request.getParameter("payType"));
+		parmMap.put("topicId", request.getParameter("topicId"));
+		resultMap = onlineService.getTopicById(parmMap);
+		return resultMap;
+	}
+
+	/*根据topicId修改题目详情*/
+	@RequestMapping(params="method=editeTopicById", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> editeTopicById(HttpServletRequest request) {
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
+		parmMap.put("payType", Integer.parseInt(request.getParameter("payType")));
+		parmMap.put("TITLE", StringUtil.isBlank(request.getParameter("TITLE"))?"":request.getParameter("TITLE"));
+		parmMap.put("OPTION_A", StringUtil.isBlank(request.getParameter("OPTION_A"))?"":request.getParameter("OPTION_A"));
+		parmMap.put("OPTION_B", StringUtil.isBlank(request.getParameter("OPTION_B"))?"":request.getParameter("OPTION_B"));
+		parmMap.put("OPTION_C", StringUtil.isBlank(request.getParameter("OPTION_C"))?"":request.getParameter("OPTION_C"));
+		parmMap.put("OPTION_D", StringUtil.isBlank(request.getParameter("OPTION_D"))?"":request.getParameter("OPTION_D"));
+		parmMap.put("RIGHT_OPTION", StringUtil.isBlank(request.getParameter("RIGHT_OPTION"))?"":request.getParameter("RIGHT_OPTION"));
+		parmMap.put("EXPLAIN_TEXT", StringUtil.isBlank(request.getParameter("EXPLAIN_TEXT"))?"":request.getParameter("EXPLAIN_TEXT"));
+		parmMap.put("TOPIC_ID", Integer.parseInt(request.getParameter("topicId")));
+		parmMap.put("TYPE", Integer.parseInt(request.getParameter("TYPE")));
+		resultMap = onlineService.editeTopicById(parmMap);
+		return resultMap;
+	}
+
+	/*支付*/
+	@RequestMapping(params="method=payH5Money", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> payH5Money (HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String payClass = request.getParameter("payClass");
+		String payMoney = request.getParameter("payMoney");
+		String openid = request.getParameter("openid");
+		String ipString = request.getRemoteAddr();
+//		ipString = "119.97.231.230";
+		YoyoH5Util yoyoH5Util = new YoyoH5Util();
+
+		String orderNumb = yoyoH5Util.returnOrderNumb();
+		String orderTime = yoyoH5Util.returnOrderTime();
+
+		resultMap.put("result", yoyoH5Util.returnPackage(payClass, payMoney , orderNumb, orderTime, openid, ipString));
+		resultMap.put("orderNumber", orderNumb);
+		resultMap.put("payMoney", payMoney);
+		resultMap.put("orderType", payClass);
+		resultMap.put("orderTime", orderTime);
+
 		return resultMap;
 	}
 }

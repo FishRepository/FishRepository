@@ -20,7 +20,8 @@
     "pages/help/help",
     "pages/englishChap/englishChap",
     "pages/englishQuestion/englishQuestion",
-    "pages/englishPay/englishPay"
+    "pages/englishPay/englishPay",
+    "pages/h5WxPay/h5WxPay"
   ],
   "window":{
     "backgroundTextStyle":"dark",

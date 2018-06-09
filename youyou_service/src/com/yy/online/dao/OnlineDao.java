@@ -364,4 +364,18 @@ public interface OnlineDao {
 	 */
 	public int countUsers(Map<String, Object> param);
 
+	/**
+	 * 获取试题
+	 * @param param
+	 * @return
+	 */
+	public Map<String, Object> getTopicById(Map<String, Object> param);
+
+	/**
+	 * 修改试题
+	 * @param param
+	 * @return
+	 */
+	public int editeTopicById(Map<String, Object> param);
+
 }

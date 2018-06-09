@@ -776,4 +776,24 @@ public class OnlineServiceImpl implements OnlineService{
 		return resultMap;
 	}
 
+	@Override
+	public Map<String, Object> getTopicById(Map<String, Object> parm) {
+		Map<String, Object> resultMap;
+		resultMap = onlineDao.getTopicById(parm);
+		resultMap.put(RESULT, SUCCESS);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> editeTopicById(Map<String, Object> parm) {
+		Map<String, Object> resultMap = new HashMap<>();
+		int result = onlineDao.editeTopicById(parm);
+		if(result > 0){
+			resultMap.put(RESULT, SUCCESS);
+		}else {
+			resultMap.put(RESULT, FAIL);
+		}
+		return resultMap;
+	}
+
 }

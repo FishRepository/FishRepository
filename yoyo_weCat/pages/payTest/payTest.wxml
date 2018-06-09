@@ -7,7 +7,8 @@
       <text>及格分：{{item.passScore}}</text>
     </view>
     <button data-pay="{{item.pay}}" 
-    data-id="{{item.examClass}}" 
+    data-id="{{item.examClass}}"
+    data-title="{{item.exam_name}}" 
     data-postType="{{postType}}"
     data-certType="{{certType}}" bindtap='paySub'>购买({{item.pay/100}}元)</button>
     <text class='tip'>购买后再次点击免费做题</text>
