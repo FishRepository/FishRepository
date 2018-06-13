@@ -11,10 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.portlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,25 +24,29 @@ import java.util.Map;
 public class OnlineController {
 	@Autowired
 	private OnlineService onlineService;
-	
+
 	/*初始化解析币*/
-	String coin = "5";
-	
+	private String coin = "5";
+
 	/*用户收集WeChat*/
 	@RequestMapping(params="method=regUser", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> regUser (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> regUser (HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
+		String name = request.getParameter("NAME");
+		if(EmojiFilter.containsEmoji(name)){
+			name = EmojiFilter.filterEmoji(name);
+		}
 		parmMap.put("WID", request.getParameter("WID"));
-		parmMap.put("NAME", request.getParameter("NAME"));
+		parmMap.put("NAME", name);
 		parmMap.put("SEX", request.getParameter("SEX"));
 		parmMap.put("COIN", coin);
 		resultMap = onlineService.regUser(parmMap);
 		return resultMap;
 	}
 	@RequestMapping(params="method=wxPay", method = RequestMethod.GET)
-	public String wxPay(HttpServletRequest request, HttpServletResponse response){
+	public String wxPay(HttpServletRequest request){
 		String title = request.getParameter("title");
 		String pay = request.getParameter("pay");
 		String openid = request.getParameter("openid");
@@ -88,9 +90,9 @@ public class OnlineController {
 	/*添加岗位*/
 	@RequestMapping(params="method=addPost", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addPost (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addPost (HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("NAME", request.getParameter("postInput"));
 		resultMap = onlineService.addPost(parmMap);
 		return resultMap;
@@ -99,9 +101,9 @@ public class OnlineController {
 	/*获取岗位*/
 	@RequestMapping(params="method=getPost", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getPost (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getPost (){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		resultMap = onlineService.getPost(parmMap);
 		return resultMap;
 	}
@@ -109,9 +111,9 @@ public class OnlineController {
 	/*添加证书*/
 	@RequestMapping(params="method=addCert", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addCert (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addCert (HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("NAME", request.getParameter("certInput"));
 		parmMap.put("CLASS", request.getParameter("postType"));
 		parmMap.put("SHARE_TYPE", request.getParameter("shareType"));
@@ -131,9 +133,9 @@ public class OnlineController {
 	/*获取所有证书*/
 	@RequestMapping(params="method=getCert", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getCert (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getCert(){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		resultMap = onlineService.getCert(parmMap);
 		return resultMap;
 	}
@@ -141,10 +143,10 @@ public class OnlineController {
 	/*获取所有证书*/
 	@RequestMapping(params="method=getCertByPost", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getCertByPost (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
+	public Map<String, Object> getCertByPost(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
 		parmMap.put("CLASS", request.getParameter("postId"));
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap;
 		resultMap = onlineService.getCertByPost(parmMap);
 		return resultMap;
 	}
@@ -152,9 +154,9 @@ public class OnlineController {
 	/*导入topic*/
 	@RequestMapping(params="method=addXls", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addXls (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addXls(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("PAY_TYPE", request.getParameter("pays_type"));
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
@@ -177,9 +179,9 @@ public class OnlineController {
 	/*搜索试题*/
 	@RequestMapping(params="method=searchTopic", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> searchTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> searchTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("PAY_TYPE", request.getParameter("pay_type"));
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
@@ -192,9 +194,9 @@ public class OnlineController {
 	/*试题添加图片*/
 	@RequestMapping(params="method=updateTopicImage", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateTopicImage (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updateTopicImage(HttpServletRequest request) throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
 		String urlPath = "/pictures/";
 		parmMap.put("ID", request.getParameter("topicId"));
@@ -207,9 +209,9 @@ public class OnlineController {
 	/*获取试题*/
 	@RequestMapping(params="method=getTopicByRang", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getTopicByRang (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getTopicByRang(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("PAY_TYPE", request.getParameter("pay_type"));
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
@@ -222,9 +224,9 @@ public class OnlineController {
 	/*获取付费试题*/
 	@RequestMapping(params="method=getPayTopicByRang", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getPayTopicByRang (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getPayTopicByRang(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("PAY_TYPE", request.getParameter("pay_type"));
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
@@ -237,9 +239,9 @@ public class OnlineController {
 	/*获取用户信息*/
 	@RequestMapping(params="method=getUserInfo", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getUserInfo (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getUserInfo(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("OPENID", request.getParameter("WID"));
 		resultMap = onlineService.getUserInfo(parmMap);
 		return resultMap;
@@ -248,9 +250,9 @@ public class OnlineController {
 	/*修改用户信息*/
 	@RequestMapping(params="method=updateUserInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateUserInfo (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updateUserInfo(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("OPENID", request.getParameter("openid"));
 		parmMap.put("NAME", request.getParameter("userName"));
 		parmMap.put("SEX", request.getParameter("userSex"));
@@ -263,9 +265,9 @@ public class OnlineController {
 	/*记录订单*/
 	@RequestMapping(params="method=pay", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> pay (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> pay(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		
 		GregorianCalendar worldTour = new GregorianCalendar();
         worldTour.add(GregorianCalendar.DATE, 30);
@@ -289,8 +291,8 @@ public class OnlineController {
 	/*支付*/
 	@RequestMapping(params="method=payMoney", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> payMoney (HttpServletRequest request, HttpServletResponse response) throws Exception{
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> payMoney(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		String payClass = request.getParameter("payClass");
 		String payMoney = request.getParameter("payMoney");
@@ -314,9 +316,9 @@ public class OnlineController {
 	/*获取用户解析币*/
 	@RequestMapping(params="method=getUserCoin", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getUserCoin (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getUserCoin(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("OPENID", request.getParameter("WID"));
 		resultMap = onlineService.getUserCoin(parmMap);
 		return resultMap;
@@ -325,9 +327,9 @@ public class OnlineController {
 	/*获取用户解析币*/
 	@RequestMapping(params="method=rechargeCoin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> rechargeCoin (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> rechargeCoin(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("OPENID", request.getParameter("WID"));
 		parmMap.put("COIN", request.getParameter("COIN"));
 		resultMap = onlineService.rechargeCoin(parmMap);
@@ -337,9 +339,9 @@ public class OnlineController {
 	/*获取用户解析币*/
 	@RequestMapping(params="method=subCoin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> subCoin (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> subCoin(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("OPENID", request.getParameter("WID"));
 		parmMap.put("COIN", request.getParameter("COIN"));
 		resultMap = onlineService.subCoin(parmMap);
@@ -349,9 +351,9 @@ public class OnlineController {
 	/*获取用户解析币*/
 	@RequestMapping(params="method=getTopicExplain", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getTopicExplain (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getTopicExplain(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("TOPIC_ID", request.getParameter("topicId"));
 		parmMap.put("PAY_TYPE", request.getParameter("payType"));
 		resultMap = onlineService.getTopicExplain(parmMap);
@@ -361,9 +363,9 @@ public class OnlineController {
 	/*获取用户解析币*/
 	@RequestMapping(params="method=getOrderList", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getOrderList (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getOrderList(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("WID", request.getParameter("openid"));
 		resultMap = onlineService.getOrderList(parmMap);
 		return resultMap;
@@ -372,9 +374,9 @@ public class OnlineController {
 	/*删除试题*/
 	@RequestMapping(params="method=delTopic", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> delTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("ID", request.getParameter("topicId"));
 		parmMap.put("PAY_TYPE", request.getParameter("payType"));
 		resultMap = onlineService.delTopic(parmMap);
@@ -383,9 +385,9 @@ public class OnlineController {
 
 	@RequestMapping(params="method=doLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doLogin(HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> doLogin(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("adminName", request.getParameter("adminName"));
 		parmMap.put("adminPassword", request.getParameter("adminPassword"));
 		resultMap = onlineService.adminLogin(parmMap);
@@ -398,8 +400,8 @@ public class OnlineController {
 	public Map<String, Object> getUserByPage (@RequestParam(value = "start", defaultValue = "0") int start,
 											  @RequestParam(value = "length", defaultValue = "10") int length,
 											  @RequestParam(value = "userName") String userName){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("begin", start);
 		parmMap.put("end", length);
 		parmMap.put("userName", userName);
@@ -413,9 +415,9 @@ public class OnlineController {
 	/*添加试卷*/
 	@RequestMapping(params="method=addExamClass", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addExamClass (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addExamClass(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("postType", request.getParameter("postType"));
 		parmMap.put("certType", request.getParameter("certType"));
 		parmMap.put("totalScore", request.getParameter("totalScore"));
@@ -435,9 +437,9 @@ public class OnlineController {
 	/*获取用户列表by区间*/
 	@RequestMapping(params="method=getExamList", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getExamList (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getExamList(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("postType", request.getParameter("postType"));
 		parmMap.put("certType", request.getParameter("certType"));
 		resultMap = onlineService.getExamList(parmMap);
@@ -447,9 +449,9 @@ public class OnlineController {
 	/*获取用户列表by区间*/
 	@RequestMapping(params="method=getAllExam", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getAllExam (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getAllExam(){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		resultMap = onlineService.getAllExam(parmMap);
 		return resultMap;
 	}
@@ -457,9 +459,9 @@ public class OnlineController {
 	/*导入topic*/
 	@RequestMapping(params="method=addExamXls", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addExamXls (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addExamXls(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("TYPE", request.getParameter("type"));
 		parmMap.put("EXAM_CLASS", request.getParameter("exams"));
 		parmMap.put("ARTICLE", request.getParameter("article")!=null?request.getParameter("article"):"");
@@ -478,9 +480,9 @@ public class OnlineController {
 	/*获取用户列表by区间*/
 	@RequestMapping(params="method=getExamByClass", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getExamByClass (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getExamByClass(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("EXAM_CLASS", request.getParameter("examClass"));
 		resultMap = onlineService.getExamByClass(parmMap);
 		return resultMap;
@@ -489,9 +491,9 @@ public class OnlineController {
 	/*获取用户所有套卷*/
 	@RequestMapping(params="method=getUserExamList", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getUserExamList (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getUserExamList(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("openid", request.getParameter("openid"));
 		resultMap = onlineService.getUserExamList(parmMap);
 		return resultMap;
@@ -500,9 +502,9 @@ public class OnlineController {
 	/*获取用户所有套卷*/
 	@RequestMapping(params="method=addAdv", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addAdv (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addAdv(HttpServletRequest request) throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
 		String urlPath = "/pictures/";
 		parmMap.put("NAME", request.getParameter("advName"));
@@ -514,9 +516,9 @@ public class OnlineController {
 	/*获取用户所有套卷*/
 	@RequestMapping(params="method=getAllAdv", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getAllAdv (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getAllAdv() throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		resultMap = onlineService.getAllAdv(parmMap);
 		return resultMap;
 	}
@@ -524,9 +526,9 @@ public class OnlineController {
 	/*更新广告*/
 	@RequestMapping(params="method=updataAdv", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updataAdv (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updataAdv(HttpServletRequest request) throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
 		String urlPath = "/pictures/";
 		parmMap.put("ID", request.getParameter("advId"));
@@ -539,9 +541,9 @@ public class OnlineController {
 	/*不显示广告*/
 	@RequestMapping(params="method=updataAdvShow", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updataAdvShow (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updataAdvShow(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("ID", request.getParameter("advId"));
 		parmMap.put("ADV_SHOW", request.getParameter("advShow"));
 		resultMap = onlineService.updataAdvShow(parmMap);
@@ -550,9 +552,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=getUserExam", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getUserExam (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getUserExam(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("openid", request.getParameter("openid"));
 		parmMap.put("examId", request.getParameter("examId"));
 		resultMap = onlineService.getUserExam(parmMap);
@@ -561,9 +563,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=updateAdvInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateAdvInfo (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updateAdvInfo(HttpServletRequest request) throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
 		String urlPath = "/pictures/";
 		parmMap.put("ID", request.getParameter("advId"));
@@ -574,9 +576,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=getAdvInfo", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getAdvInfo (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getAdvInfo(HttpServletRequest request) throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("advId", request.getParameter("advId"));
 		resultMap = onlineService.getAdvInfo(parmMap);
 		return resultMap;
@@ -584,9 +586,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=searchPayTopic", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> searchPayTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> searchPayTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("TITLE", request.getParameter("title"));
 		resultMap = onlineService.searchPayTopic(parmMap);
 		return resultMap;
@@ -594,9 +596,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=addSection", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addSection (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addSection(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("name", request.getParameter("name"));
 		parmMap.put("certType", request.getParameter("certType"));
 		parmMap.put("postType", request.getParameter("postType"));
@@ -606,9 +608,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=delSection", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delSection (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> delSection(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("id", request.getParameter("id"));
 		resultMap = onlineService.delSection(parmMap);
 		return resultMap;
@@ -616,9 +618,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=updataSection", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updataSection (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updataSection(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("id", request.getParameter("id"));
 		parmMap.put("name", request.getParameter("name"));
 		resultMap = onlineService.delSection(parmMap);
@@ -627,9 +629,9 @@ public class OnlineController {
 	
 	@RequestMapping(params="method=getSection", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getSection (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getSection(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("certType", request.getParameter("certType"));
 		parmMap.put("postType", request.getParameter("postType"));
 		resultMap = onlineService.getSection(parmMap);
@@ -639,9 +641,9 @@ public class OnlineController {
 	/*导入topic*/
 	@RequestMapping(params="method=addSectionTopic", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addSectionTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> addSectionTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("PAY_TYPE", request.getParameter("pays_type"));
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
@@ -665,9 +667,9 @@ public class OnlineController {
 	/*搜索试题*/
 	@RequestMapping(params="method=searchSectionTopic", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> searchSectionTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> searchSectionTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("SECTION_TYPE", request.getParameter("section_type"));
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
@@ -679,9 +681,9 @@ public class OnlineController {
 	/*删除章节试题*/
 	@RequestMapping(params="method=delSectionTopic", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delSectionTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> delSectionTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("id", request.getParameter("id"));
 		resultMap = onlineService.delSectionTopic(parmMap);
 		return resultMap;
@@ -690,9 +692,9 @@ public class OnlineController {
 	/*修改章节试题  添加图片*/
 	@RequestMapping(params="method=updateSectionTopicImage", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateSectionTopicImage (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> updateSectionTopicImage(HttpServletRequest request) throws IOException{
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
 		String urlPath = "/pictures/";
 		parmMap.put("ID", request.getParameter("topicId"));
@@ -704,9 +706,9 @@ public class OnlineController {
 	/*getSectionTopic 获取章节试题*/
 	@RequestMapping(params="method=getSectionTopic", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getSectionTopic (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getSectionTopic(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("POST_TYPE", request.getParameter("post_type"));
 		parmMap.put("CERT_TYPE", request.getParameter("cert_type"));
 		parmMap.put("SECTION_TYPE", request.getParameter("section_type"));
@@ -717,9 +719,9 @@ public class OnlineController {
 	/*获取用户解析币*/
 	@RequestMapping(params="method=getSectionExplain", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getSectionExplain (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getSectionExplain(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 		parmMap.put("TOPIC_ID", request.getParameter("topicId"));
 		resultMap = onlineService.getSectionExplain(parmMap);
 		return resultMap;
@@ -728,8 +730,8 @@ public class OnlineController {
 	/*获取openid*/
 	@RequestMapping(params="method=getOpenId", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getOpenId (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> getOpenId(HttpServletRequest request){
+		Map<String, Object> resultMap = new HashMap<>();
 		String codeString = request.getParameter("js_code");
 		resultMap.put("data", JSONArray.fromObject("["+YoyoUtil.getConvert(codeString)+"]"));
 		return resultMap;
@@ -738,9 +740,9 @@ public class OnlineController {
     /*getEnglishClass 获取英语课程*/
     @RequestMapping(params="method=getEnglishClass", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getEnglishClass (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getEnglishClass(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("className", request.getParameter("className"));
         parmMap.put("isPay", request.getParameter("isPay"));
         resultMap = onlineService.getEnglishClass(parmMap);
@@ -750,9 +752,9 @@ public class OnlineController {
     /*addEnglishClass 添加英语课程*/
     @RequestMapping(params="method=addEnglishClass", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addEnglishClass (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> addEnglishClass(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("className", request.getParameter("className"));
         parmMap.put("isPay", request.getParameter("isPay"));
         parmMap.put("payMoney", request.getParameter("payMoney"));
@@ -763,9 +765,9 @@ public class OnlineController {
     /*updEnglishClass 修改英语课程*/
     @RequestMapping(params="method=updEnglishClass", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updEnglishClass (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> updEnglishClass(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("id", request.getParameter("id"));
         parmMap.put("className", request.getParameter("className"));
         parmMap.put("isPay", request.getParameter("isPay"));
@@ -777,9 +779,9 @@ public class OnlineController {
     /*delEnglishClass 删除英语课程*/
     @RequestMapping(params="method=delEnglishClass", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> delEnglishClass (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> delEnglishClass(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("id", request.getParameter("id"));
         resultMap = onlineService.deleteEnglishClass(parmMap);
         return resultMap;
@@ -788,9 +790,9 @@ public class OnlineController {
     /*添加课程图片*/
     @RequestMapping(params="method=updateEnglishClassPic", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateEnglishClassPic (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> updateEnglishClassPic(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
         String urlPath = "/pictures/";
         parmMap.put("id", request.getParameter("topicId"));
@@ -802,8 +804,8 @@ public class OnlineController {
     /*获取所有英语课程*/
     @RequestMapping(params="method=getSelClass", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getSelClass (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getSelClass (){
+        Map<String, Object> resultMap;
         resultMap = onlineService.getAllEnglishClass();
         return resultMap;
     }
@@ -811,9 +813,9 @@ public class OnlineController {
     /*getEnglishClassChap 获取英语课程章节*/
     @RequestMapping(params="method=getEnglishClassChap", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getEnglishClassChap(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("classId", request.getParameter("classId"));
         parmMap.put("chapName", request.getParameter("chapName"));
         resultMap = onlineService.getEnglishChap(parmMap);
@@ -823,9 +825,9 @@ public class OnlineController {
     /*addEnglishClassChap 添加英语课程章节*/
     @RequestMapping(params="method=addEnglishClassChap", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> addEnglishClassChap(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("classId", request.getParameter("classId"));
         parmMap.put("chapName", request.getParameter("chapName"));
         resultMap = onlineService.addEnglishChap(parmMap);
@@ -835,9 +837,9 @@ public class OnlineController {
     /*updEnglishClassChap 修改英语课程章节*/
     @RequestMapping(params="method=updEnglishClassChap", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> updEnglishClassChap(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("id", request.getParameter("id"));
         parmMap.put("chapName", request.getParameter("chapName"));
         resultMap = onlineService.updateEnglishChap(parmMap);
@@ -847,9 +849,9 @@ public class OnlineController {
     /*delEnglishClassChap 删除英语课程*/
     @RequestMapping(params="method=delEnglishClassChap", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> delEnglishClassChap (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> delEnglishClassChap(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("id", request.getParameter("id"));
         resultMap = onlineService.deleteEnglishChap(parmMap);
         return resultMap;
@@ -858,9 +860,9 @@ public class OnlineController {
     /*根据课程获取章节*/
     @RequestMapping(params="method=getChapByClassId", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getChapByClassId (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getChapByClassId(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("classId", request.getParameter("classId"));
         resultMap = onlineService.getChapByClassId(parmMap);
         return resultMap;
@@ -869,7 +871,7 @@ public class OnlineController {
     /*导入英语试题*/
     @RequestMapping(params="method=addEnglishQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addEnglishQuestion(@RequestParam("xls") String xls, @RequestParam("classId") String classId, @RequestParam("chapId") String chapId){
+    public Map<String, Object> addEnglishQuestion(@RequestParam("xls") String xls, @RequestParam("chapId") String chapId){
         Map<String, Object> parmMap;
 		Map<String, Object> resultMap = new HashMap<>();
 		JSONArray xlsArr = JSONArray.fromObject(xls);
@@ -909,9 +911,9 @@ public class OnlineController {
     /*getEnglishQuestion 根据英语课程、章节获取试题*/
     @RequestMapping(params="method=getEnglishQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getEnglishQuestion(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getEnglishQuestion(parmMap);
         return resultMap;
@@ -920,9 +922,9 @@ public class OnlineController {
     /*updEnglishQuestion 修改英语试题*/
     @RequestMapping(params="method=updEnglishQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> updEnglishQuestion(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("id", request.getParameter("id"));
         parmMap.put("qtType", request.getParameter("qtType"));
         parmMap.put("qtDif", request.getParameter("qtDif"));
@@ -940,9 +942,9 @@ public class OnlineController {
     /*delEnglishQuestion 删除英语试题*/
     @RequestMapping(params="method=delEnglishQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> delEnglishQuestion (HttpServletRequest request, HttpServletResponse response){
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> delEnglishQuestion(HttpServletRequest request){
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("id", request.getParameter("id"));
         resultMap = onlineService.delEnglishQuestion(parmMap);
         return resultMap;
@@ -951,9 +953,9 @@ public class OnlineController {
     /*添加英语试题图片*/
     @RequestMapping(params="method=updateEnglishQuestionPic", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateEnglishQuestionPic (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> updateEnglishQuestionPic(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         String realPath = request.getSession().getServletContext().getRealPath("/") + "pictures/";
         String urlPath = "/pictures/";
         parmMap.put("id", request.getParameter("topicId"));
@@ -966,8 +968,8 @@ public class OnlineController {
     @RequestMapping(params="method=updateEnglishQuestionVol", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> updateEnglishQuestionVol (HttpServletRequest request,@RequestParam(value="targetId")String targetId, @RequestBody MultipartFile audio) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         String realPath = request.getSession().getServletContext().getRealPath("/") + "audio/";
         String urlPath = "/audio/";
         parmMap.put("id",targetId);
@@ -979,9 +981,9 @@ public class OnlineController {
     /*获取所有英语课程*/
     @RequestMapping(params="method=getAllEnglishClassData", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getAllEnglishClassData (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getAllEnglishClassData(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("WID",request.getParameter("WID"));
         resultMap = onlineService.getAllEnglishData(parmMap);
         return resultMap;
@@ -990,9 +992,9 @@ public class OnlineController {
     /*根据课程ID获取章节列表*/
     @RequestMapping(params="method=getAllEnglishChapDataByClassId", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getAllEnglishChapDataByClassId (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getAllEnglishChapDataByClassId(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("classId", request.getParameter("classId"));
         resultMap = onlineService.getAllEnglishChapDataByClassId(parmMap);
         return resultMap;
@@ -1001,9 +1003,9 @@ public class OnlineController {
     /*根据章节ID获取所有试题列表*/
     @RequestMapping(params="method=getAllEnglishQuestionDataByChapId", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getAllEnglishQuestionDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getAllEnglishQuestionDataByChapId(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getAllEnglishQuestionDataByChapId(parmMap);
         return resultMap;
@@ -1012,9 +1014,9 @@ public class OnlineController {
     /*根据章节ID获取听力试题列表*/
     @RequestMapping(params="method=getAllEnglishQuestionListenDataByChapId", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getAllEnglishQuestionListenDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getAllEnglishQuestionListenDataByChapId(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getAllEnglishQuestionListenDataByChapId(parmMap);
         return resultMap;
@@ -1023,9 +1025,9 @@ public class OnlineController {
     /*根据章节ID获取会话试题列表*/
     @RequestMapping(params="method=getAllEnglishQuestionTalkDataByChapId", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getAllEnglishQuestionTalkDataByChapId (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getAllEnglishQuestionTalkDataByChapId(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("chapId", request.getParameter("chapId"));
         resultMap = onlineService.getAllEnglishQuestionTalkDataByChapId(parmMap);
         return resultMap;
@@ -1034,9 +1036,9 @@ public class OnlineController {
     /*插入英语课程购买记录*/
     @RequestMapping(params="method=addEnglishPayRecord", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> addEnglishPayRecord (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> addEnglishPayRecord(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
 		parmMap.put("WID", request.getParameter("wid"));
 		parmMap.put("CLASS_ID", request.getParameter("CLASS_ID"));
 		parmMap.put("ORDER_ID", request.getParameter("ORDER_ID"));
@@ -1047,9 +1049,9 @@ public class OnlineController {
     /*查询英语课程购买记录*/
     @RequestMapping(params="method=getEnglishPayRecord", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getEnglishPayRecord (HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Map<String, Object> parmMap = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+    public Map<String, Object> getEnglishPayRecord(HttpServletRequest request) throws IOException{
+        Map<String, Object> parmMap = new HashMap<>();
+        Map<String, Object> resultMap;
         parmMap.put("WID", request.getParameter("wid"));
         resultMap = onlineService.getEnglishPayRecord(parmMap);
         return resultMap;
@@ -1059,8 +1061,8 @@ public class OnlineController {
 	/*查询用户是否购买了盖英语课程*/
 	@RequestMapping(params="method=getEnglishPayRecordCount", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getEnglishPayRecordCount (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map<String, Object> parmMap = new HashMap();
+	public Map<String, Object> getEnglishPayRecordCount(HttpServletRequest request) throws IOException{
+		HashMap<String, Object> parmMap = new HashMap<>();
 		Map<String, Object> resultMap;
 		parmMap.put("WID", request.getParameter("WID"));
 		parmMap.put("CLASS_ID", request.getParameter("CLASS_ID"));
@@ -1071,9 +1073,9 @@ public class OnlineController {
 	/*记录英语订单*/
 	@RequestMapping(params="method=englishPay", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> englishPay (HttpServletRequest request, HttpServletResponse response){
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public Map<String, Object> englishPay(HttpServletRequest request){
+		Map<String, Object> parmMap = new HashMap<>();
+		Map<String, Object> resultMap;
 
 		GregorianCalendar worldTour = new GregorianCalendar();
 		worldTour.add(GregorianCalendar.DATE, 30);
@@ -1098,12 +1100,12 @@ public class OnlineController {
 	/*英语语音识别*/
 	@RequestMapping(params="method=englishASR", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object>  englishASR(@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpServletResponse response){
+	public Map<String, Object>  englishASR(@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request){
 		Map<String, Object> resultMap = new HashMap<>();
 		String fileName = request.getParameter("fileName");
 		String preContext = request.getParameter("preContext");
 		String filePath = request.getSession().getServletContext().getRealPath("")+"\\preASRVoice\\"+fileName;
-		System.out.println("####################fileName="+fileName+", preContext="+preContext+", filePath="+filePath);
+//		System.out.println("####################fileName="+fileName+", preContext="+preContext+", filePath="+filePath);
 		SaveFileFromWX save = new SaveFileFromWX();
 		boolean b = save.saveFile(request, file);
 		if(b){
@@ -1160,7 +1162,7 @@ public class OnlineController {
 		String payMoney = request.getParameter("payMoney");
 		String openid = request.getParameter("openid");
 		String ipString = request.getRemoteAddr();
-//		ipString = "119.97.231.230";
+		ipString = "119.97.231.230";
 		YoyoH5Util yoyoH5Util = new YoyoH5Util();
 
 		String orderNumb = yoyoH5Util.returnOrderNumb();
@@ -1171,7 +1173,6 @@ public class OnlineController {
 		resultMap.put("payMoney", payMoney);
 		resultMap.put("orderType", payClass);
 		resultMap.put("orderTime", orderTime);
-
 		return resultMap;
 	}
 }

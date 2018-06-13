@@ -75,9 +75,11 @@ App({
         'WID': openid
       },
       success:function(d){
-        that.globalData.userInfo.nickName = d.data.USER_INFO.user_name;
-        that.globalData.userInfo.gender = d.data.USER_INFO.user_sex;
-        that.globalData.userInfo.coin = d.data.USER_INFO.user_coin;
+        if (d.data.USER_INFO){
+          that.globalData.userInfo.nickName = d.data.USER_INFO.user_name;
+          that.globalData.userInfo.gender = d.data.USER_INFO.user_sex;
+          that.globalData.userInfo.coin = d.data.USER_INFO.user_coin;
+        }
       }
     })
   }

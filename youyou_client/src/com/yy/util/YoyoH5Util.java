@@ -116,7 +116,7 @@ public class YoyoH5Util {
         sb.append("<out_trade_no>"+orderNumb+"</out_trade_no>"); //商户订单号 
         sb.append("<spbill_create_ip>"+ipString+"</spbill_create_ip>");  //终端IP
         sb.append("<time_start>"+orderTime+"</time_start>"); 
-        sb.append("<total_fee>"+payMoney+"</total_fee>");  //总金额
+        sb.append("<total_fee>"+Integer.parseInt(payMoney)*100+"</total_fee>");  //总金额
         sb.append("<trade_type>"+trade_type+"</trade_type>");  //交易类型
 		sb.append("<scene_info>{\"h5_info\": {\"type\":\"Wap\",\"wap_url\": \"https://www.yoyotec.com\",\"wap_name\": \"武汉游友科技有限公司\"}}</scene_info>");
         sb.append("<sign>"+sign+"</sign>");  //签名
@@ -127,13 +127,14 @@ public class YoyoH5Util {
 	public static String doPost(String urlStr, String strInfo) {  
         String reStr="";  
         try {  
-            URL url = new URL(urlStr);  
-            URLConnection con = url.openConnection();  
-            con.setDoOutput(true);  
+            URL url = new URL(urlStr);
+			HttpURLConnection  con = (HttpURLConnection)url.openConnection();
+            con.setDoOutput(true);
+			con.setRequestMethod("POST");
             con.setRequestProperty("Pragma:", "no-cache");  
             con.setRequestProperty("Cache-Control", "no-cache");  
-            con.setRequestProperty("Content-Type", "text/xml");  
-            OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());  
+            con.setRequestProperty("Content-Type", "text/xml");
+            OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
             out.write(new String(strInfo.getBytes("utf-8")));  
             out.flush();  
             out.close();  

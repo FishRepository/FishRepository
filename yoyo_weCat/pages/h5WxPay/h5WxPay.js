@@ -12,6 +12,7 @@ Page({
    */
   onLoad: function (options) {
     var src = app.globalData.hostUrl + '/admin.do?method=wxPay&title=' + options.title + '&pay=' + options.pay / 100 + '&openid=' + options.openid;
+    console.log(src);
     var that = this;
     that.setData({
       paySrc: src,
