@@ -46,8 +46,13 @@
   border-radius: 10px;
   width: 85%;
   margin: 0px auto;
-  padding: 10px
+  padding: 10px;
 }
+
+.scroll{
+  height: 70%;
+}
+
 .exam .swiper-cont .topic-cont .topic{
   color: #444;
   font-size: 14px;

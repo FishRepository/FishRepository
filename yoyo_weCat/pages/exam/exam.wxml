@@ -11,6 +11,7 @@
   <swiper class="swiper-cont" bindchange="swiperChange" current="{{nowCurrent}}">
     <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
       <swiper-item>
+        <scroll-view scroll-y class='scroll'>
         <view class="topic-cont">
           <view class="topic">
             <text class="type">{{topicType[list.topicType]}}</text><text>{{list.topicTitle}}</text>
@@ -63,9 +64,8 @@
               </label>
             </radio-group>
           </block>
-
         </view>
-        
+        </scroll-view>
         <view class="sbtn">
           <button class="check" type="primary" bindtap="showModel" wx:if="{{list.topicType=='3'}}">查看文章</button>
           <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
@@ -82,6 +82,7 @@
             <text>{{list.explain}}</text>
           </view>
         </view>
+        
       </swiper-item>
     </block>
   </swiper>

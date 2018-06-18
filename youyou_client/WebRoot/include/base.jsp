@@ -26,3 +26,11 @@ response.setHeader("pragma", "no-cache");
 <link href="<%=path%>/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="<%=path%>/css/admin.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="<%=path%>/css/jquery.dataTables.min.css">
+
+<script>
+    var url = window.location.href;
+    if(url.indexOf('method=login') === -1){
+        var userId = getCookie("userId");
+        if(!userId) location.href = urlPath+"/admin.do?method=login";
+    }
+</script>

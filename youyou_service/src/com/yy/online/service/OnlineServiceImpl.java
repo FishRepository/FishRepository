@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yy.jave.ConvertAudio;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -246,9 +247,14 @@ public class OnlineServiceImpl implements OnlineService{
 	@Override
 	public Map<String, Object> adminLogin(Map<String, Object> parm) {
 		// TODO Auto-generated method stub
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap;
 		resultMap=this.onlineDao.adminLogin(parm);
-		resultMap.put(RESULT, SUCCESS);
+		if(resultMap!=null && resultMap.get("user_id") != null){
+			resultMap.put(RESULT, SUCCESS);
+		}else{
+			resultMap = new HashMap<>();
+			resultMap.put(RESULT, FAIL);
+		}
 		return resultMap;
 	}
 

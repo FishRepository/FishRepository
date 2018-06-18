@@ -46,17 +46,20 @@ Page({
     wx.getStorage({
       key: that.data.key,
       success: function (res) {
-        console.log(res)
-        wx.hideLoading();
+        console.log('get storage success')
         that.setData({
           resData: res.data
         });
         that.setData({
           nowCurrent: that.data.resData.nowCurrent
         })
+        setTimeout(function () {
+          wx.hideLoading()
+        }, 2000)
         //that.countDown(that.data.resTime);
       },
       fail:function(){
+        console.log('get storage faile')
         wx.request({
           url: app.globalData.hostUrl + '/admin.do?method=getTopicByRang',
           data: {
@@ -67,8 +70,8 @@ Page({
             "examId": options.examId
           },
           success: function (res) {
-            console.log(res)
-            wx.hideLoading();
+            console.log('get backdata success')
+            
             if (res.data.LIST.length == 0) {
               wx.showToast({
                 title: '暂无此类试题',
@@ -82,10 +85,12 @@ Page({
                 }
               })
             }
-
             that.setData({
               resData: res.data
             });
+            setTimeout(function () {
+              wx.hideLoading()
+            }, 2000)
             // var time = parseInt(that.data.resData.exam_time * 60);
             // that.countDown(time);
           }

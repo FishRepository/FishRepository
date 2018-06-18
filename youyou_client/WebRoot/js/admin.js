@@ -16,6 +16,28 @@ function delCookie(name) {
 	if(cval != null)
 		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
+
+function isBlankStr(str){
+    if(!str){
+        return true;
+    }
+    if(str===''){
+        return true;
+    }
+    if(str===undefined){
+        return true;
+    }
+    if(str==='undefined'){
+        return true;
+    }
+    return false;
+}
+
+function checkLogin() {
+    var userId = getCookie("userId");
+    if(userId) location.href = urlPath+"/admin.do?method=index&user_name="+getCookie("userName");
+}
+
 var page_table={
     dom : "<'row'r>t<'row'<'col-sm-6'li><'col-sm-6'p>>",
     domEL : "<'row'r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
