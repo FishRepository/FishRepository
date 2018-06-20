@@ -25,7 +25,7 @@
   ],
   "window":{
     "backgroundTextStyle":"dark",
-    "navigationBarBackgroundColor": "#00D96D",
+    "navigationBarBackgroundColor": "#12B362",
     "navigationBarTitleText": "YOYO",
     "navigationBarTextStyle":"#FFF",
     "enablePullDownRefresh": true
@@ -37,20 +37,20 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "images/english-icon-off.png",
-        "selectedIconPath": "images/english-icon-on.png"
+        "iconPath": "images/2.0/icon_home_off.png",
+        "selectedIconPath": "images/2.0/icon_home_on.png"
       },
       {
         "pagePath": "pages/newChoose/newChoose",
-        "text": "在线练习",
-        "iconPath": "images/exam-icon-off.png",
-        "selectedIconPath": "images/exam-icon-on.png"
+        "text": "学习",
+        "iconPath": "images/2.0/icon_study_off.png",
+        "selectedIconPath": "images/2.0/icon_study_on.png"
       },
       {
         "pagePath": "pages/user/user",
-        "text": "我的",
-        "iconPath": "images/user-icon-off.png",
-        "selectedIconPath": "images/user-icon-on.png"
+        "text": "个人中心",
+        "iconPath": "images/2.0/icon_my_off.png",
+        "selectedIconPath": "images/2.0/icon_my_on.png"
       }
     ]
   }

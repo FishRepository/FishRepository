@@ -42,7 +42,7 @@
 .container .userInfo{
   position: relative;
   z-index: 10;
-  margin-top: -100px;
+  margin-top: -50px;
   width: 100%;
   text-align: center;
 }
@@ -55,13 +55,13 @@
 }
 .container .userInfo .info{
   display: block;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   background: #FFF;
   margin-top: -40px;
   padding-top: 40px;
   padding-bottom: 20px;
-  border-radius: 10px
+  border-radius: 5px
 }
 .container .userInfo .info .name{
   color: #00D96D;
@@ -73,38 +73,39 @@
   font-size: 14px;
   color: #666;
 }
-.container .userInfo .info .coin{
-  font-size: 14px;
-  color: #666
+.container .coin{
+  font-size: 15px;
+  color: #000000;
+  text-align: center;
 }
-.container .userInfo .info .coin button{
+.container .coin button{
   font-size: 14px;
   color: #FFF;
   background: #00D96D;
   width: 90%;
   margin: 0 auto
 }
-.container .userInfo .info .coin image{
+.container .coin image{
   width: 20px;
   height: 20px;
   position: relative;
   top: 5px;
   margin-right: 5px
 }
-.container .userInfo .info .coin navigator{
+.container .coin navigator{
   display: inline-block;
   float: right;
   margin-top: 6px;
   margin-right: 20px
 }
-.container .userInfo .info .coin navigator:hover{
+.container .coin navigator:hover{
   color: #00D96D
 }
 .container .test-cont{
-  width: 80%;
+  width: 90%;
   margin: 20px auto;
   background: #FFF;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px 0;
 }
 .container .test-cont .title{
@@ -115,17 +116,17 @@
   padding-bottom: 10px;
   border-bottom: 1px solid #EEE
 }
-.container .test-cont .test-list{
+.container .test-list{
   flex-direction: row;
 }
-.container .test-cont .test-list .flex-item{
+.container .test-list .flex-item{
   display: inline-block;
-  width: 33.33%;
+  width: 25%;
   text-align: center;
   padding: 2px 0 2px;
   position: relative
 }
-.container .test-cont .test-list .flex-item:after{
+.container .test-list .flex-item:after{
   content: "";
   display: block;
   width: 1px;
@@ -135,17 +136,17 @@
   right: 0;
   top: 25%;
 }
-.container .test-cont .test-list .flex-item:last-child::after{
+.container .test-list .flex-item:last-child::after{
   display: none
 }
-.container .test-cont .test-list .flex-item navigator image{
+.container .test-list .flex-item navigator image{
   width: 40px;
   height: 40px;
 }
-.container .test-cont .test-list .flex-item navigator text{
+.container .test-list .flex-item navigator text{
   display: block;
-  color: #274e13;
-  font-size: 14px
+  color: #333333;
+  font-size: 12px
 }
 .container .model{
   position: fixed;
@@ -200,4 +201,19 @@
 }
 .container .model .box .btns button.n{
   color: #999
+}
+.foot{
+  bottom:0px;
+  width: 80%;
+  text-align: center;
+}
+.bottom-text1{
+  position:fixed;
+  font-size:12pt;
+  color:#B2B2B2;
+}
+.bottom-text2{
+  position:fixed;
+  font-size:10pt;
+  color:#999999;
 }

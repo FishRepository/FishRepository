@@ -5,17 +5,54 @@
     <image src="{{advUrl}}" mode="widthFix"></image>
   </navigator>
   <view class="bg">
-    <image src="../../images/shouye-img.jpg" mode="widthFix"></image>
+    <image src="../../images/2.0/home_banner.png" mode="widthFix"></image>
   </view>
   <view class="userInfo">
-    <image class="userImg" src="{{userInfo.avatarUrl}}" bindtap="goUser"></image>
+    <!-- <image class="userImg" src="{{userInfo.avatarUrl}}" bindtap="goUser"></image> -->
     <view class="info">
-      <text class="name">Hello,<text>{{userInfo.nickName}}</text></text>
-      <view class="tip">
+      <!-- <text class="name">Hello,<text>{{userInfo.nickName}}</text></text> -->
+      <!-- <view class="tip">
         <text>来海证无忧，证书轻松拿</text>
+      </view> -->
+      
+      <view class="test-list">
+        <view class="flex-item sxcs">
+
+  <!--/pages/result/result?passScore=' + pass + '&userScore=' + userScore-->
+  <!--/pages/choose/choose?payType=0-->
+          <navigator url="/pages/clearStr/clearStr?payType=0&type=sxcs&postType={{postType}}&certType={{certType}}">
+            <image src="../../images/2.0/icon_simulation_test.png"></image>
+            <text>模拟测试</text>
+          </navigator>
+        </view>
+        <view class="flex-item">
+          <navigator url="/pages/newOrder/newOrder?payType=0&type=mncs&postType={{postType}}&certType={{certType}}">
+            <image src="../../images/2.0/icon_order_test.png"></image>
+            <text>顺序测试</text>
+          </navigator>
+        </view>
+        <view class="flex-item">
+          <navigator url="/pages/payTest/payTest?payType=1&postType={{postType}}&certType={{certType}}"> 
+            <image src="../../images/2.0/icon_zhenti_test.png"></image>
+            <text>真题测试</text>
+          </navigator>
+        </view>
+        <view class="flex-item">
+          <navigator url="/pages/english/english"> 
+            <image src="../../images/2.0/icon_english_test.png"></image>
+            <text>英语测试</text>
+          </navigator>
+        </view>
       </view>
-      <view class="coin">
-        <button bindtap='reload'>{{postText}}-{{certText}}</button>
+    </view>
+  </view>
+  <view class="test-cont section">
+    <!-- <text class="title">在线测试</text> -->
+    <view class="coin">
+        <view bindtap='reload'>
+          {{postText}} - {{certText}}
+        </view>
+        <!-- <button bindtap='reload'>{{postText}}-{{certText}}</button> -->
         <!-- 剩余解析币：
         <image src="../../images/star-icon.png"></image>
         <text>
@@ -23,55 +60,6 @@
           <text>{{userInfo.coin}}</text>
         </text>
         <navigator url="/pages/pay/pay" style="display:none">充值</navigator> -->
-      </view>
-    </view>
-  </view>
-  <view class="test-cont section">
-    <text class="title">在线测试</text>
-    <view class="test-list">
-      <view class="flex-item sxcs">
-
-<!--/pages/result/result?passScore=' + pass + '&userScore=' + userScore-->
-<!--/pages/choose/choose?payType=0-->
-        <navigator url="/pages/clearStr/clearStr?payType=0&type=sxcs&postType={{postType}}&certType={{certType}}">
-          <image src="../../images/k1.png"></image>
-          <text>模拟测试</text>
-        </navigator>
-      </view>
-      <view class="flex-item">
-        <navigator url="/pages/newOrder/newOrder?payType=0&type=mncs&postType={{postType}}&certType={{certType}}">
-          <image src="../../images/k4.png"></image>
-          <text>顺序测试</text>
-        </navigator>
-      </view>
-      <view class="flex-item">
-        <navigator url="/pages/payTest/payTest?payType=1&postType={{postType}}&certType={{certType}}"> 
-          <image src="../../images/k2.png"></image>
-          <text>真题测试</text>
-        </navigator>
-      </view>
-      <view class="flex-item">
-        <navigator url="/pages/english/english"> 
-          <image src="../../images/k3.png"></image>
-          <text>英语测试</text>
-        </navigator>
-      </view>
-      <!-- <block wx:if="{{isRecord}}">
-        <view class="flex-item" bindtap="stopRecord">
-          <navigator>
-            <image src="../../images/stopRecord.png"/>
-            <text>结束</text>
-          </navigator>
-        </view>
-      </block>
-      <block wx:else>
-        <view class="flex-item" bindtap="record">
-          <navigator>
-            <image src="../../images/record.png"/>
-            <text>录音</text>
-          </navigator> 
-        </view>
-      </block> -->
     </view>
   </view>
   <view class="model" wx:if="{{showModel}}">
@@ -84,4 +72,8 @@
       </view>
     </view>
   </view>
+  <!-- <view class='foot'>
+    <text class='bottom-text1'>来海证无忧，证书轻松拿</text>
+    <text class='bottom-text2'>语音识别技术由讯飞提供</text>
+  </view> -->
 </view>
