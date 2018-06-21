@@ -8,27 +8,35 @@
   background: #FFF;
   padding-top: 10px;
   position: relative;
-  text-align: center;
   border-bottom: 1px solid #DDDDDD;
-  padding-bottom: 10px
+  padding-bottom: 10px;
+  display:flex;
+  width:100%;
+  height:12%;
+  justify-content:center;
+  align-items:center;
 }
 .container .user navigator.edit{
   position: absolute;
-  top: 20px;
+  top: 50%;
   right: 20px;
 }
 .container .user navigator.edit image{
-  width: 20px;
-  height: 20px;
+  width:5px;
+  height:9px;
+  position:absolute;
+  right:-10px;
 }
 .container .user .user-img{
-  width: 70px;
-  height: 70px;
-  border: 3px solid #00D96D;
-  border-radius: 50%
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  position: absolute;
+  left: 20px;
 }
 .container .user .name{
-  padding: 5px 0
+  position:absolute;
+  left:92px;
 }
 .container .user .name text{
   font-size: 16px;
@@ -43,7 +51,8 @@
   top: 5px
 }
 .container .user .coin{
-  padding-top: 5px
+  padding-top: 5px;
+  display: inline-block;
 }
 .container .user .coin image{
   width: 28px;
@@ -87,8 +96,8 @@
   height: 25px;
   display: inline-block;
   float: left;
-  margin-left: 10px;
-  margin-right: 5px
+  margin-left: 20px;
+  margin-right: 10px
 }
 .container .list .list-item image.rightIcon{
   width: 5px;

@@ -17,11 +17,8 @@
       
       <view class="test-list">
         <view class="flex-item sxcs">
-
-  <!--/pages/result/result?passScore=' + pass + '&userScore=' + userScore-->
-  <!--/pages/choose/choose?payType=0-->
           <navigator url="/pages/clearStr/clearStr?payType=0&type=sxcs&postType={{postType}}&certType={{certType}}">
-            <image src="../../images/2.0/icon_simulation_test.png"></image>
+            <image src="../../images/2.0/icon_simulation_test.png"></image> 
             <text>模拟测试</text>
           </navigator>
         </view>
@@ -42,7 +39,7 @@
             <image src="../../images/2.0/icon_english_test.png"></image>
             <text>英语测试</text>
           </navigator>
-        </view>
+        </view>    
       </view>
     </view>
   </view>

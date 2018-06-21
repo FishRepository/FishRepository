@@ -24,13 +24,17 @@
   margin-bottom: 2rem;
   text-align: center;
   vertical-align: middle;
+  flex-direction: row;
 }
-.post text{
+.post .title{
   color: #888888;
   font-size: 12px;
   align-items:center;
   display:flex;
   padding-left:10px;
+}
+.post view text{
+  font-size: 16px;
 }
 .post picker view{
   align-items:center;
@@ -47,7 +51,10 @@
   text-align: center;
   vertical-align: middle;
 }
-.cert text{
+.cert view text{
+  font-size: 16px;
+}
+.cert .title{
   color: #888888;
   font-size: 12px;
   align-items:center;
@@ -81,4 +88,10 @@
   position:fixed;
   font-size:10pt;
   color:#999999;
+}
+.rightIcon{
+  width: 5px;
+  height: 9px;
+  position: absolute;
+  right: 10px;
 }

@@ -1,58 +1,59 @@
 <view class="container">
   <view class="user">
-    <navigator url="/pages/info/info" class="edit">
-      <image src="../../images/binaji-icon.png"></image>
-    </navigator>
     <image class="user-img" src="{{userInfo.avatarUrl}}"></image>
     <view class="name">
       <text>{{userInfo.nickName}}</text>
       <image src="{{sexIcon[userInfo.gender]}}"></image>
     </view>
-    <view class="coin">
+    <!-- <view class="coin">
       <image src="../../images/star-icon.png"></image>
       <text>x<text>{{userInfo.coin}}</text></text>
-    </view>
+    </view> -->
+    <navigator url="/pages/info/info" class="edit">
+      <image src="../../images/right-icon.jpg"></image>
+    </navigator>
   </view>
   <view class="list">
     <view class="list-item chongzhi">
       <navigator url="/pages/pay/pay">
-        <image class="icon" src="../../images/chongzhi-icon.png"></image>
+        <image class="icon" src="../../images/2.0/icon_recharge.png"></image>
         <text>充值</text>
         <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </navigator>
     </view>
-    <view class="list-item jilu">
+    <view class="list-item chongzhi">
       <navigator url="/pages/record/record">
-        <image class="icon" src="../../images/chongzhijilu-icon.png"></image>
+        <image class="icon" src="../../images/2.0/icon_recharge_record.png"></image>
         <text>充值记录</text>
         <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </navigator>
     </view>
-    <view class="list-item jilu">
+    <view class="list-item chongzhi">
       <navigator url="/pages/userExam/userExam">
-        <image class="icon" src="../../images/kaoshi-icon-on.png"></image>
+        <image class="icon" src="../../images/2.0/icon_my_paper.png"></image>
         <text>我的试卷</text>
         <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </navigator>
     </view>
-    <view class="list-item jilu">
+    <view class="list-item chongzhi">
       <navigator url="/pages/englishPay/englishPay">
-        <image class="icon" src="../../images/user-icon-pay.png"></image>
+        <image class="icon" src="../../images/2.0/my_english_purchase_history.png"></image>
         <text>英语课程购买记录</text>
         <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </navigator>
     </view>
-    <view class="list-item jilu">
+    <view class="list-item chongzhi">
       <navigator url="/pages/help/help">
-        <image class="icon" src="../../images/help-icon.png"></image>
+        <image class="icon" src="../../images/2.0/icon_help.png"></image>
         <text>帮助中心</text>
         <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </navigator>
     </view>
-    <view class="list-item jilu">
+    <view class="list-item chongzhi">
       <view bindtap="clearStorage">
-        <image class="icon" src="../../images/clear-icon.png"></image>
+        <image class="icon" src="../../images/2.0/icon_clean.png"></image>
         <text>清除所有试题缓存</text>
+        <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </view>
     </view>
   </view>

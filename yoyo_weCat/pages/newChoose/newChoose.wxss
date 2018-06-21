@@ -126,7 +126,7 @@
   padding: 2px 0 2px;
   position: relative
 }
-.container .test-list .flex-item:after{
+/* .container .test-list .flex-item:after{
   content: "";
   display: block;
   width: 1px;
@@ -135,7 +135,7 @@
   position: absolute;
   right: 0;
   top: 25%;
-}
+} */
 .container .test-list .flex-item:last-child::after{
   display: none
 }
