@@ -1,15 +1,17 @@
-<view class="record">
+<scroll-view scroll-y class="record">
   <block wx:for="{{LIST}}" wx:for-item="list" wx:key="">
     <view class="list">
       <view class="top">
         <text class="name">{{orderType[list.order_type]}}</text>
-        <text class="time">{{list.order_time}}</text>
+        <!-- <text class="time">{{list.order_time}}</text> -->
+        <image src="{{stateImgUrl[list.order_state]}}"></image>
       </view>
       <view class="body">
         <text>订单编号：{{list.order_number}}</text>
-        <text>金　　额：{{list.order_money/100}}元</text>
-        <text>支付状态：{{stateType[list.order_state]}}</text>
+        <text class="border">金　　额：¥{{list.order_money/100}}</text>
+        <!-- <text>支付状态：{{stateType[list.order_state]}}</text> -->
+        <text>支付状态：{{list.order_time}}</text>
       </view>
     </view>
   </block>
-</view>
+</scroll-view>

@@ -1,17 +1,24 @@
 .record{
   background: #eee;
   padding-top: 20px;
-  padding-bottom: 20px
+  padding-bottom: 20px;
+  height: 100%;
 }
 .record .list{
-  width: 80%;
-  margin: 0px auto 20px;
+  width: 100%;
+  margin: 15px 0 15px 0;
   background: #FFF;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 .record .list .top{
-  border-bottom: 1px solid #EEE;
+  /* border-bottom: 1px solid #EEE; */
   padding: 10px;
+}
+.record .list .top image{
+  width:50px;
+  height:50px;
+  position:absolute;
+  right:10px;
 }
 .record .list .top::after{
   content: "";
@@ -19,9 +26,9 @@
   clear: both
 }
 .record .list .top .name{
-  color: #00D96D;
-  font-weight: bold;
-  font-size: 14px;
+  color: #000000;
+  /* font-weight: bold; */
+  font-size: 14pt;
   float: left
 }
 .record .list .top .time{
@@ -38,4 +45,7 @@
   padding: 5px 0;
   color: #666;
   font-size: 14px
+}
+.border{
+  border-bottom:1px solid #EEE;
 }

@@ -8,6 +8,7 @@ Page({
   data: {
     List:{},
     stateType:["支付失败","支付成功"],
+    stateImgUrl: ["../../images/2.0/icon_pay_fail.png","../../images/2.0/icon_pay_success.png"],
     orderType:["","解析币充值","真题付费"]
   },
 

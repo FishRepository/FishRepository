@@ -3,10 +3,14 @@ var app = getApp();
 Page({
   data: {
     LIST: [],
-    choose:"",
-    postType:"",
-    certType:"",
-    sectionType:""
+    LISTALL: [],
+    choose: "",
+    postType: "",
+    certType: "",
+    sectionType: "",
+    showMoreStat: true,
+    isChoose: false,
+    currentId:""
   },
   bindChange: function (e) {
     var that = this;
@@ -23,6 +27,57 @@ Page({
     var that = this;
     var post = options.postType,cert = options.certType;
     that.getSection(post,cert);
+  },
+  showMore: function () {
+    var that = this
+    var showMoreStat = false
+    var LIST = that.data.LISTALL
+    var currentId = that.data.currentId
+    var chooseState = "LIST[" + currentId + "].chooseStat"
+    that.setData({
+      showMoreStat: showMoreStat,
+      LIST: LIST
+    })
+    var param = {}
+    param[chooseState] = true
+    that.setData(param)
+  },
+  chooseChap: function (e) {
+    var that = this
+    var data = e.currentTarget.dataset
+    var currentId = data.id
+    var idChooseState = that.data.LIST[currentId].chooseStat
+    if(idChooseState === true){
+      return false
+    }
+    var param = {}
+    var chooseState = "LIST[" + currentId + "].chooseStat"
+    var currentId_ = "currentId"
+    param[chooseState] = true
+    param[currentId_] = currentId
+    that.setData(param)
+    var LIST = that.data.LIST
+    for (var i = 0; i < LIST.length; i++) {
+      if (i == currentId) {
+        continue
+      }
+      var idChooseState_ = that.data.LIST[i].chooseStat
+      if (idChooseState_ === true) {
+        var param_ = {}
+        var chooseState_ = "LIST[" + i + "].chooseStat"
+        param_[chooseState_] = false
+        that.setData(param_)
+      }
+    }
+    that.setData({
+      isChoose: true
+    })
+    const val = data.value
+    that.setData({
+      choose: that.data.LIST[currentId].NAME,
+      sectionType: that.data.LIST[currentId].ID,
+      key: that.data.LIST[currentId].ID + "-" + that.data.LIST[currentId].POST_TYPE + "-" + that.data.LIST[currentId].CERT_TYPE + "key"
+    })
   },
   getSection:function(p,c){
     var that = this;
@@ -45,8 +100,10 @@ Page({
             }
           })
         } else {
+          var LIST = res.data.LIST.slice(0, 5)
           that.setData({
-            LIST: res.data.LIST,
+            LIST: LIST,
+            LISTALL: res.data.LIST,
             choose: res.data.LIST[0].NAME,
             postType: res.data.LIST[0].POST_TYPE,
             certType: res.data.LIST[0].CERT_TYPE,
@@ -59,6 +116,13 @@ Page({
   },
   clearSession: function () {
     var that = this;
+    var isChoose = that.data.isChoose
+    if (!isChoose){
+      wx.showToast({
+        title: '请先选择章节'
+      })
+      return false
+     }
     wx.showModal({
       title: '提示',
       content: '删除此试题缓存后，再次进入将不会继续上一次测试',
@@ -76,4 +140,20 @@ Page({
       }
     })
   },
+  goExam: function () {
+    var that = this;
+    var isChoose = that.data.isChoose
+    if (!isChoose) {
+      wx.showToast({
+        title: '请先选择章节'
+      })
+      return false
+    }
+    var sectionType = that.data.sectionType
+    var postType = that.data.postType
+    var certType = that.data.certType
+    wx.navigateTo({
+      url: '/pages/newExam/newExam?sectionType=' + sectionType + '&postType=' + postType + '&certType=' + certType,
+    })
+  }
 })

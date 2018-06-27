@@ -3,7 +3,7 @@
     <view class="picker">
       <view class="post">
         <picker bindchange="postChange" range="{{list}}" range-key="{{'postName'}}" value="{{postIndex}}">
-          <text class="title">工作岗位</text>
+          <text class="title">请选择工作岗位</text>
           <view>
             <text>{{list[postIndex].postName}}</text>
             <image class="rightIcon" src="../../images/right-icon.jpg"></image>
@@ -12,7 +12,7 @@
       </view>
       <view class="cert">
         <picker bindchange="certChange" range="{{certList}}" range-key="{{'certName'}}" value="{{certIndex}}">
-          <text class='title'>请选择科目</text>
+          <text class='title'>考试科目</text>
           <view>
             <text>{{certList[certIndex].certName}}</text>
             <image class="rightIcon" src="../../images/right-icon.jpg"></image>

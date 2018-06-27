@@ -1,5 +1,5 @@
 <!--pages/newOrder/newOrder.wxml-->
-<view class="order">
+<!-- <view class="order">
   <view class="section">
     <text>请选择章节</text>
   </view>
@@ -13,4 +13,36 @@
     <navigator url="/pages/newExam/newExam?sectionType={{sectionType}}&postType={{postType}}&certType={{certType}}">确定</navigator>
     <button bindtap="clearSession">清除此题缓存</button>
   </view>
+</view> -->
+<view class='main'>
+  <view class='container'>
+    <view class='title'>
+      <text>请选择章节</text>
+    </view>
+    <scroll-view scroll-y class='list'>
+      <block wx:for="{{LIST}}" wx:for-index="idx" wx:key="chapKey" wx:for-item="item">
+        <view class='item' bindtap='chooseChap' data-id="{{idx}}" data-value="{{item.NAME}}">
+          {{item.NAME}}
+          <block wx:if="{{item.chooseStat == true}}">
+            <image src="../../images/2.0/icon_choose.png"></image>
+          </block>
+        </view>
+      </block>
+      <block wx:if='{{showMoreStat==true}}'>
+        <view class='more' bindtap='showMore'>
+        显示更多章节
+        <image src="../../images/2.0/icon_down_arrow.png"></image>
+        </view>
+      </block>
+    </scroll-view>
+    <block wx:if='{{showMoreStat==false}}'>
+      <view class='moretips'>
+      滑动选择章节
+      </view>
+    </block>
+  </view>
+</view>
+<view class='foot'>
+  <view class="{{isChoose==true?'foot-left left-choose':'foot-left'}}" bindtap="clearSession">清除此题缓存</view>
+  <view class="{{isChoose==true?'foot-right right-choose':'foot-right'}}" bindtap='goExam'>开始测试</view>
 </view>

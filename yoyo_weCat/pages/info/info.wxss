@@ -1,4 +1,4 @@
-.info{
+/* .info{
   height: 100%;
   background: #EEE;
 }
@@ -46,4 +46,101 @@
   color: #FFF;
   margin: 0 10px;
   font-size: 14px
+} */
+.container{
+  height: 100%;
+  width: 100%;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  background: #F5F7F6;
+}
+.container .info{
+  width: 100%;
+  height: 25%;
+  margin: 0 0 10px 0;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E5E5E5;
+}
+.container .info .item{
+  display: flex;
+  height: 33.3%;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.container .info .name{
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.container .info .telphone{
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.container .info .item label{
+  margin-left: 10px;
+  width: 22%;
+  font-size: 14pt;
+  color: #000000;
+}
+.container .info .item input{
+  font-size: 14pt;
+  color: #B2B2B2;
+}
+.container .sex{
+  height:20%;
+  display:block;
+  background-color:#FFFFFF;
+  border-bottom:1px solid #E5E5E5;
+}
+.container .sex image{
+  width:25px;
+  height:25px;
+  margin-right:10px;
+}
+.container .sex .title{
+  background-color:#F5F7F6;
+  color:#888888;
+  display:flex;
+  font-size:12pt;
+  height: 25%;
+}
+.container .sex .title text{
+  margin-left: 20px;
+}
+.container .sex .male{
+  display:flex;
+  height: 37.5%;
+  align-items:center;
+  margin-left:20px;
+  border-bottom:1px solid #E5E5E5;
+  justify-content: space-between;
+}
+.container .sex .male text{
+  color:#000000;
+  font-size:12pt;
+}
+.container .sex .female{
+  display:flex;
+  height: 37.5%;
+  align-items:center;
+  margin-left:20px;
+  justify-content: space-between;
+}
+.container .sex .female text{
+  color:#000000;
+  font-size:12pt;
+}
+.container .confirm{
+  display:block;
+  position:relative;
+  margin-top:50px;
+  width:100%;
+  align-content:center;
+}
+.container .confirm button{
+  width:90%;
+  background-color:#12B362;
+  color:#FFFFFF;
+  font-size:14pt;
 }

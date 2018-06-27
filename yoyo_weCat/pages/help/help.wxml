@@ -1,5 +1,5 @@
 <!--pages/help/help.wxml-->
-<view class="help">
+<scroll-view scroll-y class="help">
   <text class="title">帮助中心</text>
   <text>亲爱的考证朋友，您好！感谢使用海证无忧考证练习平台，预祝您考证顺利通过！</text>
   <text>欢迎关注我们的同名微信公众号，海证无忧，获取更多服务！</text>
@@ -14,4 +14,4 @@
   <text>微信公众号：海证无忧</text>
   <text class="s">QQ：1278688161</text>
   <text class="s">邮箱：youyou@yoyotec.com</text>
-</view>
+</scroll-view>

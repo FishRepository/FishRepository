@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="user">
+  <view class="user" bindtap='editeUser'>
     <image class="user-img" src="{{userInfo.avatarUrl}}"></image>
     <view class="name">
       <text>{{userInfo.nickName}}</text>
@@ -14,13 +14,13 @@
     </navigator>
   </view>
   <view class="list">
-    <view class="list-item chongzhi">
+    <!-- <view class="list-item chongzhi">
       <navigator url="/pages/pay/pay">
         <image class="icon" src="../../images/2.0/icon_recharge.png"></image>
         <text>充值</text>
         <image class="rightIcon" src="../../images/right-icon.jpg"></image>
       </navigator>
-    </view>
+    </view> -->
     <view class="list-item chongzhi">
       <navigator url="/pages/record/record">
         <image class="icon" src="../../images/2.0/icon_recharge_record.png"></image>

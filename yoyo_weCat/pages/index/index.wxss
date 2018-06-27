@@ -19,7 +19,7 @@
 .post view{
   background: #FFFFFF;
   width: 100%;
-  height: 2rem;
+  height: 35pt;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
   text-align: center;
@@ -28,35 +28,34 @@
 }
 .post .title{
   color: #888888;
-  font-size: 12px;
+  font-size: 10pt;
   align-items:center;
   display:flex;
   padding-left:10px;
 }
 .post view text{
-  font-size: 16px;
+  font-size: 12pt;
 }
 .post picker view{
   align-items:center;
   display:flex;
   padding-left:10px;
-  font-size:16px;
 }
 .cert view{
   background: #FFFFFF;
   width: 100%;
-  height: 2rem;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
   text-align: center;
   vertical-align: middle;
+  height: 35pt;
 }
 .cert view text{
-  font-size: 16px;
+  font-size: 12pt;
 }
 .cert .title{
   color: #888888;
-  font-size: 12px;
+  font-size: 10pt;
   align-items:center;
   display:flex;
   padding-left:10px;
@@ -65,7 +64,6 @@
   align-items:center;
   display:flex;
   padding-left:10px;
-  font-size:16px;
 }
 .btn{
   position: fixed;

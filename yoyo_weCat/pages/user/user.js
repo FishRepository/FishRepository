@@ -6,7 +6,7 @@ Page({
    */
   data: {
     userInfo:{},
-    sexIcon: ["../../images/girl-icon.png","../../images/boy-icon.png"]
+    sexIcon: ["../../images/2.0/icon_female.png","../../images/2.0/icon_male.png"]
   },
   getOurUserInfo: function (openid) {
     var that = this;
@@ -56,6 +56,11 @@ Page({
           wx.clearStorage()
         }
       }
+    })
+  },
+  editeUser: function () {
+    wx.navigateTo({
+      url: '/pages/info/info',
     })
   },
   /**

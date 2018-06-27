@@ -90,6 +90,15 @@ Page({
       }
     })
   },
+  chooseGender: function (e) {
+    var that = this
+    var data = e.target.dataset
+    var gender = data.sex
+    var param = {}
+    var genderInfo = 'userInfo.gender'
+    param[genderInfo] = gender
+    that.setData(param)
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
