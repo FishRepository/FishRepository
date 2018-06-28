@@ -1,4 +1,4 @@
-<scroll-view style="height: 100%;background: #eee;" scroll-y="true" class="container film-list" bindscroll="scroll" bindscrolltolower="scrolltolower">
+<scroll-view scroll-y="true" class="container" bindscroll="scroll" bindscrolltolower="scrolltolower">
   <block wx:for-items="{{LIST}}" wx:for-item="item">
     <view class="film-item">
       <view class="film-image" bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
@@ -26,8 +26,8 @@
               </block>
             </view>
             <view bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
-              <image class="file-money-icon" src="../../images/value.png"></image>
-              <text class="film-year-money">{{item.PAY_MONEY}}元</text>
+              <!-- <image class="file-money-icon" src="../../images/value.png"></image> -->
+              <text class="film-year-money">￥{{item.PAY_MONEY}}</text>
             </view>
             <view>
               <block wx:if="{{item.PAY_OVER?true:false}}">
@@ -35,7 +35,7 @@
               <block wx:else>
                 <button class="pay-btn" bindtap="payForEnglishClass" data-money="{{item.PAY_MONEY}}"
                 data-classId="{{item.ID}}">购买</button>
-              </block>  
+              </block>
             </view> 
           </block>
       </view>

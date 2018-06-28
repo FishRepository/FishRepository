@@ -5,17 +5,55 @@ Page({
     LIST: [],
     choose: "",
     sectionType: "",
-    value:[0]
+    value:[0],
+    isChoose: false,
+    currentId: ""
   },
-  bindChange: function (e) {
-    var that = this;
-    const val = e.detail.value
+  // bindChange: function (e) {
+  //   var that = this;
+  //   const val = e.detail.value
+  //   that.setData({
+  //     choose: that.data.LIST[val].CHAP_NAME,
+  //     sectionType: that.data.LIST[val].ID,
+  //     value: val
+  //   });
+  //   wx.setStorageSync(that.data.key, that.data);
+  // },
+  chooseChap: function (e) {
+    var that = this
+    var data = e.currentTarget.dataset
+    var currentId = data.id
+    var idChooseState = that.data.LIST[currentId].chooseStat
+    if (idChooseState === true) {
+      return false
+    }
+    var param = {}
+    var chooseState = "LIST[" + currentId + "].chooseStat"
+    var currentId_ = "currentId"
+    param[chooseState] = true
+    param[currentId_] = currentId
+    that.setData(param)
+    var LIST = that.data.LIST
+    for (var i = 0; i < LIST.length; i++) {
+      if (i == currentId) {
+        continue
+      }
+      var idChooseState_ = that.data.LIST[i].chooseStat
+      if (idChooseState_ === true) {
+        var param_ = {}
+        var chooseState_ = "LIST[" + i + "].chooseStat"
+        param_[chooseState_] = false
+        that.setData(param_)
+      }
+    }
     that.setData({
-      choose: that.data.LIST[val].CHAP_NAME,
-      sectionType: that.data.LIST[val].ID,
-      value: val
-    });
-    wx.setStorageSync(that.data.key, that.data);
+      isChoose: true
+    })
+    const val = data.value
+    that.setData({
+      choose: that.data.LIST[currentId].CHAP_NAME,
+      sectionType: that.data.LIST[currentId].ID,
+    })
   },
   onLoad: function (options) {
     var that = this;
@@ -81,4 +119,18 @@ Page({
       }
     })
   },
+  goExam: function () {
+    var that = this;
+    var isChoose = that.data.isChoose
+    if (!isChoose) {
+      wx.showToast({
+        title: '请先选择章节'
+      })
+      return false
+    }
+    var sectionType = that.data.sectionType
+    wx.navigateTo({
+      url: '/pages/englishQuestion/englishQuestion?chapId='+sectionType
+    })
+  }
 })

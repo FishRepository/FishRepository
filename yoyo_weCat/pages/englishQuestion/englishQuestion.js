@@ -528,7 +528,7 @@ Page({
     if (that.data.qtTypeSwitch === clicktype){
       return;
     }
-    if (clicktype == 2 && that.data.conversationList.length==0){
+    if (clicktype == 2 && that.data.resData.conversationList.length==0){
       wx.showToast({
         title: '该章节暂无会话题!'
       })

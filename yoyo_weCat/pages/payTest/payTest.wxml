@@ -1,17 +1,20 @@
 <!--pages/payTest/payTest.wxml-->
 <view class="payTest">
-  <view class="testList" wx:for="{{LIST}}">
-    <text class="title">{{item.exam_name}}</text>
-    <view class="info">
-      <text>总分：{{item.totalScore}}</text>
-      <text>及格分：{{item.passScore}}</text>
+  <scroll-view scroll-y class='scroll'>
+    <view class="testList" wx:for="{{LIST}}">
+      <text class="title">{{item.exam_name}}</text>
+      <view class="info">
+        <text>试卷总分：{{item.totalScore}}</text>
+        <text class='textBorder'>及格分数：{{item.passScore}}</text>
+      </view>
+      <button data-pay="{{item.pay}}" 
+      data-id="{{item.examClass}}"
+      data-title="{{item.exam_name}}" 
+      data-postType="{{postType}}"
+      data-certType="{{certType}}" bindtap='paySub'>￥{{item.pay/100}}.00</button>
+      <!-- <text class='tip'>购买后再次点击免费做题</text> -->
+      <!-- <navigator url="/pages/wepay/wepay?payMoney={{item.pay}}&examId={{item.examClass}}&postType={{postType}}&certType={{certType}}&type={{type}}">购买({{item.pay/100}}元)</navigator> -->
     </view>
-    <button data-pay="{{item.pay}}" 
-    data-id="{{item.examClass}}"
-    data-title="{{item.exam_name}}" 
-    data-postType="{{postType}}"
-    data-certType="{{certType}}" bindtap='paySub'>购买({{item.pay/100}}元)</button>
-    <text class='tip'>购买后再次点击免费做题</text>
-    <!-- <navigator url="/pages/wepay/wepay?payMoney={{item.pay}}&examId={{item.examClass}}&postType={{postType}}&certType={{certType}}&type={{type}}">购买({{item.pay/100}}元)</navigator> -->
-  </view>
+  </scroll-view>
+  <view class='bottom'>购买后再次点击试卷开始做题</view>
 </view>

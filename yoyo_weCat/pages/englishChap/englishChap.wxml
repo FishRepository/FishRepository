@@ -1,5 +1,5 @@
 <!--pages/newOrder/newOrder.wxml-->
-<view class="order">
+<!-- <view class="order">
   <view class="section">
     <text>请选择英语课程章节</text>
   </view>
@@ -13,4 +13,25 @@
     <navigator url="/pages/englishQuestion/englishQuestion?chapId={{sectionType}}">确定</navigator>
     <button bindtap="clearSession">清除此章节缓存</button>
   </view>
+</view> -->
+<view class='main'>
+  <view class='container'>
+    <view class='title'>
+      <text>请选择章节</text>
+    </view>
+    <scroll-view scroll-y class='list'>
+      <block wx:for="{{LIST}}" wx:for-index="idx" wx:key="chapKey" wx:for-item="item">
+        <view class='item' bindtap='chooseChap' data-id="{{idx}}" data-value="{{item.CHAP_NAME}}">
+          {{item.CHAP_NAME}}
+          <block wx:if="{{item.chooseStat == true}}">
+            <image src="../../images/2.0/icon_choose.png"></image>
+          </block>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+</view>
+<view class='foot'>
+  <view class="{{isChoose==true?'foot-left left-choose':'foot-left'}}" bindtap="clearSession">清除此题缓存</view>
+  <view class="{{isChoose==true?'foot-right right-choose':'foot-right'}}" bindtap='goExam'>开始测试</view>
 </view>

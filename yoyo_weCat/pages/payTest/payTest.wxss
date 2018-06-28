@@ -1,14 +1,20 @@
 /* pages/payTest/payTest.wxss */
 .payTest{
-  background: #FEFEFE;
-  padding: 10px
+  background:#F5F7F6;
+  height:100%;
+  align-items:center;
+  justify-content:center;
+}
+.scroll{
+  height: 80%;
 }
 .payTest .testList{
-  border: 1px solid #FEFEFE;
+  border: 1px solid #E5E5E5;
   padding: 10px;
-  border-radius: 5px;
-  box-shadow: 1px 2px 5px #E2E2E2;
-  background: #FFF
+  /* border-radius: 5px; */
+  /* box-shadow: 1px 2px 5px #E2E2E2; */
+  background: #FFF;
+  margin-bottom:15px;
 }
 .payTest .testList text.title{
   font-size: 14px;
@@ -19,26 +25,45 @@
   margin-bottom: 10px
 }
 .payTest .testList view{
-  text-align: center;
+  text-align: left;
   margin-bottom: 10px
 }
 .payTest .testList view text{
-  margin: 0 10px;
-  font-size: 14px;
-  color: #666;
+  margin-top:10px;
+  font-size:10pt;
+  color:#999999;
+  display:block;
+}
+.textBorder{
+  border-bottom:1px solid #E5E5E5;
 }
 .payTest .testList button{
-  border: none;
-  height: 30px;
-  line-height: 30px;
-  color: #FFF;
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  background: #00D96D
+  border:none;
+  height:30px;
+  line-height:30px;
+  color:#FFF;
+  text-align:center;
+  font-size:14px;
+  font-weight:bold;
+  background:#12B362;
+  width:78px;
+  margin-right:10px;
 }
 .payTest .testList .tip{
   color: #FFC926;
   font-size: 14px;
   font-weight: bold
+}
+.bottom{
+  position:absolute;
+  bottom:0px;
+  display:flex;
+  width:100%;
+  height:5%;
+  background-color:#FAEDD4;
+  color:#FF9600;
+  margin-left:0;
+  font-size:10pt;
+  align-items:center;
+  justify-content:center;
 }

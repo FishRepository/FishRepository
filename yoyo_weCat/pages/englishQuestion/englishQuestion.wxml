@@ -15,7 +15,7 @@
   <swiper class="swiper-cont" bindchange="swiperChange" current="{{qtTypeSwitch==1?listeningNowCurrent:convNowCurrent}}">
     <block wx:if="{{qtTypeSwitch==1}}">
     <!--听力-->
-    <block wx:for="{{resData.listeningList}}" wx:for-item="list" wx:for-index="idx" >
+    <block wx:for="{{resData.listeningList}}" wx:for-item="list" wx:for-index="idx" wx:key="listeningListKey">
       <swiper-item>
           
          <scroll-view scroll-y="true" class="topic-cont"> 

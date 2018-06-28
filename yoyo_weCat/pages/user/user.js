@@ -17,6 +17,7 @@ Page({
         'WID': openid
       },
       success: function (d) {
+        console.log(d.data.USER_INFO)
         that.setData({
           userInfo: {
             nickName: d.data.USER_INFO.user_name,
