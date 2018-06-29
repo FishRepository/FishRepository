@@ -25,3 +25,14 @@
     <text class='bottom-text2'>语音识别技术由讯飞提供</text>
     <!-- <button class="btn yellow" bindtap="clearStr">重新做题</button> -->
 </view>
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="modal-title">授权</view>
+    <view class="modal-content">
+      点击确定授权海证获得您的用户信息
+    </view>
+    <view class="modal-footer">
+      <button class="btn-confirm" open-type="getUserInfo" bindgetuserinfo='onConfirm' data-status="cancel">确定</button>
+      <view class="btn-cancel"  bindtap="onCancel" data-status="confirm">取消</view>
+    </view>
+</view>

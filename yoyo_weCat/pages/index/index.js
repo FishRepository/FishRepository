@@ -15,12 +15,23 @@ Page({
     showAdv: true,
     adv: "0",
     advUrl: "",
+    showModal: false
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
+    wx.getUserInfo({
+      success: function (res) {
+        app.globalData.userInfo = res.userInfo;
+      },
+      fail: function (res) {
+        that.setData({
+          showModal: true
+        })
+      }
+    })
     app.getUserInfo();
     try{
       var postVal = wx.getStorageSync("postVal");
@@ -149,6 +160,19 @@ Page({
     } catch (e) {
       console.log(e);
     }
+  },
+  onConfirm : function (e) {
+    var that = this
+    console.log(e.detail.userInfo)
+    app.globalData.userInfo = e.detail.userInfo;
+    that.setData({
+      showModal: false
+    })
+  },
+  onCancel : function () {
+    this.setData({
+      showModal: false
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -6,12 +6,16 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    wx.getUserInfo({
-      success: function (res) {
-        that.globalData.userInfo = res.userInfo;
-      }
-    })
+    // wx.getUserInfo({
+    //   success: function (res) {
+    //     that.globalData.userInfo = res.userInfo;
+    //   },
+    //   fail: function (res) {
+    //     if (res.errMsg === 'getUserInfo:fail scope unauthorized'){
+          
+    //     }
+    //   }
+    // })
   },
   getUserInfo:function(){
     var that = this

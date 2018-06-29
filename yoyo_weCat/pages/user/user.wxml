@@ -1,6 +1,9 @@
 <view class="container">
   <view class="user" bindtap='editeUser'>
-    <image class="user-img" src="{{userInfo.avatarUrl}}"></image>
+    <image class="user-img" src="{{userInfo.avatarUrl}}"></image> 
+    <!-- <view class="user-img">
+      <open-data  type="userAvatarUrl"></open-data>
+    </view> -->
     <view class="name">
       <text>{{userInfo.nickName}}</text>
       <image src="{{sexIcon[userInfo.gender]}}"></image>
