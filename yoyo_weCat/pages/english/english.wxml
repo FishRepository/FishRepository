@@ -1,7 +1,7 @@
 <scroll-view scroll-y="true" class="container" bindscroll="scroll" bindscrolltolower="scrolltolower">
   <block wx:for-items="{{LIST}}" wx:for-item="item">
     <view class="film-item">
-      <view class="film-image" bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
+      <view class="film-image" bindtap="viewDetail" data-money="{{item.PAY_MONEY}}" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
         <block wx:if="{{item.CLASS_PIC?true:false}}">
           <image src="{{imgUrl}}{{item.CLASS_PIC}}"></image>
         </block>
@@ -10,7 +10,7 @@
       </block>
       </view>
       <view class="film-info">
-          <view bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
+          <view bindtap="viewDetail" data-money="{{item.PAY_MONEY}}" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
             <text class="film-title">{{item.CLASS_NAME}}</text>
           </view>
           <block wx:if="{{item.IS_PAY===1?false:true}}">
@@ -19,23 +19,23 @@
             </view>
           </block>
           <block wx:else>
-            <view class="hhhh" bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
+            <view class="hhhh" bindtap="viewDetail" data-money="{{item.PAY_MONEY}}" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
               <text class="film-year-pay">{{payType[item.IS_PAY]}}</text>
               <block wx:if="{{item.PAY_OVER?true:false}}">
                 <image class="has-pay" src="../../images/has_buy1.png"></image>
               </block>
             </view>
-            <view bindtap="viewDetail" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
+            <view bindtap="viewDetail" data-money="{{item.PAY_MONEY}}" data-payover="{{item.PAY_OVER}}" data-ispay="{{item.IS_PAY}}" data-id="{{item.ID}}" data-title="{{item.CLASS_NAME}}">
               <!-- <image class="file-money-icon" src="../../images/value.png"></image> -->
               <text class="film-year-money">￥{{item.PAY_MONEY}}</text>
             </view>
             <view>
-              <block wx:if="{{item.PAY_OVER?true:false}}">
+              <!-- <block wx:if="{{item.PAY_OVER?true:false}}">
               </block>
               <block wx:else>
                 <button class="pay-btn" bindtap="payForEnglishClass" data-money="{{item.PAY_MONEY}}"
                 data-classId="{{item.ID}}">购买</button>
-              </block>
+              </block> -->
             </view> 
           </block>
       </view>

@@ -35,9 +35,12 @@ Page({
     })
   },
   viewDetail: function (e) {
+    var that = this
     var ds = e.currentTarget.dataset;
     var isPay = ds.ispay;
     var payOver = ds.payover;
+    var openid = app.globalData.openid;
+    var classId = ds.classid;
     if (isPay==0){
       wx.navigateTo({
         url: '../englishChap/englishChap?classId=' + ds.id
@@ -48,9 +51,37 @@ Page({
           url: '../englishChap/englishChap?classId=' + ds.id
         })
       }else{
-        wx.showToast({
-          title: '请先购买课程！',
+        // wx.showToast({
+        //   title: '请先购买课程！',
+        // })
+        wx.showModal({
+          title: '提示',
+          content: '点击确认购买课程！',
+          success: function (res) {
+            if (res.confirm) {
+              var oType = 2;
+              var payMoney = ds.money * 100;
+              wx.request({
+                url: app.globalData.hostUrl + '/admin.do?method=payMoney',
+                data: {
+                  payMoney: payMoney,
+                  payClass: app.globalData.orderType[oType],
+                  openid: app.globalData.openid
+                },
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                method: "post",
+                success: function (d) {
+                  if (d.data.result.prepay_id) {
+                    that.requestPayment(d.data.result.prepay_id, d.data.orderNumber, oType, payMoney, d.data.orderTime, classId);
+                  }
+                }
+              })
+            }
+          }
         })
+        
       }
     }
   },

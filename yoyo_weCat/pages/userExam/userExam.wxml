@@ -1,5 +1,5 @@
 <!--pages/userExam/userExam.wxml-->
-<view class="payTest">
+<scroll-view class="payTest">
   <view class="testList" wx:for="{{LIST}}">
     <text class="title">{{item.examInfo.cert_name}}</text>
     <view class="info">
@@ -10,4 +10,4 @@
     <button data-e="{{item.examId}}" data-p="{{item.examInfo.postType}}" data-c="{{item.examInfo.certType}}" bindtap="clearStr">重新做题</button>
     <navigator url="/pages/combo/combo?examId={{item.examId}}&payType=1&postType={{item.examInfo.postType}}&certType={{item.examInfo.certType}}&shareType=1">立即考试</navigator>
   </view>
-</view>
+</scroll-view>
