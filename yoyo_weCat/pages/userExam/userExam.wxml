@@ -1,6 +1,6 @@
 <!--pages/userExam/userExam.wxml-->
-<scroll-view class="payTest">
-  <view class="testList" wx:for="{{LIST}}">
+<scroll-view scroll-y class="payTest">
+  <view class="testList" wx:for="{{LIST}}" wx:key="examListKey">
     <text class="title">{{item.examInfo.cert_name}}</text>
     <view class="info">
       <text>到期：{{item.timeEnd}}</text>

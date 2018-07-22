@@ -155,16 +155,16 @@ Page({
     var choose4 = "resData.LIST[" + index + "].choose4";
     switch (that.data.topicResult) {
       case "1":
-        param[choose1] = "wrongTip";
+        param[choose1] = "wrongTipCol";
         break;
       case "2":
-        param[choose2] = "wrongTip";
+        param[choose2] = "wrongTipCol";
         break;
       case "3":
-        param[choose3] = "wrongTip";
+        param[choose3] = "wrongTipCol";
         break;
       case "4":
-        param[choose4] = "wrongTip";
+        param[choose4] = "wrongTipCol";
         break;
       default:
         break

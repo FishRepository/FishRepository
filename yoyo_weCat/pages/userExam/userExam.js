@@ -18,6 +18,9 @@ Page({
   },
   getExamList: function () {
     var that = this;
+    wx.showLoading({
+      title: '正在加载试卷...'
+    })
     wx.request({
       url: app.globalData.hostUrl + '/admin.do?method=getUserExamList',
       data: {
@@ -27,6 +30,9 @@ Page({
         that.setData({
           LIST:res.data.LIST
         })
+        setTimeout(function () {
+          wx.hideLoading()
+        }, 2000)
       }
     })
   },

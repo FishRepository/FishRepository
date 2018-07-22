@@ -3,13 +3,14 @@
   <view class="top">
     <image class="time-icon" style="display:none" src="../../images/chongzhijilu-icon.png"></image>
     <text class="time" style="display:none">{{timeHour}}:{{timeMin}}:{{timeSec}}</text>
-    <button class="wrongBtn" bindtap="showWrong">错题集</button>
-    <text><text>{{nowCurrent+1}}</text>/<text>{{resData.LIST.length}}</text></text>
-    <text class="wrong" bindtap="showWrong">错误：<text>{{resData.wrongNumb}}</text></text>
+    <view class="wrongBtn" bindtap="showWrong">查看错题集</view>
+    <text class="topNumb"><text>({{nowCurrent+1}}</text>/<text>{{resData.LIST.length}})</text></text>
+    <text class="wrong">错误：<text>{{resData.wrongNumb}}</text></text>
   </view>
   <swiper class="swiper-cont" bindchange="swiperChange" current="{{nowCurrent}}">
     <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
       <swiper-item>
+        <scroll-view scroll-y class='scroll'>
         <view class="topic-cont">
           <view class="topic">
             <text class="type">{{topicType[list.topicType]}}</text><text>{{list.topicTitle}}</text>
@@ -62,9 +63,8 @@
               </label>
             </radio-group>
           </block>
-
         </view>
-        
+        </scroll-view>
         <view class="sbtn">
           <button class="check" type="primary" bindtap="showModel" wx:if="{{list.topicType=='3'}}">查看文章</button>
           <button class="confirm" type="primary" disabled="{{list.btnDisabled}}" bindtap="showRight">确定</button>
@@ -74,17 +74,17 @@
           <view class="right">
             <text class="r {{list.wrongTip}}">正确答案:{{showRight[list.topicRightOption]}}</text>
           </view>
-          <view class="jiexi" wx:if="{{list.showExplain!='0'}}">
+          <!-- <view class="jiexi" wx:if="{{list.showExplain!='0'}}">
             <text>{{list.explainText}}</text>
-          </view>
+          </view> -->
         </view>
       </swiper-item>
     </block>
   </swiper>
   <view class="btns">
-    <button class="prev" bindtap="prev">上一题</button>
-    <button class="submit" bindtap="submit">交 卷</button>
-    <button class="next" bindtap="next">下一题</button>
+    <view class="prev" bindtap="prev">上一题</view>
+    <view class="submit" bindtap="submit">交 卷</view>
+    <view class="next" bindtap="next">下一题</view>
   </view>
   <view class="showmodel" wx:if="{{showModel}}">
     <view class="textcont" animation="{{animationData}}">
@@ -97,7 +97,7 @@
   <swiper wx:if="{{showWrong}}" class="swiper-cont wrongSwiper" style="height: 100%; padding-bottom: 0">
     <block wx:for="{{resData.LIST}}" wx:for-item="list" wx:key="">
       <swiper-item wx:if="{{list.isWrong}}">
-        <view class="topic-cont">
+        <view class="topic-cont-wrong">
           <view class="topic">
             <text class="type">{{topicType[list.topicType]}}</text><text>{{list.topicTitle}}</text>
           </view>

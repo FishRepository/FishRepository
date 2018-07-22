@@ -24,19 +24,25 @@
   float: left
 }
 .exam .top .wrongBtn{
-  font-size: 12px;
-  background: #FBCB3B;
-  color: #FFF;
+  font-size: 10pt;
+  /* background: #FBCB3B; */
+  color: #12B362;
   height: 20px;
   line-height: 20px;
-  float: left
+  float: left;
+  margin-left: 10px;
 }
 .exam .top .wrong{
   float: right;
+  color:#808080;
+  margin-right:10px;
 }
-.exam .top .wrong text{
+.exam .top .topNumb{
+  color: #808080;
+}
+/* .exam .top .wrong text{
   color: #FBCB3B
-}
+} */
 .exam .swiper-cont{
   height: 80%;
   padding-bottom: 50px
@@ -46,16 +52,50 @@
   border-radius: 10px;
   width: 85%;
   margin: 0px auto;
-  padding: 10px
+  padding: 10px;
+  height: 100%;
 }
+
+/*错误页正文样式  S*/
+.wrongSwiper .topic-cont-wrong{
+  background: #FFF;
+  border-radius: 10px;
+  width: 85%;
+  margin: 0px auto;
+  padding: 10px;
+  height: 70%;
+}
+.wrongSwiper .topic-cont-wrong .topic{
+  color: #444;
+  font-size: 14px;
+  line-height: normal
+}
+.wrongSwiper .topic-cont-wrong .topic .type{
+  background: #12B362;
+  color: #FFFFFF;
+  border-radius: 3px;
+  font-size: 11px;
+  padding: 0 3px;
+  margin-right: 5px
+}
+.wrongSwiper .topic-cont-wrong view{
+  font-size: 14px;
+  display: block;
+  padding: 5px 0
+}
+/*错误页正文样式 E*/
+.scroll{
+  height: 70%;
+}
+
 .exam .swiper-cont .topic-cont .topic{
   color: #444;
   font-size: 14px;
   line-height: normal
 }
 .exam .swiper-cont .topic-cont .topic .type{
-  background: #00D96D;
-  color: #FFF;
+  background: #12B362;
+  color: #FFFFFF;
   border-radius: 3px;
   font-size: 11px;
   padding: 0 3px;
@@ -91,23 +131,25 @@
   position: absolute
 }
 .exam .swiper-cont .confirm{
-  width: 60px;
-  font-size: 14px;
+  width: 90%;
+  font-size: 14pt;
   margin: 10px auto;
-  height: 30px;
+  height: 45px;
   border: none;
-  line-height: 30px
+  line-height: 45px;
+  background-color: #12B362;
+  color:#FFFFFF;
 }
 .exam .swiper-cont .right-cont{
-  width: 85%;
-  margin: 0 auto;
-  background: #FFF;
-  border-radius: 10px;
+  width: 100%;
+  margin: 20px auto;
+  /* background: #FFF; */
+  /* border-radius: 10px; */
   padding: 10px
 }
 .exam .swiper-cont .right-cont .right{
   font-size: 14px;
-  text-align: right;
+  /* text-align: right; */
   height: 25px;
   line-height: 25px;
   margin-bottom: 5px
@@ -153,26 +195,29 @@
   left: 0;
   text-align: center
 }
-.exam .btns button{
+.exam .btns view{
   display: inline-block;
   width: 60px;
   height: 30px;
   padding: 0;
   line-height: 30px;
-  background: #00D96D;
+  /* background: #00D96D; */
   font-size: 14px;
-  color: #FFF;
+  /* color: #FFF; */
   margin: 10px;
 }
 .exam .btns .prev{
   float: left;
+  color:#FFA200;
 }
 .exam .btns .next{
   float: right;
+  color:#35C35B;
 }
 .exam .btns .submit{
   margin: 10px auto;
   width: 100px;
+  color:#35C35B;
 }
 .exam .showmodel{
   width: 100%;
@@ -212,10 +257,18 @@
   margin-top: 1px;
 }
 .exam .wrongTip{
-  color: #FF0000
+  color: #FFA200;
+  width:100%;
+  text-align:center;
+}
+.exam .wrongTipCol{
+  color: #FFA200;
+  width:100%;
 }
 .exam .rightTip{
-  color: #00D96D
+  color: #12B362;
+  width:100%;
+  text-align:center;
 }
 .wrongSwiper{
   position: absolute;
@@ -229,7 +282,7 @@
   margin: 20px;
 }
 .wrongSwiper .closeWrong button{
-  background: #00D96D;
+  background: #12B362;
   color: #FFF;
   font-size: 14px;
   border-radius: 5px

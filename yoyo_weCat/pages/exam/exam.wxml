@@ -2,7 +2,6 @@
 <view class="exam">
   <view class="top">
     <image class="time-icon" style="display:none" src="../../images/chongzhijilu-icon.png"></image>
-
     <text class="time" style="display:none">{{timeHour}}:{{timeMin}}:{{timeSec}}</text>
     <view class="wrongBtn" bindtap="showWrong">查看错题集</view>
     <text class="topNumb"><text>({{nowCurrent+1}}</text>/<text>{{resData.LIST.length}})</text></text>
@@ -82,7 +81,6 @@
             <text>{{list.explain}}</text>
           </view> -->
         </view>
-        
       </swiper-item>
     </block>
   </swiper>
