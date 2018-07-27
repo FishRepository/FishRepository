@@ -40,7 +40,7 @@ Page({
     var isPay = ds.ispay;
     var payOver = ds.payover;
     var openid = app.globalData.openid;
-    var classId = ds.classid;
+    var classId = ds.id;
     if (isPay==0){
       wx.navigateTo({
         url: '../englishChap/englishChap?classId=' + ds.id
